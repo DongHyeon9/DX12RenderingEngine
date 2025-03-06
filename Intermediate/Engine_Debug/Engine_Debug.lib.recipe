@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <ProjectOutputs />
+  <ContentFiles>
+    <ContentFile>
+      <FullPath>C:\Users\hdh97\Desktop\DX12RenderingEngine\Bin\Engine\GS_Default.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\Users\hdh97\Desktop\DX12RenderingEngine\Bin\Engine\PS_Default.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\Users\hdh97\Desktop\DX12RenderingEngine\Bin\Engine\DS_Default.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\Users\hdh97\Desktop\DX12RenderingEngine\Bin\Engine\HS_Default.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\Users\hdh97\Desktop\DX12RenderingEngine\Bin\Engine\VS_Default.cso</FullPath>
+    </ContentFile>
+  </ContentFiles>
+  <SatelliteDlls />
+  <NonRecipeFileRefs />
+</Project>

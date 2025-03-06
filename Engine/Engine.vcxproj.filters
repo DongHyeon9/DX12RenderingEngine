@@ -1,0 +1,367 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="01.Engine">
+      <UniqueIdentifier>{1fe564bb-e0b0-4d3b-853b-aa3d78b6cb54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Manager">
+      <UniqueIdentifier>{584f8c63-6088-427e-946e-17b10fbcdb07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.Shader">
+      <UniqueIdentifier>{fed25413-2ab0-4d8f-8aea-fd31761a6777}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.Object">
+      <UniqueIdentifier>{d3ad25aa-269a-4423-9fc6-9e34dedb255d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.Component">
+      <UniqueIdentifier>{46e41e40-d1cc-4b8c-b7a8-a5b8e0252bbe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06.Resource">
+      <UniqueIdentifier>{a2eb9d80-eba2-4f54-a7e3-6f8914a32dae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="99.Header">
+      <UniqueIdentifier>{e7b0d082-6c77-4c86-84b8-1c7e742fe881}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="99.Header\ThirdParty">
+      <UniqueIdentifier>{524c28ce-4f69-435d-ad88-72520f80fe06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Engine\Render">
+      <UniqueIdentifier>{72d11c5f-60f6-4c9f-a0d3-b90a16caaa26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.Shader\Vertex">
+      <UniqueIdentifier>{0b1eb39e-c567-466b-96ce-99ae0644644a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.Shader\Pixel">
+      <UniqueIdentifier>{28598f08-cc96-4600-b09f-1a6d23497cb1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.Shader\Geometry">
+      <UniqueIdentifier>{9b4b915b-080d-4d06-93cf-c8cfd5e46427}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.Shader\Header">
+      <UniqueIdentifier>{0e0b2366-1a3c-455a-a9dc-2b21596bf2bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.Shader\Tessellation">
+      <UniqueIdentifier>{2b0e132b-400d-40ff-81ba-66fa31d70b5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.Shader\Tessellation\Domain">
+      <UniqueIdentifier>{61a197eb-a6b1-4b8f-a079-a9e99072ea09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.Shader\Tessellation\Hull">
+      <UniqueIdentifier>{cc7a9c93-b461-43d2-a30d-14bd589e7510}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Engine\Render\PipelineStateObject">
+      <UniqueIdentifier>{f6df0fbe-5786-443c-a0cf-880725689934}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Engine\Render\PipelineStateObject\Shader">
+      <UniqueIdentifier>{956f7db6-5e05-4c99-a80c-ef6995d74a5f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Engine\Render\PipelineStateObject\RootArgument">
+      <UniqueIdentifier>{27fd0df7-6430-43a1-8d1f-830e8401fbec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06.Resource\External">
+      <UniqueIdentifier>{6207e26d-233a-45e5-99fa-23ccb5948fd8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06.Resource\Internal">
+      <UniqueIdentifier>{9c8d4c4d-f00a-4626-a2af-88d419e98b8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Engine\Render\PipelineStateObject\RootArgument\DescriptorTable">
+      <UniqueIdentifier>{ddcf8b49-338b-43da-ab2f-48d224a033b4}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\Header\Enum.h">
+      <Filter>99.Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Header\Header.h">
+      <Filter>99.Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Header\PreProcess.h">
+      <Filter>99.Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Header\Struct.h">
+      <Filter>99.Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Header\Type.h">
+      <Filter>99.Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Header\Value.h">
+      <Filter>99.Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Header\EngineCore.h">
+      <Filter>99.Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Header\d3dx12.h">
+      <Filter>99.Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Header\EngineUtil.h">
+      <Filter>99.Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Scene.h">
+      <Filter>01.Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\AppBase.h">
+      <Filter>01.Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Engine.h">
+      <Filter>01.Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Header\EngineCoreMinimal.h">
+      <Filter>99.Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Header\EngineUtil.inl">
+      <Filter>99.Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Manager\InputManager.h">
+      <Filter>02.Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Manager\TimerManager.h">
+      <Filter>02.Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Manager\CameraManager.h">
+      <Filter>02.Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Manager\GeometryManager.h">
+      <Filter>02.Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Render\CommandObject.h">
+      <Filter>01.Engine\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Render\Device.h">
+      <Filter>01.Engine\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Render\SwapChain.h">
+      <Filter>01.Engine\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object\Actor.h">
+      <Filter>04.Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object\Object.h">
+      <Filter>04.Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Manager\ResourceManager.h">
+      <Filter>02.Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Component\TransformComp.h">
+      <Filter>05.Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Component\Component.h">
+      <Filter>05.Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Component\LightComp.h">
+      <Filter>05.Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Component\MeshComp.h">
+      <Filter>05.Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Component\MonoBehaviour.h">
+      <Filter>05.Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Render\PipelineStateObject.h">
+      <Filter>01.Engine\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Render\PipelineStateObject\Shader\PixelShaderObject.h">
+      <Filter>01.Engine\Render\PipelineStateObject\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Render\PipelineStateObject\Shader\ShaderObjectBase.h">
+      <Filter>01.Engine\Render\PipelineStateObject\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Render\PipelineStateObject\Shader\VertexShaderObject.h">
+      <Filter>01.Engine\Render\PipelineStateObject\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Render\PipelineStateObject\Shader\DomainShaderObject.h">
+      <Filter>01.Engine\Render\PipelineStateObject\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Render\PipelineStateObject\Shader\GeometryShaderObject.h">
+      <Filter>01.Engine\Render\PipelineStateObject\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Render\PipelineStateObject\Shader\HullShaderObject.h">
+      <Filter>01.Engine\Render\PipelineStateObject\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Render\PipelineStateObject\DepthStencilObject.h">
+      <Filter>01.Engine\Render\PipelineStateObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Render\PipelineStateObject\RenderTargetObject.h">
+      <Filter>01.Engine\Render\PipelineStateObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Render\PipelineStateObject\ShaderObject.h">
+      <Filter>01.Engine\Render\PipelineStateObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Render\PipelineStateObject\BlendStateObject.h">
+      <Filter>01.Engine\Render\PipelineStateObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Render\UploadBuffer.h">
+      <Filter>01.Engine\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Render\DescriptorHeap.h">
+      <Filter>01.Engine\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Render\PipelineStateObject\RasterizerStateObject.h">
+      <Filter>01.Engine\Render\PipelineStateObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Render\PipelineStateObject\RootSignature.h">
+      <Filter>01.Engine\Render\PipelineStateObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Render\PipelineStateObject\RootArgument\RootArguments.h">
+      <Filter>01.Engine\Render\PipelineStateObject\RootArgument</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Resource\External\Texture.h">
+      <Filter>06.Resource\External</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Resource\External\Mesh.h">
+      <Filter>06.Resource\External</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Resource\External\Resource.h">
+      <Filter>06.Resource\External</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Resource\Internal\Material.h">
+      <Filter>06.Resource\Internal</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Resource\Internal\ConstantBuffer.h">
+      <Filter>06.Resource\Internal</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Render\PipelineStateObject\RootArgument\DescriptorTable\DescriptorTable.h">
+      <Filter>01.Engine\Render\PipelineStateObject\RootArgument\DescriptorTable</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Render\PipelineStateObject\RootArgument\DescriptorTable\DescriptorTable.inl">
+      <Filter>01.Engine\Render\PipelineStateObject\RootArgument\DescriptorTable</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\Engine\AppBase.cpp">
+      <Filter>01.Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Scene.cpp">
+      <Filter>01.Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Engine.cpp">
+      <Filter>01.Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Manager\TimerManager.cpp">
+      <Filter>02.Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Manager\CameraManager.cpp">
+      <Filter>02.Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Manager\GeometryManager.cpp">
+      <Filter>02.Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Manager\InputManager.cpp">
+      <Filter>02.Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Render\Device.cpp">
+      <Filter>01.Engine\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Render\SwapChain.cpp">
+      <Filter>01.Engine\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Render\CommandObject.cpp">
+      <Filter>01.Engine\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object\Actor.cpp">
+      <Filter>04.Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object\Object.cpp">
+      <Filter>04.Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Manager\ResourceManager.cpp">
+      <Filter>02.Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Component\Component.cpp">
+      <Filter>05.Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Component\LightComp.cpp">
+      <Filter>05.Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Component\MeshComp.cpp">
+      <Filter>05.Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Component\MonoBehaviour.cpp">
+      <Filter>05.Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Component\TransformComp.cpp">
+      <Filter>05.Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Render\PipelineStateObject.cpp">
+      <Filter>01.Engine\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Render\PipelineStateObject\Shader\VertexShaderObject.cpp">
+      <Filter>01.Engine\Render\PipelineStateObject\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Render\PipelineStateObject\Shader\DomainShaderObject.cpp">
+      <Filter>01.Engine\Render\PipelineStateObject\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Render\PipelineStateObject\Shader\GeometryShaderObject.cpp">
+      <Filter>01.Engine\Render\PipelineStateObject\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Render\PipelineStateObject\Shader\HullShaderObject.cpp">
+      <Filter>01.Engine\Render\PipelineStateObject\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Render\PipelineStateObject\Shader\PixelShaderObject.cpp">
+      <Filter>01.Engine\Render\PipelineStateObject\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Render\PipelineStateObject\RenderTargetObject.cpp">
+      <Filter>01.Engine\Render\PipelineStateObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Render\PipelineStateObject\ShaderObject.cpp">
+      <Filter>01.Engine\Render\PipelineStateObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Render\PipelineStateObject\BlendStateObject.cpp">
+      <Filter>01.Engine\Render\PipelineStateObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Render\PipelineStateObject\DepthStencilObject.cpp">
+      <Filter>01.Engine\Render\PipelineStateObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Render\UploadBuffer.cpp">
+      <Filter>01.Engine\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Render\DescriptorHeap.cpp">
+      <Filter>01.Engine\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Render\PipelineStateObject\RasterizerStateObject.cpp">
+      <Filter>01.Engine\Render\PipelineStateObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Render\PipelineStateObject\RootSignature.cpp">
+      <Filter>01.Engine\Render\PipelineStateObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Render\PipelineStateObject\RootArgument\RootArguments.cpp">
+      <Filter>01.Engine\Render\PipelineStateObject\RootArgument</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Resource\External\Texture.cpp">
+      <Filter>06.Resource\External</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Resource\External\Mesh.cpp">
+      <Filter>06.Resource\External</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Resource\External\Resource.cpp">
+      <Filter>06.Resource\External</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Resource\Internal\ConstantBuffer.cpp">
+      <Filter>06.Resource\Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Resource\Internal\Material.cpp">
+      <Filter>06.Resource\Internal</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Default.hlsli">
+      <Filter>03.Shader\Header</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Source\Shader\Geometry\GS_Default.hlsl">
+      <Filter>03.Shader\Geometry</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\Shader\Tessellation\Domain\DS_Default.hlsl">
+      <Filter>03.Shader\Tessellation\Domain</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\Shader\Tessellation\Hull\HS_Default.hlsl">
+      <Filter>03.Shader\Tessellation\Hull</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\Shader\Pixel\PS_Default.hlsl">
+      <Filter>03.Shader\Pixel</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\Shader\Vertex\VS_Default.hlsl">
+      <Filter>03.Shader\Vertex</Filter>
+    </FxCompile>
+  </ItemGroup>
+</Project>

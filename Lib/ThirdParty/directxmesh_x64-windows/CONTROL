@@ -1,0 +1,7 @@
+Package: directxmesh
+Version: 2024-02-21
+Depends: directxmath, vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 82aa9d73245ba0179c21e0afe3d88af49c716e23d7b3725b1a1086e636d937ab
+Description: DirectXMesh geometry processing library

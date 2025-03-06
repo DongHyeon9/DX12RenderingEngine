@@ -1,0 +1,147 @@
+{
+  "$schema": "https://raw.githubusercontent.com/spdx/spdx-spec/v2.2.1/schemas/spdx-schema.json",
+  "spdxVersion": "SPDX-2.2",
+  "dataLicense": "CC0-1.0",
+  "SPDXID": "SPDXRef-DOCUMENT",
+  "documentNamespace": "https://spdx.org/spdxdocs/directxmesh-x64-windows-2024-02-21-528b6a8b-861a-4ab7-b24c-5cc22bf55334",
+  "name": "directxmesh:x64-windows@2024-02-21 82aa9d73245ba0179c21e0afe3d88af49c716e23d7b3725b1a1086e636d937ab",
+  "creationInfo": {
+    "creators": [
+      "Tool: vcpkg-8a83681f921b10d86ae626fd833c253f4f8c355b"
+    ],
+    "created": "2025-02-18T08:35:38Z"
+  },
+  "relationships": [
+    {
+      "spdxElementId": "SPDXRef-port",
+      "relationshipType": "GENERATES",
+      "relatedSpdxElement": "SPDXRef-binary"
+    },
+    {
+      "spdxElementId": "SPDXRef-port",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-file-0"
+    },
+    {
+      "spdxElementId": "SPDXRef-port",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-file-1"
+    },
+    {
+      "spdxElementId": "SPDXRef-port",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-file-2"
+    },
+    {
+      "spdxElementId": "SPDXRef-binary",
+      "relationshipType": "GENERATED_FROM",
+      "relatedSpdxElement": "SPDXRef-port"
+    },
+    {
+      "spdxElementId": "SPDXRef-file-0",
+      "relationshipType": "CONTAINED_BY",
+      "relatedSpdxElement": "SPDXRef-port"
+    },
+    {
+      "spdxElementId": "SPDXRef-file-1",
+      "relationshipType": "CONTAINED_BY",
+      "relatedSpdxElement": "SPDXRef-port"
+    },
+    {
+      "spdxElementId": "SPDXRef-file-2",
+      "relationshipType": "CONTAINED_BY",
+      "relatedSpdxElement": "SPDXRef-port"
+    }
+  ],
+  "packages": [
+    {
+      "name": "directxmesh",
+      "SPDXID": "SPDXRef-port",
+      "versionInfo": "2024-02-21",
+      "downloadLocation": "git+https://github.com/Microsoft/vcpkg#ports/directxmesh",
+      "homepage": "https://github.com/Microsoft/DirectXMesh",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "description": "DirectXMesh geometry processing library",
+      "comment": "This is the port (recipe) consumed by vcpkg."
+    },
+    {
+      "name": "directxmesh:x64-windows",
+      "SPDXID": "SPDXRef-binary",
+      "versionInfo": "82aa9d73245ba0179c21e0afe3d88af49c716e23d7b3725b1a1086e636d937ab",
+      "downloadLocation": "NONE",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "comment": "This is a binary package built by vcpkg."
+    },
+    {
+      "SPDXID": "SPDXRef-resource-1",
+      "name": "Microsoft/DirectXMesh",
+      "downloadLocation": "git+https://github.com/Microsoft/DirectXMesh@${DIRECTXMESH_TAG}",
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA512",
+          "checksumValue": "f15bba68982ffb69f2f07503aeb565a95b733feb14b5bfb546284e6be498e6e45a286e556228c4284c8fccddd3581cc7aa10b5b522f9ba4d511f0303757c83e8"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-resource-2",
+      "name": "meshconvert-${DIRECTXMESH_TAG}.exe",
+      "packageFileName": "meshconvert-${DIRECTXMESH_TAG}.exe",
+      "downloadLocation": "https://github.com/Microsoft/DirectXMesh/releases/download/${DIRECTXMESH_TAG}/meshconvert.exe",
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA512",
+          "checksumValue": "a1a7187a19b5947dd5ab34097da55793f43fccb0cd1efc81d9b8ccdd8fcffeb638174c004c64a4cf9b720e878d9352fa3c2a7a1082de7123279dde14cc5a628c"
+        }
+      ]
+    }
+  ],
+  "files": [
+    {
+      "fileName": "./C:/Users/hdh97/vcpkg/ports/directxmesh/portfile.cmake",
+      "SPDXID": "SPDXRef-file-0",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "7991e67101cdb13fe643db71ff2945e8ed42a6628df92b99437a6f437a0b0261"
+        }
+      ],
+      "licenseConcluded": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "fileName": "./C:/Users/hdh97/vcpkg/ports/directxmesh/usage",
+      "SPDXID": "SPDXRef-file-1",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "0903f3a6279180eb2ac6bfc2a61f62922d7712ae15710b6bf6a2a484541638d9"
+        }
+      ],
+      "licenseConcluded": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "fileName": "./C:/Users/hdh97/vcpkg/ports/directxmesh/vcpkg.json",
+      "SPDXID": "SPDXRef-file-2",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "f8352ce3e26d7c0ec6359e0229afebda1e5c35cc89a8e366a0accdc2fe17712e"
+        }
+      ],
+      "licenseConcluded": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    }
+  ]
+}

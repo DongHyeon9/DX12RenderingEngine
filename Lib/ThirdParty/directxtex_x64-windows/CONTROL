@@ -1,0 +1,28 @@
+Package: directxtex
+Version: 2024-03-06
+Depends: directxmath, vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-windows
+Multi-Arch: same
+Abi: f18dac6cc681319c5445ec8fd7bda02b6d2c16b8a1a66c569cb2801574e457fa
+Description: DirectXTex texture processing library
+Default-Features: dx11
+
+Package: directxtex
+Feature: dx11
+Architecture: x64-windows
+Multi-Arch: same
+Description: Build with DirectX11 support
+
+Package: directxtex
+Feature: dx12
+Depends: directx-headers
+Architecture: x64-windows
+Multi-Arch: same
+Description: Build with DirectX12 support for Windows 10/Windows 11
+
+Package: directxtex
+Feature: openexr
+Depends: openexr
+Architecture: x64-windows
+Multi-Arch: same
+Description: Enable OpenEXR support
