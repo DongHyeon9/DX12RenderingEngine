@@ -34,7 +34,7 @@
     <ClInclude Include="Source\Engine\Render\PipelineStateObject\DepthStencilObject.h" />
     <ClInclude Include="Source\Engine\Render\PipelineStateObject\RasterizerStateObject.h" />
     <ClInclude Include="Source\Engine\Render\PipelineStateObject\RenderTargetObject.h" />
-    <ClInclude Include="Source\Engine\Render\PipelineStateObject\RootArgument\DescriptorTable\DescriptorTable.h" />
+    <ClInclude Include="Source\Engine\Render\PipelineStateObject\RootArgument\DescriptorTable.h" />
     <ClInclude Include="Source\Engine\Render\PipelineStateObject\RootArgument\RootArguments.h" />
     <ClInclude Include="Source\Engine\Render\PipelineStateObject\RootSignature.h" />
     <ClInclude Include="Source\Engine\Render\PipelineStateObject\ShaderObject.h" />
@@ -90,6 +90,7 @@
     <ClCompile Include="Source\Engine\Render\PipelineStateObject\DepthStencilObject.cpp" />
     <ClCompile Include="Source\Engine\Render\PipelineStateObject\RasterizerStateObject.cpp" />
     <ClCompile Include="Source\Engine\Render\PipelineStateObject\RenderTargetObject.cpp" />
+    <ClCompile Include="Source\Engine\Render\PipelineStateObject\RootArgument\DescriptorTable.cpp" />
     <ClCompile Include="Source\Engine\Render\PipelineStateObject\RootArgument\RootArguments.cpp" />
     <ClCompile Include="Source\Engine\Render\PipelineStateObject\RootSignature.cpp" />
     <ClCompile Include="Source\Engine\Render\PipelineStateObject\ShaderObject.cpp" />
@@ -115,9 +116,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Default.hlsli" />
-    <ClInclude Include="Source\Engine\Render\PipelineStateObject\RootArgument\DescriptorTable\DescriptorTable.inl">
-      <FileType>Document</FileType>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Source\Shader\Geometry\GS_Default.hlsl">

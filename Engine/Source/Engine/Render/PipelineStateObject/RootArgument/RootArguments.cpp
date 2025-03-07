@@ -47,19 +47,16 @@ bool RootArguments::CreateRootSignature(Microsoft::WRL::ComPtr<ID3D12Device> Dev
     desc.srvCount = std::clamp(desc.srvCount, (uint32)0, static_cast<uint32>(E_SRV_REGISTER::END));
     desc.uavCount = std::clamp(desc.uavCount, (uint32)0, static_cast<uint32>(E_UAV_REGISTER::END));
 
-    const bool bUseTable = desc.cbvTableNum || desc.srvTableNum || desc.uavTableNum;
-
     uint32 total{
         desc.cbvCount +
         desc.srvCount +
         desc.uavCount };
 
-    total += bUseTable ? 1 : 0;
+    total += desc.tableCount ? 1 : 0;
 
     std::vector<CD3DX12_ROOT_PARAMETER> param{ total };
     uint32 currentIdx{};
-    std::vector<CD3DX12_DESCRIPTOR_RANGE> ranges{};
-
+    
 	for (uint8 i = 0; i < desc.cbvCount; ++i, ++currentIdx)
 		param[currentIdx].InitAsConstantBufferView(i);
 
@@ -69,28 +66,15 @@ bool RootArguments::CreateRootSignature(Microsoft::WRL::ComPtr<ID3D12Device> Dev
 	for (uint8 i = 0; i < desc.uavCount; ++i, ++currentIdx)
         param[currentIdx].InitAsUnorderedAccessView(i);
 
-    if (bUseTable)
+    if (desc.tableCount)
     {
-        if (desc.cbvTableNum) {
-            ranges.emplace_back(CD3DX12_DESCRIPTOR_RANGE{ D3D12_DESCRIPTOR_RANGE_TYPE_CBV, ENUM_COUNT::TABLE_CBV_REGISTER, static_cast<UINT>(E_TABLE_CBV_REGISTER::B5) });
-            cbvTable.Init(Device, currentIdx, desc.cbvTableNum);
-            tableDescriptorHeaps.emplace_back(cbvTable.GetDescriptorHeap());
-        }
-        
-        if (desc.srvTableNum) {
-            ranges.emplace_back(CD3DX12_DESCRIPTOR_RANGE{ D3D12_DESCRIPTOR_RANGE_TYPE_SRV, ENUM_COUNT::TABLE_SRV_REGISTER, static_cast<UINT>(E_TABLE_SRV_REGISTER::T5) });
-            srvTable.Init(Device, currentIdx, desc.srvTableNum);
-            tableDescriptorHeaps.emplace_back(srvTable.GetDescriptorHeap());
-        }
-
-        if (desc.uavTableNum) {
-            ranges.emplace_back(CD3DX12_DESCRIPTOR_RANGE{ D3D12_DESCRIPTOR_RANGE_TYPE_UAV, ENUM_COUNT::TABLE_UAV_REGISTER, static_cast<UINT>(E_TABLE_UAV_REGISTER::U5) });
-            uavTable.Init(Device, currentIdx, desc.uavTableNum);
-            tableDescriptorHeaps.emplace_back(uavTable.GetDescriptorHeap());
-        }
-
-        if (!ranges.empty())
-            param[currentIdx].InitAsDescriptorTable(static_cast<UINT>(ranges.size()), ranges.data());
+        std::array<CD3DX12_DESCRIPTOR_RANGE, 3> ranges{
+            CD3DX12_DESCRIPTOR_RANGE{ D3D12_DESCRIPTOR_RANGE_TYPE_CBV, ENUM_COUNT::TABLE_CBV_REGISTER, static_cast<UINT>(E_TABLE_CBV_REGISTER::B5) },
+            CD3DX12_DESCRIPTOR_RANGE{ D3D12_DESCRIPTOR_RANGE_TYPE_SRV, ENUM_COUNT::TABLE_SRV_REGISTER, static_cast<UINT>(E_TABLE_SRV_REGISTER::T5) },
+            CD3DX12_DESCRIPTOR_RANGE{ D3D12_DESCRIPTOR_RANGE_TYPE_UAV, ENUM_COUNT::TABLE_UAV_REGISTER, static_cast<UINT>(E_TABLE_UAV_REGISTER::U5) }
+        };
+        table.Init(Device, currentIdx, desc.tableCount);
+        param[currentIdx].InitAsDescriptorTable(static_cast<UINT>(ranges.size()), ranges.data());
     }
     
     D3D12_ROOT_SIGNATURE_DESC signatureDesc{
@@ -154,17 +138,17 @@ void RootArguments::SetCBV(E_CBV_REGISTER Register, D3D12_GPU_VIRTUAL_ADDRESS GP
 
 void RootArguments::SetUAVTable(Microsoft::WRL::ComPtr<ID3D12Device> Device, E_TABLE_UAV_REGISTER Register, D3D12_CPU_DESCRIPTOR_HANDLE srcHandle)
 {
-    uavTable.SetData(Device, Register, srcHandle);    
+    table.SetUAV(Device, Register, srcHandle);
 }
 
 void RootArguments::SetSRVTable(Microsoft::WRL::ComPtr<ID3D12Device> Device, E_TABLE_SRV_REGISTER Register, D3D12_CPU_DESCRIPTOR_HANDLE srcHandle)
 {
-    srvTable.SetData(Device, Register, srcHandle);
+    table.SetSRV(Device, Register, srcHandle);
 }
 
 void RootArguments::SetCBVTable(Microsoft::WRL::ComPtr<ID3D12Device> Device, E_TABLE_CBV_REGISTER Register, D3D12_CPU_DESCRIPTOR_HANDLE srcHandle)
 {
-    cbvTable.SetData(Device, Register, srcHandle);
+    table.SetCBV(Device, Register, srcHandle);
 }
 
 void RootArguments::CommitData(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> CmdList)
@@ -180,14 +164,10 @@ void RootArguments::CommitData(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>
     for (const auto& gpuAddress : uavRegisters)
         CmdList->SetGraphicsRootUnorderedAccessView(currentIdx++, gpuAddress);
 
-    cbvTable.CommitTable(CmdList);
-    srvTable.CommitTable(CmdList);
-    uavTable.CommitTable(CmdList);
+    table.CommitTable(CmdList);
 }
 
 void RootArguments::Clear()
 {
-    cbvTable.Clear();
-    srvTable.Clear();
-    uavTable.Clear();
+    table.Clear();
 }

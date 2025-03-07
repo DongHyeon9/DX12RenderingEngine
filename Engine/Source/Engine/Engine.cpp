@@ -211,19 +211,12 @@ void Engine::RenderBegin()
 	cmdList->SetGraphicsRootSignature(pipelineStateObject->GetRootSignature()->GetRootSignature(E_ROOT_SIGNATURE_FLAG::DEFAULT).Get());
 	pipelineStateObject->GetRootSignature()->ClearTable(E_ROOT_SIGNATURE_FLAG::DEFAULT);
 
-	std::vector<Microsoft::WRL::ComPtr<ID3D12DescriptorHeap>> tableDescriptorHeaps = pipelineStateObject->GetRootSignature()->GetTableDescriptorHeaps(E_ROOT_SIGNATURE_FLAG::DEFAULT);
+	ID3D12DescriptorHeap* tableDescriptorHeap = pipelineStateObject->GetRootSignature()->GetTableDescriptorHeaps(E_ROOT_SIGNATURE_FLAG::DEFAULT).Get();
 
-	if (tableDescriptorHeaps.empty() || tableDescriptorHeaps[0] == nullptr) {
-		OutputDebugStringA("Error: Descriptor heaps are NULL!\n");
+	if (tableDescriptorHeap != nullptr)
+	{
+		cmdList->SetDescriptorHeaps(1, &tableDescriptorHeap);
 	}
-	else {
-		std::vector<ID3D12DescriptorHeap*> rawDescriptorHeaps;
-		for (auto& heap : tableDescriptorHeaps) {
-			rawDescriptorHeaps.push_back(heap.Get());  // ComPtr에서 원시 포인터 추출
-		}
-		cmdList->SetDescriptorHeaps(static_cast<UINT>(rawDescriptorHeaps.size()), rawDescriptorHeaps.data());
-	}
-
 
 	cmdList->ResourceBarrier(1, &barrier);
 

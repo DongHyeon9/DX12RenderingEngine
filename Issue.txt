@@ -1,1 +1,0 @@
-D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV를 하나씩 밖에 못쓴다네요ㅋㅋ

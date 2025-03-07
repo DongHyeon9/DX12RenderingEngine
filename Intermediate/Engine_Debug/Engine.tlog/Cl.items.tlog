@@ -12,6 +12,7 @@ C:\Users\hdh97\Desktop\DX12RenderingEngine\Engine\Source\Engine\Render\PipelineS
 C:\Users\hdh97\Desktop\DX12RenderingEngine\Engine\Source\Engine\Render\PipelineStateObject\DepthStencilObject.cpp;C:\Users\hdh97\Desktop\DX12RenderingEngine\Intermediate\Engine_Debug\DepthStencilObject.obj
 C:\Users\hdh97\Desktop\DX12RenderingEngine\Engine\Source\Engine\Render\PipelineStateObject\RasterizerStateObject.cpp;C:\Users\hdh97\Desktop\DX12RenderingEngine\Intermediate\Engine_Debug\RasterizerStateObject.obj
 C:\Users\hdh97\Desktop\DX12RenderingEngine\Engine\Source\Engine\Render\PipelineStateObject\RenderTargetObject.cpp;C:\Users\hdh97\Desktop\DX12RenderingEngine\Intermediate\Engine_Debug\RenderTargetObject.obj
+C:\Users\hdh97\Desktop\DX12RenderingEngine\Engine\Source\Engine\Render\PipelineStateObject\RootArgument\DescriptorTable.cpp;C:\Users\hdh97\Desktop\DX12RenderingEngine\Intermediate\Engine_Debug\DescriptorTable.obj
 C:\Users\hdh97\Desktop\DX12RenderingEngine\Engine\Source\Engine\Render\PipelineStateObject\RootArgument\RootArguments.cpp;C:\Users\hdh97\Desktop\DX12RenderingEngine\Intermediate\Engine_Debug\RootArguments.obj
 C:\Users\hdh97\Desktop\DX12RenderingEngine\Engine\Source\Engine\Render\PipelineStateObject\RootSignature.cpp;C:\Users\hdh97\Desktop\DX12RenderingEngine\Intermediate\Engine_Debug\RootSignature.obj
 C:\Users\hdh97\Desktop\DX12RenderingEngine\Engine\Source\Engine\Render\PipelineStateObject\ShaderObject.cpp;C:\Users\hdh97\Desktop\DX12RenderingEngine\Intermediate\Engine_Debug\ShaderObject.obj

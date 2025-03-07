@@ -9,10 +9,9 @@ bool RootSignature::Init(Microsoft::WRL::ComPtr<ID3D12Device> Device)
 	desc.cbvCount = 3;
 	desc.srvCount = 0;
 	desc.uavCount = 0;
-	desc.cbvTableNum = 256;
-	desc.srvTableNum = 256;
+	desc.tableCount = 256;
 
-	rootArguments[idx].Init(Device, IID_PPV_ARGS(&signatures[idx]), desc);
+	CHECK(rootArguments[idx].Init(Device, IID_PPV_ARGS(&signatures[idx]), desc), "DEFAULT 루트시그니처 생성 실패", false);
 
 	LOG("루트 시그니처 초기화 성공");
 	return true;

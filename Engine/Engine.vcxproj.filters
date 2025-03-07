@@ -64,9 +64,6 @@
     <Filter Include="06.Resource\Internal">
       <UniqueIdentifier>{9c8d4c4d-f00a-4626-a2af-88d419e98b8d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01.Engine\Render\PipelineStateObject\RootArgument\DescriptorTable">
-      <UniqueIdentifier>{ddcf8b49-338b-43da-ab2f-48d224a033b4}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Header\Enum.h">
@@ -219,11 +216,8 @@
     <ClInclude Include="Source\Resource\Internal\ConstantBuffer.h">
       <Filter>06.Resource\Internal</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Engine\Render\PipelineStateObject\RootArgument\DescriptorTable\DescriptorTable.h">
-      <Filter>01.Engine\Render\PipelineStateObject\RootArgument\DescriptorTable</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Engine\Render\PipelineStateObject\RootArgument\DescriptorTable\DescriptorTable.inl">
-      <Filter>01.Engine\Render\PipelineStateObject\RootArgument\DescriptorTable</Filter>
+    <ClInclude Include="Source\Engine\Render\PipelineStateObject\RootArgument\DescriptorTable.h">
+      <Filter>01.Engine\Render\PipelineStateObject\RootArgument</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -311,12 +305,6 @@
     <ClCompile Include="Source\Engine\Render\PipelineStateObject\DepthStencilObject.cpp">
       <Filter>01.Engine\Render\PipelineStateObject</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Engine\Render\UploadBuffer.cpp">
-      <Filter>01.Engine\Render</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Engine\Render\DescriptorHeap.cpp">
-      <Filter>01.Engine\Render</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Engine\Render\PipelineStateObject\RasterizerStateObject.cpp">
       <Filter>01.Engine\Render\PipelineStateObject</Filter>
     </ClCompile>
@@ -340,6 +328,9 @@
     </ClCompile>
     <ClCompile Include="Source\Resource\Internal\Material.cpp">
       <Filter>06.Resource\Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Render\PipelineStateObject\RootArgument\DescriptorTable.cpp">
+      <Filter>01.Engine\Render\PipelineStateObject\RootArgument</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -1,19 +1,12 @@
 #pragma once
-#include "DescriptorTable/DescriptorTable.h"
-
-using SRVDescriptorTable = DescriptorTable<E_TABLE_SRV_REGISTER>;
-using CBVDescriptorTable = DescriptorTable<E_TABLE_CBV_REGISTER>;
-using UAVDescriptorTable = DescriptorTable<E_TABLE_UAV_REGISTER>;
+#include "DescriptorTable.h"
 
 struct RootArgumentDesc
 {
 	uint32 cbvCount{};
 	uint32 srvCount{};
 	uint32 uavCount{};
-
-	uint32 cbvTableNum{};
-	uint32 srvTableNum{};
-	uint32 uavTableNum{};
+	uint32 tableCount{};
 };
 
 class RootArguments
@@ -25,12 +18,8 @@ protected:
 private:
 	//텍스처 샘플링시 사용할 필터링 방식 및 텍스처 좌표 래핑 방식
 	std::vector<D3D12_STATIC_SAMPLER_DESC> samplerDescs{};
-	std::vector<Microsoft::WRL::ComPtr<ID3D12DescriptorHeap>> tableDescriptorHeaps{};
 
-	SRVDescriptorTable srvTable{};
-	CBVDescriptorTable cbvTable{};
-	UAVDescriptorTable uavTable{};
-
+	DescriptorTable table{};
 	std::array<D3D12_GPU_VIRTUAL_ADDRESS, static_cast<uint8>(E_CBV_REGISTER::END)> cbvRegisters{};
 	std::array<D3D12_GPU_VIRTUAL_ADDRESS, static_cast<uint8>(E_SRV_REGISTER::END)> srvRegisters{};
 	std::array<D3D12_GPU_VIRTUAL_ADDRESS, static_cast<uint8>(E_UAV_REGISTER::END)> uavRegisters{};
@@ -51,7 +40,7 @@ public:
 	void CommitData(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> CmdList);
 	void Clear();
 
-	FORCEINLINE std::vector<Microsoft::WRL::ComPtr<ID3D12DescriptorHeap>> GetTableDescriptorHeaps()const { return tableDescriptorHeaps; }
+	FORCEINLINE Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> GetTableDescriptorHeap()const { return table.GetDescriptorHeap(); }
 
 protected:
 

@@ -37,7 +37,7 @@ public:
 	void CommitData(Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> CmdList, E_ROOT_SIGNATURE_FLAG Flag);
 	void ClearTable(E_ROOT_SIGNATURE_FLAG Flag);
 	
-	FORCEINLINE std::vector<Microsoft::WRL::ComPtr<ID3D12DescriptorHeap>> GetTableDescriptorHeaps(E_ROOT_SIGNATURE_FLAG Flag)const { return rootArguments[static_cast<uint8>(Flag)].GetTableDescriptorHeaps(); }
+	FORCEINLINE Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> GetTableDescriptorHeaps(E_ROOT_SIGNATURE_FLAG Flag)const { return rootArguments[static_cast<uint8>(Flag)].GetTableDescriptorHeap(); }
 
 protected:
 
