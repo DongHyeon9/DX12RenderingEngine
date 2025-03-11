@@ -27,30 +27,6 @@ bool SwapChain::Init(Microsoft::WRL::ComPtr<ID3D12Device> Device, Microsoft::WRL
 	swapCahinDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;		//DirectX 12에서 가장 권장되는 스왑 방식 (*3)
 	swapCahinDesc.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;	//전체 화면과 창 모드 전환을 허용
 
-	//스캔라인(Scanline) 렌더링 (*1)
-	//디스플레이는 화면을 한 줄(Scanline)씩 순차적으로 그리는 방식을 사용
-	//인터레이스(Interlaced) 방식과 프로그레시브(Progressive) 방식이 존재
-	// 
-	//DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED -> 특정 스캔라인 순서를 지정하지 않고 디스플레이 기본 설정을 따름
-	//DXGI_MODE_SCANLINE_ORDER_PROGRESSIVE -> 모든 라인을 순서대로 출력 (보통 LCD/LED 모니터에서 사용)
-	//DXGI_MODE_SCANLINE_ORDER_UPPER_FIELD_FIRST -> 인터레이스 방식(짝수 줄 먼저 그린 후 홀수 줄 그리기)
-	//DXGI_MODE_SCANLINE_ORDER_LOWER_FIELD_FIRST -> 인터레이스 방식(홀수 줄 먼저 그린 후 짝수 줄 그리기)
-
-	//스케일링(Scaling) (*2)
-	//렌더링된 프레임(이미지)의 크기가 디스플레이 크기와 다를 때 크기를 조정하는 방식
-	// 
-	//DXGI_MODE_SCALING_UNSPECIFIED -> 스케일링 옵션을 명시적으로 설정하지 않고 디스플레이 기본값을 따름
-	//DXGI_MODE_SCALING_CENTERED -> 해상도가 다르면 이미지를 중앙에 배치하고 남은 부분은 검은색(블랙 바)으로 채움
-	//DXGI_MODE_SCALING_STRETCHED -> 해상도가 다르면 이미지를 화면 크기에 맞게 늘려서 출력
-
-	//스왑 이펙트(Swap Effect) (*3)
-	//백 버퍼(Back Buffer)와 프론트 버퍼(Front Buffer)를 어떻게 교체할 것인지 결정
-	// 
-	//DXGI_SWAP_EFFECT_DISCARD -> 사용하지 않는 버퍼는 즉시 삭제됨(구형 DXGI 1.0 방식)
-	//DXGI_SWAP_EFFECT_SEQUENTIAL -> 프레임을 순차적으로 보존(오래된 방식, vsync 필요)
-	//DXGI_SWAP_EFFECT_FLIP_SEQUENTIAL -> 백 버퍼가 뒤집혀서(flip) 사용됨(DXGI 1.2 이상에서 추천)
-	//DXGI_SWAP_EFFECT_FLIP_DISCARD -> 가장 최근의 백 버퍼만 유지하며 이전 버퍼를 버림(DirectX 12에서 최적화됨)
-	
 	hr = Factory->CreateSwapChain(
 		CommandQueue.Get(),		//GPU 명령 실행을 담당하는 커맨드 큐를 연결
 		&swapCahinDesc,
@@ -58,10 +34,6 @@ bool SwapChain::Init(Microsoft::WRL::ComPtr<ID3D12Device> Device, Microsoft::WRL
 
 	CHECK(SUCCEEDED(hr), "스왑체인 생성 실패", false);
 
-	// 디스크립터 힙
-	// 리소스를 GPU가 접근할 수 있도록 저장하는곳
-	// 각 디스크립터는 특정 크기의 메모리를 차지
-	// 해당 크기를 미리 가져와야 정확한 오프셋으로 계산 가능
 	rtvDescriptorSize = Device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
 
 	LOG("렌더 타겟 뷰 생성 시작");

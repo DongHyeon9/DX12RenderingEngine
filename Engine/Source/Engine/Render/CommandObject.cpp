@@ -30,7 +30,7 @@ bool CommandObject::Init(Microsoft::WRL::ComPtr<ID3D12Device> Device)
 		IID_PPV_ARGS(&commandAllocator));
 	CHECK(SUCCEEDED(hr), "커맨드 얼로케이터 생성 실패", false);
 	LOG("커맨드 얼로케이터 생성");
-
+	
 	hr = Device->CreateCommandList(
 		0,									//멀티 GPU 환경에서 사용할 GPU를 지정(단일 GPU에서는 0을 사용)
 		D3D12_COMMAND_LIST_TYPE_DIRECT,		//DIRECT 타입의 명령 리스트를 생성(일반적인 렌더링 및 그래픽 명령)

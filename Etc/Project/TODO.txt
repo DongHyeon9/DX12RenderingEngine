@@ -1,0 +1,17 @@
+엔진 업데이트 구현
+
+쉐이더 구현(기본)
+큐브 띄우기
+
+아임구이 매니저 구현
+
+리소스 추가(Mesh, Material, Texture)
+리소스 매니저 추가
+
+Object, Actor, Component(Transform, Mesh, Light, MonoBehaviour) 추가
+라이트 매니저 추가
+쉐이더 추가(퐁, 블린퐁, 스카이 스피어)
+
+모델로드 구현
+
+피킹기능 추가

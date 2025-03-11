@@ -50,10 +50,6 @@ WPARAM Engine::Run()
 	//앱 초기화
 	CHECK(app->Init(), "앱 초기화 실패", false);
 
-	//renderSetting.bIsDrawNormal = true;
-	//renderSetting.bIsWireframe = false;
-	//renderSetting.bIsOrthographic = false;
-
 	commandObject->FlushCommandQueue();
 
 	//프로그램 메인 루프
@@ -187,11 +183,17 @@ bool Engine::InitEngineSetting()
 
 void Engine::EngineUpdate()
 {
+	const float deltaTime{ TimerManager::GetInstance()->Update() };
+	InputManager::GetInstance()->Update();
+	CameraManager::GetInstance()->Update(deltaTime);
+
+	Update(deltaTime);
 	Render();
 }
 
 void Engine::Update(float DeltaTime)
 {
+
 }
 
 void Engine::RenderBegin()
@@ -253,9 +255,6 @@ void Engine::RenderEnd()
 
 	cmdList->ResourceBarrier(1, &barrier);
 	HRESULT hr = cmdList->Close();
-	if (FAILED(hr)) {
-		
-	}
 	ID3D12CommandList* cmdlistArr[]{ cmdList.Get() };
 	commandObject->GetCommandQueue()->ExecuteCommandLists(_countof(cmdlistArr), cmdlistArr);
 	swapChain->Present();

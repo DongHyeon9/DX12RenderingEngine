@@ -27,7 +27,6 @@
     <ClInclude Include="Source\Engine\AppBase.h" />
     <ClInclude Include="Source\Engine\Engine.h" />
     <ClInclude Include="Source\Engine\Render\CommandObject.h" />
-    <ClInclude Include="Source\Engine\Render\DescriptorHeap.h" />
     <ClInclude Include="Source\Engine\Render\Device.h" />
     <ClInclude Include="Source\Engine\Render\PipelineStateObject.h" />
     <ClInclude Include="Source\Engine\Render\PipelineStateObject\BlendStateObject.h" />
@@ -45,7 +44,6 @@
     <ClInclude Include="Source\Engine\Render\PipelineStateObject\Shader\ShaderObjectBase.h" />
     <ClInclude Include="Source\Engine\Render\PipelineStateObject\Shader\VertexShaderObject.h" />
     <ClInclude Include="Source\Engine\Render\SwapChain.h" />
-    <ClInclude Include="Source\Engine\Render\UploadBuffer.h" />
     <ClInclude Include="Source\Engine\Scene.h" />
     <ClInclude Include="Source\Header\d3dx12.h" />
     <ClInclude Include="Source\Header\EngineCore.h" />
@@ -174,6 +172,14 @@
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)Source\Shader\Header\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)Source\Shader\Header\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\Etc\DX12\COM.txt" />
+    <Text Include="..\Etc\DX12\Enum.txt" />
+    <Text Include="..\Etc\DX12\Struct.txt" />
+    <Text Include="..\Etc\DX12\supURL.txt" />
+    <Text Include="..\Etc\Project\Issue.txt" />
+    <Text Include="..\Etc\Project\TODO.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

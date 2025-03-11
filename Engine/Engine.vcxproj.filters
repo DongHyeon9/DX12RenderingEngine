@@ -64,6 +64,15 @@
     <Filter Include="06.Resource\Internal">
       <UniqueIdentifier>{9c8d4c4d-f00a-4626-a2af-88d419e98b8d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Etc">
+      <UniqueIdentifier>{7215e7ce-ba55-4f1e-8989-34c37873a4c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Etc\Project">
+      <UniqueIdentifier>{4a04f30a-7c94-46ca-b3aa-690eaca913a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Etc\DX12">
+      <UniqueIdentifier>{cc90f3b4-656b-4b0d-b127-95d7889fbc2f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Header\Enum.h">
@@ -185,12 +194,6 @@
     </ClInclude>
     <ClInclude Include="Source\Engine\Render\PipelineStateObject\BlendStateObject.h">
       <Filter>01.Engine\Render\PipelineStateObject</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Engine\Render\UploadBuffer.h">
-      <Filter>01.Engine\Render</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Engine\Render\DescriptorHeap.h">
-      <Filter>01.Engine\Render</Filter>
     </ClInclude>
     <ClInclude Include="Source\Engine\Render\PipelineStateObject\RasterizerStateObject.h">
       <Filter>01.Engine\Render\PipelineStateObject</Filter>
@@ -354,5 +357,25 @@
     <FxCompile Include="Source\Shader\Vertex\VS_Default.hlsl">
       <Filter>03.Shader\Vertex</Filter>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\Etc\DX12\supURL.txt">
+      <Filter>Etc\DX12</Filter>
+    </Text>
+    <Text Include="..\Etc\Project\TODO.txt">
+      <Filter>Etc\Project</Filter>
+    </Text>
+    <Text Include="..\Etc\Project\Issue.txt">
+      <Filter>Etc\Project</Filter>
+    </Text>
+    <Text Include="..\Etc\DX12\Enum.txt">
+      <Filter>Etc\DX12</Filter>
+    </Text>
+    <Text Include="..\Etc\DX12\Struct.txt">
+      <Filter>Etc\DX12</Filter>
+    </Text>
+    <Text Include="..\Etc\DX12\COM.txt">
+      <Filter>Etc\DX12</Filter>
+    </Text>
   </ItemGroup>
 </Project>

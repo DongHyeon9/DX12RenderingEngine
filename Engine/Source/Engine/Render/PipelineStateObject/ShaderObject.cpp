@@ -10,11 +10,11 @@ bool ShaderObject::Init()
 	geometryShaderObj = std::make_unique<GeometryShaderObject>();
 	pixelShaderObj = std::make_unique<PixelShaderObject>();
 
-	vertexShaderObj->Init();
-	hullShaderObj->Init();
-	domainShaderObj->Init();
-	geometryShaderObj->Init();
-	pixelShaderObj->Init();
+	CHECK(vertexShaderObj->Init(), "버텍스 쉐이더 초기화 실패", false);
+	CHECK(hullShaderObj->Init(), "헐 쉐이더 초기화 실패", false);
+	CHECK(domainShaderObj->Init(), "도메인 쉐이더 초기화 실패", false);
+	CHECK(geometryShaderObj->Init(), "지오메트리 쉐이더 초기화 실패", false);
+	CHECK(pixelShaderObj->Init(), "픽셀 쉐이더 초기화 실패", false);
 
     LOG("쉐이더 오브젝트 초기화 성공");
     return true;

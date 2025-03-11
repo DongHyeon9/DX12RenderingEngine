@@ -4,12 +4,12 @@ bool PipelineStateObject::Init(Microsoft::WRL::ComPtr<ID3D12Device> Device)
 {
     LOG("파이프라인 스테이트 오브젝트 초기화 시작");
 
-	blendStateObject->Init();
-	depthStencilObject->Init(Device);
-	rasterizerStateObject->Init();
-	renderTargetObject->Init();
-	shaderObject->Init();
-	rootSignature->Init(Device);
+	CHECK(blendStateObject->Init(), "블랜드 스테이트 오브젝트 초기화 실패", false);
+	CHECK(depthStencilObject->Init(Device),"뎁스 스텐실 오브젝트 초기화 실패",false);
+	CHECK(rasterizerStateObject->Init(),"레스터 라이저 스테이트 오브젝트 초기화 실패",false);
+	CHECK(renderTargetObject->Init(),"렌더 타겟 오브젝트 초기화 실패",false);
+	CHECK(shaderObject->Init(),"쉐이더 오브젝트 초기화 실패",false);
+	CHECK(rootSignature->Init(Device),"루트 시그니처 초기화 실패",false);
 
 	CHECK(CreatePipelineStateObject(Device), "파이프라인 스테이트 오브젝트 생성 실패", false);
 

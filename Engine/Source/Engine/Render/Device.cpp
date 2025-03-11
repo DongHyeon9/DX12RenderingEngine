@@ -5,6 +5,7 @@ bool Device::Init()
     LOG("디바이스 초기화 시작");
 
 	HRESULT hr{};
+	//디버그 모드 활성화
 #ifdef _DEBUG
 	Microsoft::WRL::ComPtr<ID3D12Debug> debugController{};
 	hr = D3D12GetDebugInterface(IID_PPV_ARGS(&debugController));
@@ -24,8 +25,7 @@ bool Device::Init()
 	if (FAILED(hr))
 	{
 		LOG("기본 어댑터 없음");
-		//WARP 어댑터 : 소프트웨어 기반의 Direct3D 렌더링을 지원하여 GPU가 없는 환경에서도 Direct3D 기능을 실행할 수 있도록 함
-		//WARP(WIndows Advanced Rasterization Platform) 어댑터를 가져옴
+		//WARP 어댑터를 가져옴
 		Microsoft::WRL::ComPtr<IDXGIAdapter> warpAdapter{};
 		hr = dxgiFactory->EnumWarpAdapter(IID_PPV_ARGS(&warpAdapter));
 		CHECK(SUCCEEDED(hr), "렌더링 지원 안함", false);

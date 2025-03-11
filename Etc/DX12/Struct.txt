@@ -1,0 +1,256 @@
+	====================DXGI_SWAP_CHAIN_DESC====================
+	스왑 체인을 생성할 때 사용되는 설정 구조체
+
+	DXGI_MODE_DESC		BufferDesc		: 출력 디스플레이의 화면 해상도, 픽셀 형식 등을 정의
+    DXGI_SAMPLE_DESC	SampleDesc		: 멀티 샘플링(MSAA) 품질 및 개수를 정의하는 구조체
+    DXGI_USAGE			BufferUsage		: 버퍼 사용법 정의 (DXGI_USAGE_RENDER_TARGET_OUTPUT 등)
+    UINT				BufferCount		: 백 버퍼 갯수(※ DirectX 12에서는 최소 2를 사용해야 됨)
+    HWND				OutputWindow	: 렌더링할 윈도우의 핸들
+    BOOL				Windowed		: 창 모드(TRUE), 전체 화면(FALSE)
+    DXGI_SWAP_EFFECT	SwapEffect		: 백 버퍼가 어떻게 전환 관련(DXGI_SWAP_EFFECT_DISCARD, DXGI_SWAP_EFFECT_FLIP_DISCARD 등)
+    UINT				Flags			: 추가적인 옵션 플래그 (DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH 등)
+
+	====================DXGI_MODE_DESC====================
+	스왑 체인의 디스플레이 모드(해상도, 픽셀 포맷 등)를 정의하는 구조체
+
+	UINT						Width				: 화면 가로 해상도 (픽셀)
+    UINT						Height				: 화면 세로 해상도 (픽셀)
+    DXGI_RATIONAL				RefreshRate			: 초당 화면 갱신 빈도 (예: 60Hz)
+    DXGI_FORMAT					Format				: 픽셀 형식 (DXGI_FORMAT_R8G8B8A8_UNORM 등)
+    DXGI_MODE_SCANLINE_ORDER	ScanlineOrdering	: 스캔라인 순서 (인터레이스/프로그레시브)
+    DXGI_MODE_SCALING			Scaling				: 화면 크기 조정 방법 (Stretch, Centered 등)
+
+	====================DXGI_SAMPLE_DESC====================
+	멀티 샘플링(Multisample Anti-Aliasing, MSAA) 설정을 정의하는 구조체
+
+	UINT	Count		: 샘플 개수 (1이면 멀티 샘플링 비활성화, 2 이상이면 MSAA 활성화)
+    UINT	Quality		: 품질 레벨 (특정 샘플 수에서 지원되는 품질 수준 (드라이버별 다름))
+
+	====================DXGI_RATIONAL====================
+	비율을 표현하기 위한 구조체
+	주로 디스플레이의 리프레시 레이트(Refresh Rate, Hz)를 표현하는 데 사용
+	부동 소수점 오차 없이 정확한 값을 다룰 수 있도록 설계
+
+	UINT	Numerator		 : 분자
+    UINT	Denominator		 : 분모
+	
+	====================D3D12_VIEWPORT====================
+	렌더링 영역을 설정하는 구조체
+	화면에서 어느 영역을 그릴지 결정하는 역할
+
+	FLOAT	TopLeftX	: 뷰포트의 왼쪽 상단 X 좌표
+    FLOAT	TopLeftY	: 뷰포트의 왼쪽 상단 Y 좌표
+    FLOAT	Width		: 뷰포트 너비
+    FLOAT	Height		: 뷰포트의 높이
+    FLOAT	MinDepth	: 최소 깊이(일반적으로 0.0f)
+    FLOAT	MaxDepth	: 최대 깊이(일반적으로 1.0f)
+
+	====================D3D12_RECT====================
+	화면에서 특정 영역만 렌더링하도록 제한하는 구조체
+	뷰포트 안에서도 일부 영역만 그리도록 할 수 있음
+
+	LONG    left
+	LONG    top
+	LONG    right
+	LONG    bottom
+
+	====================D3D12_DESCRIPTOR_HEAP_DESC====================
+	디스크립터 힙의 속성을 정의하는 구조체
+
+	D3D12_DESCRIPTOR_HEAP_TYPE			Type				: 디스크립터 힙의 종류 (CBV/SRV/UAV 등)
+    UINT								NumDescriptors;		: 디스크립터 개수
+    D3D12_DESCRIPTOR_HEAP_FLAGS			Flags				: CPU/GPU 접근 권한
+    UINT								NodeMask			: 멀티 GPU 지원을 위한 마스크
+
+	====================D3D12_FEATURE_DATA_MULTISAMPLE_QUALITY_LEVELS====================
+	특정 픽셀 포맷과 샘플 개수에 대해 MSAA(Multisample Anti-Aliasing) 품질 수준을 쿼리하는 구조체
+
+	DXGI_FORMAT								Format				: 확인할 픽셀 포맷
+	UINT									SampleCount			: MSAA 샘플 개수 (2, 4, 8 등)
+	D3D12_MULTISAMPLE_QUALITY_LEVEL_FLAGS	Flags				: 품질 수준을 결정하는 플래그
+	UINT									NumQualityLevels	: 지원되는 품질 수준의 개수
+
+	====================D3D12_COMMAND_QUEUE_DESC====================
+	커맨드 큐 생성시 사용하는 구조체
+
+	D3D12_COMMAND_LIST_TYPE		Type		: 큐에서 실행할 명령 리스트 유형 (DIRECT, COMPUTE, COPY)
+	INT							Priority	: 명령 큐 우선순위 (NORMAL, HIGH)
+	D3D12_COMMAND_QUEUE_FLAGS	Flags		: 큐의 추가적인 설정 (NONE, DISABLE_GPU_TIMEOUT)
+	UINT						NodeMask	: 다중 GPU 환경에서 사용할 노드 선택
+
+	====================D3D12_BLEND_DESC====================
+	블렌딩(투명도, 색상 조합) 설정을 정의하는 구조체
+
+	BOOL								AlphaToCoverageEnable		: 알파 투명도를 사용하여 멀티샘플링 활성화 여부
+	BOOL								IndependentBlendEnable		: 각 렌더 타겟에 대해 독립적인 블렌딩을 허용할지 여부
+	D3D12_RENDER_TARGET_BLEND_DESC[8]	RenderTarget				: 각 렌더 타겟의 블렌딩 설정
+
+	====================D3D12_RENDER_TARGET_BLEND_DESC====================
+	개별 렌더 타겟에 대한 블렌딩 설정
+
+	BOOL				BlendEnable					: 블렌딩 활성화 여부
+	BOOL				LogicOpEnable				: 논리 연산 활성화 여부
+	D3D12_BLEND			SrcBlend					: 소스 색상 블렌딩 방식
+	D3D12_BLEND			DestBlend					: 대상 색상 블렌딩 방식
+	D3D12_BLEND_OP		BlendOp						: 색상 블렌딩 연산 방식
+	D3D12_BLEND			SrcBlendAlpha				: 소스 알파 블렌딩 방식
+	D3D12_BLEND			DestBlendAlpha				: 대상 알파 블렌딩 방식
+	D3D12_BLEND_OP		BlendOpAlpha				: 알파 블렌딩 연산 방식
+	D3D12_LOGIC_OP		LogicOp						: 논리 연산 방식
+	UINT8				RenderTargetWriteMask		: 색상 채널 활성화 여부 (D3D12_COLOR_WRITE_ENABLE_ALL 등)
+
+	====================D3D12_DESCRIPTOR_HEAP_DESC====================
+	디스크립터 힙 생성시 필요한 정보
+
+	D3D12_DESCRIPTOR_HEAP_TYPE		Type				: 디스크립터 힙의 유형 (CBV_SRV_UAV, RTV, DSV, SAMPLER)
+	UINT							NumDescriptors		: 디스크립터 개수
+	D3D12_DESCRIPTOR_HEAP_FLAGS		Flags				: 플래그 설정 (NONE, SHADER_VISIBLE)
+	UINT							NodeMask			: 다중 GPU 지원을 위한 노드 선택
+
+	====================D3D12_RESOURCE_DESC====================
+	리소스(버퍼, 텍스처) 속성을 정의하는 구조체
+	버퍼의 크기, 픽셀 형식, 텍스처의 차원 등을 설정
+
+	D3D12_RESOURCE_DIMENSION		Dimension				: 리소스 차원 (BUFFER, TEXTURE1D, TEXTURE2D, TEXTURE3D)
+	UINT64							Alignment				: 메모리 정렬(보통 0으로 설정하여 기본값 사용)
+	UINT64							Width					: 리소스의 너비
+	UINT							Height					: 리소스의 높이 (버퍼는 1)
+	UINT16							DepthOrArraySize		: 3D 텍스처의 깊이 또는 배열 크기
+	UINT16							MipLevels				: MipMap 개수
+	DXGI_FORMAT						Format					: 픽셀 포맷
+	DXGI_SAMPLE_DESC				SampleDesc				: MSAA 샘플 개수 및 품질
+	D3D12_TEXTURE_LAYOUT			Layout					: 리소스 레이아웃 (UNKNOWN, ROW_MAJOR 등)
+	D3D12_RESOURCE_FLAGS			Flags					: 리소스 플래그 (ALLOW_RENDER_TARGET, ALLOW_UNORDERED_ACCESS 등)
+
+	====================D3D12_CLEAR_VALUE====================
+	렌더 타겟(RTV) 또는 깊이-스텐실(DSV)을 클리어할 때 사용되는 초기값 지정
+
+	DXGI_FORMAT		Format			: 렌더 타겟 또는 깊이-스텐실 포맷
+	FLOAT[4]		Color			: 클리어 색상 (RTV 전용)
+	FLOAT			Depth			: 클리어할 깊이 값 (DSV 전용)
+	UINT8			Stencil			: 클리어할 스텐실 값 (DSV 전용)
+
+	====================D3D12_HEAP_PROPERTIES====================
+	리소스 할당 시 사용할 메모리 유형을 설정
+
+	D3D12_HEAP_TYPE				Type						: 힙 유형 (DEFAULT, UPLOAD, READBACK)
+	D3D12_CPU_PAGE_PROPERTY		CPUPageProperty				: CPU 페이지 속성 (UNKNOWN, WRITE_COMBINE 등)
+	D3D12_MEMORY_POOL			MemoryPoolPreference		: 메모리 풀 (UNKNOWN, L0, L1)
+	UINT						CreationNodeMask			: 멀티 GPU 지원용 노드 마스크
+	UINT						VisibleNodeMask				: 멀티 GPU에서 가시성 노드 마스크
+
+	====================D3D12_DEPTH_STENCIL_VIEW_DESC====================
+	깊이(Depth) 및 스텐실(Stencil) 버퍼의 뷰(DSV) 설정
+
+	DXGI_FORMAT					Format				: 깊이-스텐실 포맷 (DXGI_FORMAT_D32_FLOAT 등)
+	D3D12_DSV_DIMENSION			ViewDimension		: 뷰 유형 (TEXTURE2D, TEXTURE2DARRAY)
+	D3D12_DSV_FLAGS				Flags				: 뷰 플래그 (READ_ONLY_DEPTH 등)
+	D3D12_TEX2D_DSV				Texture2D			: 2D 텍스처 DSV 설정
+
+	====================D3D12_RASTERIZER_DESC====================
+	래스터라이저 설정 (컬링, 깊이 바이어스, 채우기 모드 등)
+
+	D3D12_FILL_MODE								FillMode					: 채우기 모드 (SOLID, WIREFRAME)
+	D3D12_CULL_MODE								CullMode					: 컬링 모드 (NONE, FRONT, BACK)
+	BOOL										FrontCounterClockwise		: 반시계 방향이 전면인지 여부
+	INT											DepthBias					: 깊이 바이어스 값
+	FLOAT										SlopeScaledDepthBias		: 기울기 스케일 깊이 바이어스
+	FLOAT										DepthBiasClamp				: 깊이 바이어스 클램프
+	BOOL										DepthClipEnable				: 깊이 클리핑 활성화 여부
+	BOOL										MultisampleEnable			: MSAA 활성화 여부
+	BOOL										AntialiasedLineEnable		: 안티앨리어싱 활성화 여부
+	UINT										ForcedSampleCount			: 강제 샘플 개수
+	D3D12_CONSERVATIVE_RASTERIZATION_MODE		ConservativeRaster			: 보수적 래스터화 활성화 여부
+
+	====================D3D12_INPUT_ELEMENT_DESC====================
+	정점(Vertex) 데이터의 구조를 정의하는 구조체
+	정점의 위치(Position), 색상(Color), 법선(Normal) 등의 속성 정의
+
+	LPCSTR							SemanticName			: 셰이더에서 사용할 의미(예: "POSITION", "NORMAL")
+	UINT							SemanticIndex			: 같은 의미를 가진 여러 요소를 구별하는 인덱스
+	DXGI_FORMAT						Format					: 데이터 형식 (DXGI_FORMAT_R32G32B32_FLOAT 등)
+	UINT							InputSlot				: 입력 슬롯(여러 개의 버퍼 사용 가능)
+	UINT							AlignedByteOffset		: 구조체 내 오프셋(보통 D3D12_APPEND_ALIGNED_ELEMENT 사용)
+	D3D12_INPUT_CLASSIFICATION		InputSlotClass			: 정점 입력 유형 (PER_VERTEX_DATA, PER_INSTANCE_DATA)
+	UINT							InstanceDataStepRate	: 인스턴싱 시 데이터 변경 속도
+
+	====================D3D12_INPUT_LAYOUT_DESC====================
+	D3D12_INPUT_ELEMENT_DESC 배열을 포함하여 정점 입력 레이아웃을 정의
+
+	const D3D12_INPUT_ELEMENT_DESC*		pInputElementDescs		: 입력 요소 배열 포인터
+	UINT								NumElements				: 입력 요소 개수
+
+	====================D3D12_SHADER_BYTECODE====================
+	컴파일된 쉐이더 바이트 코드를 나타내는 구조체
+
+	const void*		pShaderBytecode		: 쉐이더 바이트 코드 데이터 포인터
+	SIZE_T			BytecodeLength		: 바이트 코드 길이
+
+	====================D3D12_STATIC_SAMPLER_DESC====================
+	쉐이더에서 샘플러(텍스처 필터링) 설정을 정의
+
+	D3D12_FILTER					Filter				: 필터링 방식 (MIN_MAG_MIP_LINEAR 등)
+	D3D12_TEXTURE_ADDRESS_MODE		AddressU/V/W		: 래핑 모드 (WRAP, CLAMP 등)
+	FLOAT							MipLODBias			: MipMap Level of Detail 조정
+	UINT							MaxAnisotropy		: 최대 이방성 필터링 값
+	D3D12_COMPARISON_FUNC			ComparisonFunc		: 비교 함수 (LESS_EQUAL, ALWAYS 등)
+	D3D12_STATIC_BORDER_COLOR		BorderColor			: 경계 색상
+	FLOAT							MinLOD				: 최소 LOD
+	FLOAT							MaxLOD				: 최대 LOD
+	UINT							ShaderRegister		: 쉐이더에서 사용할 레지스터 슬롯
+	UINT							RegisterSpace		: 레지스터 공간
+	D3D12_SHADER_VISIBILITY			ShaderVisibility	: 사용 가능한 쉐이더 유형 (ALL, PIXEL 등)
+
+	====================D3D12_ROOT_SIGNATURE_DESC====================
+	쉐이더가 접근할 리소스를 정의하는 루트 시그니처
+
+	UINT									NumParameters			: 루트 파라미터 개수
+	const D3D12_ROOT_PARAMETER*				pParameters				: 루트 파라미터 배열
+	UINT									NumStaticSamplers		: 정적 샘플러 개수
+	const D3D12_STATIC_SAMPLER_DESC*		pStaticSamplers			: 정적 샘플러 배열
+	D3D12_ROOT_SIGNATURE_FLAGS				Flags					: 루트 서명 플래그
+
+	====================D3D12_GRAPHICS_PIPELINE_STATE_DESC====================
+	그래픽스 파이프라인 설정
+
+	D3D12_SHADER_BYTECODE			: VS, PS, HS, DS, GS
+	D3D12_RASTERIZER_DESC			: 래스터라이저 설정
+	D3D12_BLEND_DESC				: 블렌딩 설정
+	D3D12_DEPTH_STENCIL_DESC		: 깊이-스텐실 설정
+	D3D12_INPUT_LAYOUT_DESC			: 입력 레이아웃
+	D3D12_PRIMITIVE_TOPOLOGY_TYPE	: 정점의 연결 방식을 정의
+	DXGI_FORMAT						: 렌더 타겟 포맷
+
+	====================D3D12_ROOT_PARAMETER====================
+	루트 시그니처에서 쉐이더에 전달할 리소스를 정의하는 구조체
+	CBV(Constant Buffer View), SRV(Shader Resource View), UAV(Unordered Access View), Descriptor Table 등을 설정
+
+	D3D12_ROOT_PARAMETER_TYPE		ParameterType			: 파라미터 유형 (CBV, SRV, UAV, DescriptorTable)
+	D3D12_ROOT_DESCRIPTOR			Descriptor				: CBV, SRV, UAV일 경우 사용
+	D3D12_ROOT_DESCRIPTOR_TABLE		DescriptorTable			: 디스크립터 테이블일 경우 사용
+	D3D12_SHADER_VISIBILITY			ShaderVisibility		: 사용될 쉐이더 지정 (ALL, VERTEX, PIXEL 등)
+
+	====================D3D12_RESOURCE_BARRIER====================
+	GPU 리소스(텍스처, 버퍼 등)의 상태 전환을 관리
+	읽기(READ) <-> 쓰기(WRITE) 변경 시 필요
+
+	D3D12_RESOURCE_BARRIER_TYPE				Type			: 배리어 유형 (TRANSITION, ALIASING, UAV)
+	D3D12_RESOURCE_BARRIER_FLAGS			Flags			: BEGIN_ONLY, END_ONLY, NONE
+	union{
+	D3D12_RESOURCE_TRANSITION_BARRIER		Transition		: RESOURCE_BARRIER_TYPE_TRANSITION일 때 사용
+	D3D12_RESOURCE_ALIASING_BARRIER			Aliasing		: RESOURCE_BARRIER_TYPE_ALIASING일 때 사용
+	D3D12_RESOURCE_UAV_BARRIER				UAV				: RESOURCE_BARRIER_TYPE_UAV일 때 사용
+	}
+
+	D3D12_RESOURCE_BARRIER_TYPE_TRANSITION		: 리소스 상태 변경 (ex. COPY_DEST → PIXEL_SHADER_RESOURCE)
+	D3D12_RESOURCE_BARRIER_TYPE_ALIASING		: 서로 다른 리소스가 같은 메모리를 공유할 때 사용
+	D3D12_RESOURCE_BARRIER_TYPE_UAV				: UAV(Unordered Access View) 리소스 동기화
+
+	====================D3D12_DESCRIPTOR_RANGE====================
+	디스크립터 테이블에서 CBV, SRV, UAV 등의 디스크립터 범위를 지정
+
+	D3D12_DESCRIPTOR_RANGE_TYPE		RangeType								: 디스크립터 유형 (CBV, SRV, UAV, SAMPLER)
+	UINT							NumDescriptors							: 디스크립터 개수
+	UINT							BaseShaderRegister						: 시작 셰이더 레지스터 (t0, s0 등)
+	UINT							RegisterSpace							: 레지스터 공간 (일반적으로 0)
+	UINT							OffsetInDescriptorsFromTableStart		: 테이블 내 오프셋 (D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND 사용 가능)
