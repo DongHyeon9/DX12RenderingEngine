@@ -12,6 +12,7 @@ C:\Users\dhhan\Desktop\DX12RenderingEngine\Engine\Source\Engine\Render\PipelineS
 C:\Users\dhhan\Desktop\DX12RenderingEngine\Engine\Source\Engine\Render\PipelineStateObject\DepthStencilObject.cpp;C:\Users\dhhan\Desktop\DX12RenderingEngine\Intermediate\Engine_Debug\DepthStencilObject.obj
 C:\Users\dhhan\Desktop\DX12RenderingEngine\Engine\Source\Engine\Render\PipelineStateObject\RasterizerStateObject.cpp;C:\Users\dhhan\Desktop\DX12RenderingEngine\Intermediate\Engine_Debug\RasterizerStateObject.obj
 C:\Users\dhhan\Desktop\DX12RenderingEngine\Engine\Source\Engine\Render\PipelineStateObject\RenderTargetObject.cpp;C:\Users\dhhan\Desktop\DX12RenderingEngine\Intermediate\Engine_Debug\RenderTargetObject.obj
+C:\Users\dhhan\Desktop\DX12RenderingEngine\Engine\Source\Engine\Render\PipelineStateObject\RenderTarget\RenderTarget.cpp;C:\Users\dhhan\Desktop\DX12RenderingEngine\Intermediate\Engine_Debug\RenderTarget.obj
 C:\Users\dhhan\Desktop\DX12RenderingEngine\Engine\Source\Engine\Render\PipelineStateObject\RootArgument\DescriptorTable.cpp;C:\Users\dhhan\Desktop\DX12RenderingEngine\Intermediate\Engine_Debug\DescriptorTable.obj
 C:\Users\dhhan\Desktop\DX12RenderingEngine\Engine\Source\Engine\Render\PipelineStateObject\RootArgument\RootArguments.cpp;C:\Users\dhhan\Desktop\DX12RenderingEngine\Intermediate\Engine_Debug\RootArguments.obj
 C:\Users\dhhan\Desktop\DX12RenderingEngine\Engine\Source\Engine\Render\PipelineStateObject\RootSignature.cpp;C:\Users\dhhan\Desktop\DX12RenderingEngine\Intermediate\Engine_Debug\RootSignature.obj
@@ -23,6 +24,7 @@ C:\Users\dhhan\Desktop\DX12RenderingEngine\Engine\Source\Engine\Render\PipelineS
 C:\Users\dhhan\Desktop\DX12RenderingEngine\Engine\Source\Engine\Render\PipelineStateObject\Shader\VertexShaderObject.cpp;C:\Users\dhhan\Desktop\DX12RenderingEngine\Intermediate\Engine_Debug\VertexShaderObject.obj
 C:\Users\dhhan\Desktop\DX12RenderingEngine\Engine\Source\Engine\Render\SwapChain.cpp;C:\Users\dhhan\Desktop\DX12RenderingEngine\Intermediate\Engine_Debug\SwapChain.obj
 C:\Users\dhhan\Desktop\DX12RenderingEngine\Engine\Source\Engine\Scene.cpp;C:\Users\dhhan\Desktop\DX12RenderingEngine\Intermediate\Engine_Debug\Scene.obj
+C:\Users\dhhan\Desktop\DX12RenderingEngine\Engine\Source\Header\EngineCore.cpp;C:\Users\dhhan\Desktop\DX12RenderingEngine\Intermediate\Engine_Debug\EngineCore.obj
 C:\Users\dhhan\Desktop\DX12RenderingEngine\Engine\Source\Manager\CameraManager.cpp;C:\Users\dhhan\Desktop\DX12RenderingEngine\Intermediate\Engine_Debug\CameraManager.obj
 C:\Users\dhhan\Desktop\DX12RenderingEngine\Engine\Source\Manager\GeometryManager.cpp;C:\Users\dhhan\Desktop\DX12RenderingEngine\Intermediate\Engine_Debug\GeometryManager.obj
 C:\Users\dhhan\Desktop\DX12RenderingEngine\Engine\Source\Manager\InputManager.cpp;C:\Users\dhhan\Desktop\DX12RenderingEngine\Intermediate\Engine_Debug\InputManager.obj
@@ -31,7 +33,6 @@ C:\Users\dhhan\Desktop\DX12RenderingEngine\Engine\Source\Manager\TimerManager.cp
 C:\Users\dhhan\Desktop\DX12RenderingEngine\Engine\Source\Object\Actor.cpp;C:\Users\dhhan\Desktop\DX12RenderingEngine\Intermediate\Engine_Debug\Actor.obj
 C:\Users\dhhan\Desktop\DX12RenderingEngine\Engine\Source\Object\Object.cpp;C:\Users\dhhan\Desktop\DX12RenderingEngine\Intermediate\Engine_Debug\Object.obj
 C:\Users\dhhan\Desktop\DX12RenderingEngine\Engine\Source\Resource\External\Mesh.cpp;C:\Users\dhhan\Desktop\DX12RenderingEngine\Intermediate\Engine_Debug\Mesh.obj
-C:\Users\dhhan\Desktop\DX12RenderingEngine\Engine\Source\Resource\External\Resource.cpp;C:\Users\dhhan\Desktop\DX12RenderingEngine\Intermediate\Engine_Debug\Resource.obj
 C:\Users\dhhan\Desktop\DX12RenderingEngine\Engine\Source\Resource\External\Texture.cpp;C:\Users\dhhan\Desktop\DX12RenderingEngine\Intermediate\Engine_Debug\Texture.obj
 C:\Users\dhhan\Desktop\DX12RenderingEngine\Engine\Source\Resource\Internal\ConstantBuffer.cpp;C:\Users\dhhan\Desktop\DX12RenderingEngine\Intermediate\Engine_Debug\ConstantBuffer.obj
 C:\Users\dhhan\Desktop\DX12RenderingEngine\Engine\Source\Resource\Internal\Material.cpp;C:\Users\dhhan\Desktop\DX12RenderingEngine\Intermediate\Engine_Debug\Material.obj

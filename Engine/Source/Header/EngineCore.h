@@ -1,3 +1,5 @@
 #pragma once
 
-#include "Engine\Engine.h"
+#include "EngineUtil.h"
+
+extern std::unique_ptr<class Engine> GEngine;

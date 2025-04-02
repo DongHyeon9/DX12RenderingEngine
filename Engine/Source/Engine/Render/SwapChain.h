@@ -1,5 +1,5 @@
 #pragma once
-#include "Header\EngineCoreMinimal.h"
+#include "Header\EngineCore.h"
 
 class SwapChain
 {
@@ -12,9 +12,10 @@ private:
 	D3D12_RECT scissorRect{};
 
 	Microsoft::WRL::ComPtr<IDXGISwapChain> swapChain{};
+	uint8 currentBackBufferIdx{};
+
 	std::array<Microsoft::WRL::ComPtr<ID3D12Resource>, LITERAL::SWAP_CHAIN_BUFFER_COUNT> swapChainBuffers{};
 	std::array<D3D12_CPU_DESCRIPTOR_HANDLE, LITERAL::SWAP_CHAIN_BUFFER_COUNT> rtvHandles{};
-	uint8 currentBackBufferIdx{};
 
 	uint32 rtvDescriptorSize{};
 
@@ -29,6 +30,7 @@ public:
 	void Present();
 	void SwapIndex();
 
+	FORCEINLINE Microsoft::WRL::ComPtr<IDXGISwapChain> GetSwapChain()const { return swapChain; }
 	FORCEINLINE Microsoft::WRL::ComPtr<ID3D12Resource> GetBackBuffer()const { return swapChainBuffers[currentBackBufferIdx]; }
 	FORCEINLINE D3D12_CPU_DESCRIPTOR_HANDLE GetBackBufferRTV()const { return rtvHandles[currentBackBufferIdx]; }
 	FORCEINLINE D3D12_VIEWPORT& GetViewport() { return screenViewport; }

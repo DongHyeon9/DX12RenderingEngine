@@ -1,17 +1,10 @@
 #include "Engine.h"
 #include "AppBase.h"
 
-#include "Render\Device.h"
-#include "Render\CommandObject.h"
-#include "Render\PipelineStateObject.h"
-#include "Render\SwapChain.h"
-
 #include "Manager\CameraManager.h"
 #include "Manager\GeometryManager.h"
 #include "Manager\InputManager.h"
 #include "Manager\TimerManager.h"
-
-std::unique_ptr<Engine> GEngine = std::make_unique<Engine>();
 
 bool Engine::Init(const EngineDesc& EngineDescription)
 {
@@ -193,7 +186,9 @@ void Engine::EngineUpdate()
 
 void Engine::Update(float DeltaTime)
 {
+	app->Update(DeltaTime);
 
+	app->LateUpdate(DeltaTime);
 }
 
 void Engine::RenderBegin()
@@ -240,6 +235,8 @@ void Engine::RenderBegin()
 void Engine::Render()
 {
 	RenderBegin();
+
+	app->Render();
 
 	RenderEnd();
 }

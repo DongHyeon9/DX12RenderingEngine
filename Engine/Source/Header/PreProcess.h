@@ -33,7 +33,7 @@ public:										\
 
 #pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console")
 #define LOG_LINE std::cout << __FUNCTION__ << "(" << __LINE__ << ")";
-#define LOG(str, ...) LOG_LINE std::cout <<"\t";printf_s(str, ##_VA_ARGS_);std::cout <<std::endl;
+#define LOG(str, ...) LOG_LINE std::cout <<"\t";printf_s(str, ##__VA_ARGS__);std::cout <<std::endl;
 
 #endif	//UNICODE
 

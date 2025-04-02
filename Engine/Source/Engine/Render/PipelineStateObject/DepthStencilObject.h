@@ -1,5 +1,5 @@
 #pragma once
-#include "Header\EngineCoreMinimal.h"
+#include "Header\EngineCore.h"
 
 enum class E_DEPTH_STENCIL_STATE_FLAG : uint8
 {

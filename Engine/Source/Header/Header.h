@@ -44,5 +44,5 @@
 #include "imgui_impl_win32.h"
 
 #include <assimp/Importer.hpp>
-#include <assimp/postprocess.h>
 #include <assimp/scene.h>
+#include <assimp/postprocess.h>

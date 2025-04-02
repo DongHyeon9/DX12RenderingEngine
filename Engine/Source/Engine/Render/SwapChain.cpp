@@ -32,21 +32,9 @@ bool SwapChain::Init(Microsoft::WRL::ComPtr<ID3D12Device> Device, Microsoft::WRL
 		&swapCahinDesc,
 		swapChain.GetAddressOf());
 
+	rtvDescriptorSize = Device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+
 	CHECK(SUCCEEDED(hr), "스왑체인 생성 실패", false);
-
-	rtvDescriptorSize = Device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
-
-	LOG("렌더 타겟 뷰 생성 시작");
-
-	D3D12_DESCRIPTOR_HEAP_DESC renderTargetDesc{};
-	renderTargetDesc.NumDescriptors = LITERAL::SWAP_CHAIN_BUFFER_COUNT;	//버퍼 개수만큼 디스크립터 생성
-	renderTargetDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;				//RTV 타입
-	renderTargetDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_NONE;			//CPU 전용 힙이므로 플래그 없음
-	renderTargetDesc.NodeMask = 0;										//싱글 GPU 환경이므로 0
-
-	hr = Device->CreateDescriptorHeap(&renderTargetDesc, IID_PPV_ARGS(&rtvHeap));
-	CHECK(SUCCEEDED(hr), "렌더 타겟 생성 실패", false);
-	LOG("렌더 타겟 생성 성공");
 
 	LOG("스왑체인 초기화 성공");
 	return true;
@@ -63,6 +51,16 @@ bool SwapChain::CreateSwapChainBuffer(Microsoft::WRL::ComPtr<ID3D12Device> Devic
 	EngineSetting engineSetting = GEngine->GetEngineSetting();
 	HRESULT hr{};
 
+	rtvHeap.Reset();
+
+	D3D12_DESCRIPTOR_HEAP_DESC rtvHeapDesc{};
+	rtvHeapDesc.NumDescriptors = LITERAL::SWAP_CHAIN_BUFFER_COUNT;
+	rtvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
+	rtvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_NONE;
+	rtvHeapDesc.NodeMask = 0;
+
+	CHECK(SUCCEEDED(Device->CreateDescriptorHeap(&rtvHeapDesc, IID_PPV_ARGS(rtvHeap.GetAddressOf()))), "RTV Heap 생성 실패", false);
+
 	//새로운 해상도에 맞게 스왑 체인의 백 버퍼 크기를 변경
 	hr = swapChain->ResizeBuffers(
 		LITERAL::SWAP_CHAIN_BUFFER_COUNT,		//버퍼 개수
@@ -72,7 +70,7 @@ bool SwapChain::CreateSwapChainBuffer(Microsoft::WRL::ComPtr<ID3D12Device> Devic
 		DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH);		//스왑체인 플래그
 	CHECK(SUCCEEDED(hr), "버퍼 리사이즈 실패", false);
 	currentBackBufferIdx = 0;
-
+	
 	//새로운 백 버퍼 할당 및 RTV 생성
 	CD3DX12_CPU_DESCRIPTOR_HANDLE rtvHeapHandle{ rtvHeap->GetCPUDescriptorHandleForHeapStart() };
 	for (uint32 i = 0; i < LITERAL::SWAP_CHAIN_BUFFER_COUNT; ++i)
@@ -83,21 +81,11 @@ bool SwapChain::CreateSwapChainBuffer(Microsoft::WRL::ComPtr<ID3D12Device> Devic
 			IID_PPV_ARGS(&swapChainBuffers[i]));
 		CHECK(SUCCEEDED(hr), "스왑체인 버퍼 가져오기 실패", false);
 		//RTV(렌더 타겟 뷰)를 생성하여 백 버퍼를 렌더 타겟으로 사용 가능하게 만듦
+		rtvHandles[i] = CD3DX12_CPU_DESCRIPTOR_HANDLE{ rtvHeapHandle, static_cast<INT>(i * rtvDescriptorSize) };
 		Device->CreateRenderTargetView(
 			swapChainBuffers[i].Get(),
 			nullptr,		//기본 RTV 설정 사용
-			rtvHeapHandle);	//RTV가 저장될 디스크립터 힙의 위치
-		//다음 RTV 디스크립터 위치로 이동
-		rtvHeapHandle.Offset(1, rtvDescriptorSize);
-	}
-
-	UINT rtvHeapSize = Device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
-
-	D3D12_CPU_DESCRIPTOR_HANDLE rtvHeapBegin = rtvHeap->GetCPUDescriptorHandleForHeapStart();
-	for (uint8 i = 0; i < LITERAL::SWAP_CHAIN_BUFFER_COUNT; ++i)
-	{
-		rtvHandles[i] = CD3DX12_CPU_DESCRIPTOR_HANDLE{ rtvHeapBegin, static_cast<INT>(i * rtvHeapSize) };
-		Device->CreateRenderTargetView(swapChainBuffers[i].Get(), nullptr, rtvHandles[i]);
+			rtvHandles[i]);	//RTV가 저장될 디스크립터 힙의 위치
 	}
 
 	return true;

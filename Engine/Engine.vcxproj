@@ -33,6 +33,7 @@
     <ClInclude Include="Source\Engine\Render\PipelineStateObject\DepthStencilObject.h" />
     <ClInclude Include="Source\Engine\Render\PipelineStateObject\RasterizerStateObject.h" />
     <ClInclude Include="Source\Engine\Render\PipelineStateObject\RenderTargetObject.h" />
+    <ClInclude Include="Source\Engine\Render\PipelineStateObject\RenderTarget\RenderTarget.h" />
     <ClInclude Include="Source\Engine\Render\PipelineStateObject\RootArgument\DescriptorTable.h" />
     <ClInclude Include="Source\Engine\Render\PipelineStateObject\RootArgument\RootArguments.h" />
     <ClInclude Include="Source\Engine\Render\PipelineStateObject\RootSignature.h" />
@@ -47,7 +48,6 @@
     <ClInclude Include="Source\Engine\Scene.h" />
     <ClInclude Include="Source\Header\d3dx12.h" />
     <ClInclude Include="Source\Header\EngineCore.h" />
-    <ClInclude Include="Source\Header\EngineCoreMinimal.h" />
     <ClInclude Include="Source\Header\EngineUtil.h" />
     <ClInclude Include="Source\Header\Enum.h" />
     <ClInclude Include="Source\Header\Header.h" />
@@ -88,6 +88,7 @@
     <ClCompile Include="Source\Engine\Render\PipelineStateObject\DepthStencilObject.cpp" />
     <ClCompile Include="Source\Engine\Render\PipelineStateObject\RasterizerStateObject.cpp" />
     <ClCompile Include="Source\Engine\Render\PipelineStateObject\RenderTargetObject.cpp" />
+    <ClCompile Include="Source\Engine\Render\PipelineStateObject\RenderTarget\RenderTarget.cpp" />
     <ClCompile Include="Source\Engine\Render\PipelineStateObject\RootArgument\DescriptorTable.cpp" />
     <ClCompile Include="Source\Engine\Render\PipelineStateObject\RootArgument\RootArguments.cpp" />
     <ClCompile Include="Source\Engine\Render\PipelineStateObject\RootSignature.cpp" />
@@ -99,6 +100,7 @@
     <ClCompile Include="Source\Engine\Render\PipelineStateObject\Shader\VertexShaderObject.cpp" />
     <ClCompile Include="Source\Engine\Render\SwapChain.cpp" />
     <ClCompile Include="Source\Engine\Scene.cpp" />
+    <ClCompile Include="Source\Header\EngineCore.cpp" />
     <ClCompile Include="Source\Manager\CameraManager.cpp" />
     <ClCompile Include="Source\Manager\GeometryManager.cpp" />
     <ClCompile Include="Source\Manager\InputManager.cpp" />
@@ -107,13 +109,13 @@
     <ClCompile Include="Source\Object\Actor.cpp" />
     <ClCompile Include="Source\Object\Object.cpp" />
     <ClCompile Include="Source\Resource\External\Mesh.cpp" />
-    <ClCompile Include="Source\Resource\External\Resource.cpp" />
     <ClCompile Include="Source\Resource\External\Texture.cpp" />
     <ClCompile Include="Source\Resource\Internal\ConstantBuffer.cpp" />
     <ClCompile Include="Source\Resource\Internal\Material.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Default.hlsli" />
+    <None Include="Source\Resource\External\Resource.inl" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Source\Shader\Geometry\GS_Default.hlsl">

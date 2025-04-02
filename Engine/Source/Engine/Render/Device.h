@@ -1,5 +1,5 @@
 #pragma once
-#include "Header\EngineCoreMinimal.h"
+#include "Header\EngineCore.h"
 
 class Device
 {

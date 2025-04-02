@@ -73,6 +73,9 @@
     <Filter Include="Etc\DX12">
       <UniqueIdentifier>{cc90f3b4-656b-4b0d-b127-95d7889fbc2f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.Engine\Render\PipelineStateObject\RenderTarget">
+      <UniqueIdentifier>{5f899007-c8b5-41a3-9006-9958825065ad}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Header\Enum.h">
@@ -110,9 +113,6 @@
     </ClInclude>
     <ClInclude Include="Source\Engine\Engine.h">
       <Filter>01.Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Header\EngineCoreMinimal.h">
-      <Filter>99.Header</Filter>
     </ClInclude>
     <ClInclude Include="Source\Header\EngineUtil.inl">
       <Filter>99.Header</Filter>
@@ -210,9 +210,6 @@
     <ClInclude Include="Source\Resource\External\Mesh.h">
       <Filter>06.Resource\External</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Resource\External\Resource.h">
-      <Filter>06.Resource\External</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Resource\Internal\Material.h">
       <Filter>06.Resource\Internal</Filter>
     </ClInclude>
@@ -221,6 +218,12 @@
     </ClInclude>
     <ClInclude Include="Source\Engine\Render\PipelineStateObject\RootArgument\DescriptorTable.h">
       <Filter>01.Engine\Render\PipelineStateObject\RootArgument</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Render\PipelineStateObject\RenderTarget\RenderTarget.h">
+      <Filter>01.Engine\Render\PipelineStateObject\RenderTarget</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Resource\External\Resource.h">
+      <Filter>06.Resource\External</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -323,9 +326,6 @@
     <ClCompile Include="Source\Resource\External\Mesh.cpp">
       <Filter>06.Resource\External</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Resource\External\Resource.cpp">
-      <Filter>06.Resource\External</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Resource\Internal\ConstantBuffer.cpp">
       <Filter>06.Resource\Internal</Filter>
     </ClCompile>
@@ -335,10 +335,19 @@
     <ClCompile Include="Source\Engine\Render\PipelineStateObject\RootArgument\DescriptorTable.cpp">
       <Filter>01.Engine\Render\PipelineStateObject\RootArgument</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Engine\Render\PipelineStateObject\RenderTarget\RenderTarget.cpp">
+      <Filter>01.Engine\Render\PipelineStateObject\RenderTarget</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Header\EngineCore.cpp">
+      <Filter>99.Header</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Default.hlsli">
       <Filter>03.Shader\Header</Filter>
+    </None>
+    <None Include="Source\Resource\External\Resource.inl">
+      <Filter>06.Resource\External</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

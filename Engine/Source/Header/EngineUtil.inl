@@ -110,33 +110,33 @@ inline FString EngineUtil::Path::PrevDir(const FString& Path, size_t Count)
 
 inline FString EngineUtil::Path::GetCurrentDir()
 {
+#ifdef UNICODE
 	FString result{ std::filesystem::current_path().c_str() };
+#else
+	FString result{ std::filesystem::current_path().string() };
+#endif
 	result += (TEXT('\\'));
 	return result;
 }
 
 inline FString EngineUtil::Path::GetEngineDir()
 {
-	FString path = GetCurrentDir();
-	return AddDir(PrevDir(path), TEXT("Engine"));
+	return AddDir(PrevDir(GetCurrentDir()), TEXT("Engine"));
 }
 
 inline FString EngineUtil::Path::GetTexturesDir()
 {
-	FString path = GetResourceDir();
-	return AddDir(path, TEXT("Textures"));
+	return AddDir(GetResourceDir(), TEXT("Textures"));
 }
 
 inline FString EngineUtil::Path::GetMeshDir()
 {
-	FString path = GetResourceDir();
-	return AddDir(path, TEXT("Mesh"));
+	return AddDir(GetResourceDir(), TEXT("Mesh"));
 }
 
 inline FString EngineUtil::Path::GetResourceDir()
 {
-	FString path = GetCurrentDir();
-	return AddDir(PrevDir(path), TEXT("Resource"));
+	return AddDir(PrevDir(GetCurrentDir()), TEXT("Resource"));
 }
 
 inline FString EngineUtil::Path::GetShaderDir()
@@ -146,32 +146,27 @@ inline FString EngineUtil::Path::GetShaderDir()
 
 inline FString EngineUtil::Path::GetVertexShaderDir()
 {
-	FString path = AddDir(GetShaderDir(), TEXT("Vertex"));
-	return path;
+	return AddDir(GetShaderDir(), TEXT("Vertex"));
 }
 
 inline FString EngineUtil::Path::GetGeometryShaderDir()
 {
-	FString path = AddDir(GetShaderDir(), TEXT("Geometry"));
-	return path;
+	return AddDir(GetShaderDir(), TEXT("Geometry"));
 }
 
 inline FString EngineUtil::Path::GetDomainShaderDir()
 {
-	FString path = AddDir(GetShaderDir(), TEXT("Tessellation"), TEXT("Domain"));
-	return path;
+	return AddDir(GetShaderDir(), TEXT("Tessellation"), TEXT("Domain"));
 }
 
 inline FString EngineUtil::Path::GetHullShaderDir()
 {
-	FString path = AddDir(GetShaderDir(), TEXT("Tessellation"), TEXT("Hull"));
-	return path;
+	return AddDir(GetShaderDir(), TEXT("Tessellation"), TEXT("Hull"));
 }
 
 inline FString EngineUtil::Path::GetPixelShaderDir()
 {
-	FString path = AddDir(GetShaderDir(), TEXT("Pixel"));
-	return path;
+	return AddDir(GetShaderDir(), TEXT("Pixel"));
 }
 
 #pragma endregion Path
@@ -201,18 +196,18 @@ inline Vector3 EngineUtil::Math::ToEulerAngles(Quaternion Quaternion)
 	Vector3 angles{};
 
 	// roll (X축 회전)
-	double sinr_cosp = 2 * (Quaternion.w * Quaternion.x + Quaternion.y * Quaternion.z);
-	double cosr_cosp = 1 - 2 * (Quaternion.x * Quaternion.x + Quaternion.y * Quaternion.y);
+	const double sinr_cosp = 2 * (Quaternion.w * Quaternion.x + Quaternion.y * Quaternion.z);
+	const double cosr_cosp = 1 - 2 * (Quaternion.x * Quaternion.x + Quaternion.y * Quaternion.y);
 	angles.x = static_cast<float>(std::atan2(sinr_cosp, cosr_cosp));
 
 	// pitch (Y축 회전)
-	double sinp = std::sqrt(1 + 2 * (Quaternion.w * Quaternion.y - Quaternion.x * Quaternion.z));
-	double cosp = std::sqrt(1 - 2 * (Quaternion.w * Quaternion.y - Quaternion.x * Quaternion.z));
+	const double sinp = std::sqrt(1 + 2 * (Quaternion.w * Quaternion.y - Quaternion.x * Quaternion.z));
+	const double cosp = std::sqrt(1 - 2 * (Quaternion.w * Quaternion.y - Quaternion.x * Quaternion.z));
 	angles.y = static_cast<float>(2 * std::atan2(sinp, cosp) - 3.14159f / 2);
 
 	// yaw (Z축 회전)
-	double siny_cosp = 2 * (Quaternion.w * Quaternion.z + Quaternion.x * Quaternion.y);
-	double cosy_cosp = 1 - 2 * (Quaternion.y * Quaternion.y + Quaternion.z * Quaternion.z);
+	const double siny_cosp = 2 * (Quaternion.w * Quaternion.z + Quaternion.x * Quaternion.y);
+	const double cosy_cosp = 1 - 2 * (Quaternion.y * Quaternion.y + Quaternion.z * Quaternion.z);
 	angles.z = static_cast<float>(std::atan2(siny_cosp, cosy_cosp));
 
 	return angles;

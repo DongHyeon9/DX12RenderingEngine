@@ -1,5 +1,5 @@
 #pragma once
-#include "Header\EngineCoreMinimal.h"
+#include "Header\EngineCore.h"
 
 #define INHERITANCE_SOB(Flag) ShaderObjectBase<Flag, static_cast<uint8>(Flag::END)>
 
