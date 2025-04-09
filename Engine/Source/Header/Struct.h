@@ -23,6 +23,13 @@ struct EngineSetting
 	bool state4XMSAA{};
 };
 
+struct Transform
+{
+	Vector3 position{};
+	Vector3 rotation{};
+	Vector3 scale{ 1.0f };
+};
+
 struct CameraData
 {
 	Vector3 cameraPos{};
