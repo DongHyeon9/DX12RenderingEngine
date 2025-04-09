@@ -147,9 +147,6 @@
     <ClInclude Include="Source\Manager\ResourceManager.h">
       <Filter>02.Manager</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Component\TransformComp.h">
-      <Filter>05.Component</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Component\Component.h">
       <Filter>05.Component</Filter>
     </ClInclude>
@@ -225,6 +222,9 @@
     <ClInclude Include="Source\Resource\External\Resource.h">
       <Filter>06.Resource\External</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Component\SceneComp.h">
+      <Filter>05.Component</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Engine\AppBase.cpp">
@@ -276,9 +276,6 @@
       <Filter>05.Component</Filter>
     </ClCompile>
     <ClCompile Include="Source\Component\MonoBehaviour.cpp">
-      <Filter>05.Component</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Component\TransformComp.cpp">
       <Filter>05.Component</Filter>
     </ClCompile>
     <ClCompile Include="Source\Engine\Render\PipelineStateObject.cpp">
@@ -341,13 +338,16 @@
     <ClCompile Include="Source\Header\EngineCore.cpp">
       <Filter>99.Header</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Resource\External\Resource.cpp">
+      <Filter>06.Resource\External</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Component\SceneComp.cpp">
+      <Filter>05.Component</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Default.hlsli">
       <Filter>03.Shader\Header</Filter>
-    </None>
-    <None Include="Source\Resource\External\Resource.inl">
-      <Filter>06.Resource\External</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

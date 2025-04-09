@@ -1,7 +1,7 @@
 #pragma once
 #include "Resource.h"
 
-class Texture : public Resource<Microsoft::WRL::ComPtr<ID3D12Resource>>
+class Texture : public Resource
 {
 public:
 
@@ -15,11 +15,11 @@ private:
 	D3D12_CPU_DESCRIPTOR_HANDLE srvHandle{};
 
 public:
-	Texture() :Resource<Microsoft::WRL::ComPtr<ID3D12Resource>>(EngineUtil::Path::GetTexturesDir()) {}
+	Texture() :Resource(EngineUtil::Path::GetTexturesDir()) {}
 	bool Load(FString FileName)override;
-
-	FORCEINLINE Microsoft::WRL::ComPtr<ID3D12Resource> GetResource()const override { return texture2D; }
 	FORCEINLINE Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> GetDescriptorHeap()const { return srvHeap; }
+	FORCEINLINE Microsoft::WRL::ComPtr<ID3D12Resource> GetTexture()const { return texture2D; }
+	FORCEINLINE D3D12_CPU_DESCRIPTOR_HANDLE GetSRVHandle()const { return srvHandle; }
 
 protected:
 

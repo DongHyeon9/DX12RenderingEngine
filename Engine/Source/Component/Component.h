@@ -1,5 +1,19 @@
 #pragma once
-class Component
+#include "Object\Object.h"
+
+class Component : public Object
 {
+public:
+
+protected:
+
+private:
+
+public:
+
+protected:
+
+private:
+
 };
 

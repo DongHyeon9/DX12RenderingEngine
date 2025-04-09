@@ -126,7 +126,7 @@ inline FString EngineUtil::Path::GetEngineDir()
 
 inline FString EngineUtil::Path::GetTexturesDir()
 {
-	return AddDir(GetResourceDir(), TEXT("Textures"));
+	return AddDir(GetResourceDir(), TEXT("Texture"));
 }
 
 inline FString EngineUtil::Path::GetMeshDir()
@@ -136,7 +136,7 @@ inline FString EngineUtil::Path::GetMeshDir()
 
 inline FString EngineUtil::Path::GetResourceDir()
 {
-	return AddDir(PrevDir(GetCurrentDir()), TEXT("Resource"));
+	return AddDir(PrevDir(GetCurrentDir()), TEXT("Res"));
 }
 
 inline FString EngineUtil::Path::GetShaderDir()

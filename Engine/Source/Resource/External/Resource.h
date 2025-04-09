@@ -1,8 +1,7 @@
 #pragma once
 #include "Header\EngineCore.h"
 
-template<class _ResourceType>
-class Resource
+class Resource : public std::enable_shared_from_this<Resource>
 {
 public:
 
@@ -15,13 +14,13 @@ private:
 public:
 	Resource(FString Path) :path(Path) {}
 
-	virtual bool Load(FString FileName);
-	FORCEINLINE virtual _ResourceType GetResource()const abstract;
+	FORCEINLINE virtual bool Load(FString FileName) { fileName = std::move(FileName); return true; }
+	FORCEINLINE std::shared_ptr<Resource> GetResource() { return shared_from_this(); };
+	FORCEINLINE FString GetFileName()const { return fileName; }
+	FORCEINLINE FString GetPath()const { return path; }
 
 protected:
 
 private:
 
 };
-
-#include "Resource.inl"

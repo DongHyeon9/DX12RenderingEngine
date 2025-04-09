@@ -23,7 +23,7 @@
     <ClInclude Include="Source\Component\LightComp.h" />
     <ClInclude Include="Source\Component\MeshComp.h" />
     <ClInclude Include="Source\Component\MonoBehaviour.h" />
-    <ClInclude Include="Source\Component\TransformComp.h" />
+    <ClInclude Include="Source\Component\SceneComp.h" />
     <ClInclude Include="Source\Engine\AppBase.h" />
     <ClInclude Include="Source\Engine\Engine.h" />
     <ClInclude Include="Source\Engine\Render\CommandObject.h" />
@@ -78,7 +78,7 @@
     <ClCompile Include="Source\Component\LightComp.cpp" />
     <ClCompile Include="Source\Component\MeshComp.cpp" />
     <ClCompile Include="Source\Component\MonoBehaviour.cpp" />
-    <ClCompile Include="Source\Component\TransformComp.cpp" />
+    <ClCompile Include="Source\Component\SceneComp.cpp" />
     <ClCompile Include="Source\Engine\AppBase.cpp" />
     <ClCompile Include="Source\Engine\Engine.cpp" />
     <ClCompile Include="Source\Engine\Render\CommandObject.cpp" />
@@ -109,13 +109,13 @@
     <ClCompile Include="Source\Object\Actor.cpp" />
     <ClCompile Include="Source\Object\Object.cpp" />
     <ClCompile Include="Source\Resource\External\Mesh.cpp" />
+    <ClCompile Include="Source\Resource\External\Resource.cpp" />
     <ClCompile Include="Source\Resource\External\Texture.cpp" />
     <ClCompile Include="Source\Resource\Internal\ConstantBuffer.cpp" />
     <ClCompile Include="Source\Resource\Internal\Material.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Default.hlsli" />
-    <None Include="Source\Resource\External\Resource.inl" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Source\Shader\Geometry\GS_Default.hlsl">

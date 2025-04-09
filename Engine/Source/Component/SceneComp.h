@@ -1,7 +1,7 @@
 #pragma once
-#include "Component\SceneComp.h"
+#include "Component\Component.h"
 
-class LightComp
+class SceneComp
 {
 public:
 

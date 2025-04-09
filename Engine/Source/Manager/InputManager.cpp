@@ -3,10 +3,10 @@
 
 bool InputManager::Init()
 {
-	LOG("인풋 매니저 초기화");
+	LOG("입력 매니저 초기화");
 
 
-	LOG("인풋 매니저 초기화 성공");
+	LOG("입력 매니저 초기화 성공");
 	return true;
 }
 

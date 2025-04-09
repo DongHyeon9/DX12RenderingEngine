@@ -1,7 +1,7 @@
 #pragma once
 #include "Resource.h"
 
-class Mesh : public Resource<Mesh>
+class Mesh : public Resource
 {
 public:
 
@@ -11,7 +11,7 @@ private:
 	std::vector<MeshData> meshes{};
 
 public:
-	Mesh() :Resource<Mesh>(EngineUtil::Path::GetMeshDir()) {}
+	Mesh() :Resource(EngineUtil::Path::GetMeshDir()) {}
 	bool Load(FString FileName)override;
 
 protected:

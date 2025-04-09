@@ -5,6 +5,9 @@
 #include "Manager\GeometryManager.h"
 #include "Manager\InputManager.h"
 #include "Manager\TimerManager.h"
+#include "Manager\ResourceManager.h"
+
+#include "Resource\External\Texture.h"
 
 bool Engine::Init(const EngineDesc& EngineDescription)
 {
@@ -44,6 +47,10 @@ WPARAM Engine::Run()
 	CHECK(app->Init(), "앱 초기화 실패", false);
 
 	commandObject->FlushCommandQueue();
+
+	//TODO 메쉬 생성
+	GeometryManager::GetInstance()->CreateBox(Vector3{ 100.0f,100.0f,100.0f });
+	ResourceManager::GetInstance()->GetResource<Texture>(TEXT("T_Earth.jpg"));
 
 	//프로그램 메인 루프
 	MSG msg{};
@@ -96,8 +103,9 @@ bool Engine::InitManager()
 
 	CHECK(CameraManager::GetInstance()->Init(), "카메라 매니저 초기화 실패", false);
 	CHECK(GeometryManager::GetInstance()->Init(), "지오메트리 매니저 초기화 실패", false);
-	CHECK(InputManager::GetInstance()->Init(), "인풋 매니저 초기화 실패", false);
+	CHECK(InputManager::GetInstance()->Init(), "입력 매니저 초기화 실패", false);
 	CHECK(TimerManager::GetInstance()->Init(), "타이머 매니저 초기화 실패", false);
+	CHECK(ResourceManager::GetInstance()->Init(), "리소스 매니저 초기화 실패", false);
 
 	LOG("매니저 초기화 성공");
 	return true;
