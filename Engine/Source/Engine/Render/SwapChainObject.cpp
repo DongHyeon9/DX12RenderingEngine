@@ -1,7 +1,12 @@
-#include "SwapChain.h"
-#include "Engine\Engine.h"
+#include "SwapChainObject.h"
 
-bool SwapChain::Init(Microsoft::WRL::ComPtr<ID3D12Device> Device, Microsoft::WRL::ComPtr<IDXGIFactory4> Factory, Microsoft::WRL::ComPtr<ID3D12CommandQueue> CommandQueue)
+#include "Engine\Engine.h"
+#include "Manager\RenderManager.h"
+
+#include "Engine\Render\DeviceObject.h"
+#include "Engine\Render\CommandObject.h"
+
+bool SwapChainObject::Init()
 {
 	LOG("스왑체인 초기화 시작");
 
@@ -27,12 +32,12 @@ bool SwapChain::Init(Microsoft::WRL::ComPtr<ID3D12Device> Device, Microsoft::WRL
 	swapCahinDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;		//DirectX 12에서 가장 권장되는 스왑 방식 (*3)
 	swapCahinDesc.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;	//전체 화면과 창 모드 전환을 허용
 
-	hr = Factory->CreateSwapChain(
-		CommandQueue.Get(),		//GPU 명령 실행을 담당하는 커맨드 큐를 연결
+	hr = DEVICE_OBJ->GetFactory()->CreateSwapChain(
+		CMD_OBJ->GetCommandQueue().Get(),		//GPU 명령 실행을 담당하는 커맨드 큐를 연결
 		&swapCahinDesc,
 		swapChain.GetAddressOf());
 
-	rtvDescriptorSize = Device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+	rtvDescriptorSize = DEVICE_OBJ->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 
 	CHECK(SUCCEEDED(hr), "스왑체인 생성 실패", false);
 
@@ -40,16 +45,18 @@ bool SwapChain::Init(Microsoft::WRL::ComPtr<ID3D12Device> Device, Microsoft::WRL
 	return true;
 }
 
-void SwapChain::ResetSwapChain()
+void SwapChainObject::ResetSwapChain()
 {
 	for (auto swapChainBuffer : swapChainBuffers)
 		swapChainBuffer.Reset();
 }
 
-bool SwapChain::CreateSwapChainBuffer(Microsoft::WRL::ComPtr<ID3D12Device> Device)
+bool SwapChainObject::CreateSwapChainBuffer()
 {
 	EngineSetting engineSetting = GEngine->GetEngineSetting();
 	HRESULT hr{};
+
+	Microsoft::WRL::ComPtr<ID3D12Device> device = DEVICE_OBJ->GetDevice();
 
 	rtvHeap.Reset();
 
@@ -59,7 +66,7 @@ bool SwapChain::CreateSwapChainBuffer(Microsoft::WRL::ComPtr<ID3D12Device> Devic
 	rtvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_NONE;
 	rtvHeapDesc.NodeMask = 0;
 
-	CHECK(SUCCEEDED(Device->CreateDescriptorHeap(&rtvHeapDesc, IID_PPV_ARGS(rtvHeap.GetAddressOf()))), "RTV Heap 생성 실패", false);
+	CHECK(SUCCEEDED(device->CreateDescriptorHeap(&rtvHeapDesc, IID_PPV_ARGS(rtvHeap.GetAddressOf()))), "RTV Heap 생성 실패", false);
 
 	//새로운 해상도에 맞게 스왑 체인의 백 버퍼 크기를 변경
 	hr = swapChain->ResizeBuffers(
@@ -82,7 +89,7 @@ bool SwapChain::CreateSwapChainBuffer(Microsoft::WRL::ComPtr<ID3D12Device> Devic
 		CHECK(SUCCEEDED(hr), "스왑체인 버퍼 가져오기 실패", false);
 		//RTV(렌더 타겟 뷰)를 생성하여 백 버퍼를 렌더 타겟으로 사용 가능하게 만듦
 		rtvHandles[i] = CD3DX12_CPU_DESCRIPTOR_HANDLE{ rtvHeapHandle, static_cast<INT>(i * rtvDescriptorSize) };
-		Device->CreateRenderTargetView(
+		device->CreateRenderTargetView(
 			swapChainBuffers[i].Get(),
 			nullptr,		//기본 RTV 설정 사용
 			rtvHandles[i]);	//RTV가 저장될 디스크립터 힙의 위치
@@ -91,7 +98,7 @@ bool SwapChain::CreateSwapChainBuffer(Microsoft::WRL::ComPtr<ID3D12Device> Devic
 	return true;
 }
 
-void SwapChain::SetScreenViewport()
+void SwapChainObject::SetScreenViewport()
 {
 	EngineSetting engineSetting = GEngine->GetEngineSetting();
 	//새로운 해상도에 맞게 뷰포트(Viewport) 및 시저(Rectangle)를 업데이트
@@ -103,18 +110,18 @@ void SwapChain::SetScreenViewport()
 	screenViewport.MaxDepth = 1.0f;
 }
 
-void SwapChain::SetScissorRect()
+void SwapChainObject::SetScissorRect()
 {
 	EngineSetting engineSetting = GEngine->GetEngineSetting();
 	scissorRect = { 0, 0, static_cast<int32>(engineSetting.resolution.x), static_cast<int32>(engineSetting.resolution.y) };
 }
 
-void SwapChain::Present()
+void SwapChainObject::Present()
 {
 	swapChain->Present(0, 0);
 }
 
-void SwapChain::SwapIndex()
+void SwapChainObject::SwapIndex()
 {
 	currentBackBufferIdx = (currentBackBufferIdx + 1) % LITERAL::SWAP_CHAIN_BUFFER_COUNT;
 }

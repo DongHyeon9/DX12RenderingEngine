@@ -1,16 +1,20 @@
 #include "CommandObject.h"
 
+#include "Manager\RenderManager.h"
+#include "Engine\Render\DeviceObject.h"
+
 CommandObject::~CommandObject()
 {
 	CloseHandle(hEventCompletion);
 }
 
-bool CommandObject::Init(Microsoft::WRL::ComPtr<ID3D12Device> Device)
+bool CommandObject::Init()
 {
     LOG("커맨드 오브젝트 초기화 시작");
 
 	HRESULT hr{};
-	hr = Device->CreateFence(
+	Microsoft::WRL::ComPtr<ID3D12Device> device = DEVICE_OBJ->GetDevice();
+	hr = device->CreateFence(
 		0,						//초기 팬스 값(GPU가 처리할 작업이 없음을 의미)
 		D3D12_FENCE_FLAG_NONE,	//기본 플래그 설정
 		IID_PPV_ARGS(&fence));
@@ -21,17 +25,17 @@ bool CommandObject::Init(Microsoft::WRL::ComPtr<ID3D12Device> Device)
 	desc.Type = D3D12_COMMAND_LIST_TYPE_DIRECT;		//DIRECT 타입의 커맨드 큐 생성 (그래픽스, 컴퓨팅 등 일반적인 명령 실행)
 	desc.Flags = D3D12_COMMAND_QUEUE_FLAG_NONE;		//기본 설정으로 플래그를 설정 (특별한 기능 없음)
 
-	hr = Device->CreateCommandQueue(&desc, IID_PPV_ARGS(&commandQueue));
+	hr = device->CreateCommandQueue(&desc, IID_PPV_ARGS(&commandQueue));
 	CHECK(SUCCEEDED(hr), "커맨드 큐 생성 실패", false);
 	LOG("커맨드 큐 생성");
 
-	hr = Device->CreateCommandAllocator(
+	hr = device->CreateCommandAllocator(
 		D3D12_COMMAND_LIST_TYPE_DIRECT,		//DIRECT 타입의 명령 리스트를 할당할 수 있는 얼로케이터 생성
 		IID_PPV_ARGS(&commandAllocator));
 	CHECK(SUCCEEDED(hr), "커맨드 얼로케이터 생성 실패", false);
 	LOG("커맨드 얼로케이터 생성");
 	
-	hr = Device->CreateCommandList(
+	hr = device->CreateCommandList(
 		0,									//멀티 GPU 환경에서 사용할 GPU를 지정(단일 GPU에서는 0을 사용)
 		D3D12_COMMAND_LIST_TYPE_DIRECT,		//DIRECT 타입의 명령 리스트를 생성(일반적인 렌더링 및 그래픽 명령)
 		commandAllocator.Get(),				//커맨드 얼로케이터 지정

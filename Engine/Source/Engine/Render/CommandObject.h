@@ -17,7 +17,7 @@ private:
 
 public:
 	~CommandObject();
-	bool Init(Microsoft::WRL::ComPtr<ID3D12Device> Device);
+	bool Init();
 	bool ResetCmdList();
 	bool FlushCommandQueue();
 	void ExecuteCommandList();

@@ -1,11 +1,17 @@
 #include "Engine.h"
 #include "AppBase.h"
 
+#include "Manager\RenderManager.h"
 #include "Manager\CameraManager.h"
 #include "Manager\GeometryManager.h"
 #include "Manager\InputManager.h"
 #include "Manager\TimerManager.h"
 #include "Manager\ResourceManager.h"
+
+#include "Engine\Render\DeviceObject.h"
+#include "Engine\Render\CommandObject.h"
+#include "Engine\Render\PipelineStateObject.h"
+#include "Engine\Render\SwapChainObject.h"
 
 #include "Resource\External\Texture.h"
 
@@ -29,11 +35,11 @@ bool Engine::Init(const EngineDesc& EngineDescription)
 	//윈도우 초기화
 	CHECK(InitWindow(), "윈도우 초기화 실패", false);
 
-	//DirectX 초기화
-	CHECK(InitDirectX(), "DirectX 초기화 실패", false);
-
 	//매니저 초기화
 	CHECK(InitManager(), "매니저 초기화 실패", false);
+
+	//엔진 세팅 초기화
+	CHECK(InitEngineSetting(), "엔진 세팅 초기화 실패", false);
 
 	LOG("엔진 초기화 성공");
 	return true;
@@ -46,7 +52,7 @@ WPARAM Engine::Run()
 	//앱 초기화
 	CHECK(app->Init(), "앱 초기화 실패", false);
 
-	commandObject->FlushCommandQueue();
+	CMD_OBJ->FlushCommandQueue();
 
 	//TODO 메쉬 생성
 	GeometryManager::GetInstance()->CreateBox(Vector3{ 100.0f,100.0f,100.0f });
@@ -77,30 +83,11 @@ bool Engine::InitWindow()
 	return true;
 }
 
-bool Engine::InitDirectX()
-{
-	LOG("DX12 초기화 시작");
-
-	device = std::make_unique<Device>();
-	commandObject = std::make_unique<CommandObject>();
-	swapChain = std::make_unique<SwapChain>();
-	pipelineStateObject = std::make_unique<PipelineStateObject>();
-
-	CHECK(device->Init(), "디바이스 초기화 실패", false);
-	CHECK(commandObject->Init(device->GetDevice()), "커맨드 오브젝트 초기화 실패", false);
-	CHECK(swapChain->Init(device->GetDevice(), device->GetFactory(), commandObject->GetCommandQueue()), "스왑체인 초기화 실패", false);
-	CHECK(pipelineStateObject->Init(device->GetDevice()), "파이프라인 스테이트 초기화 실패", false);
-	
-	CHECK(ResizeWindow(), "윈도우 사이즈 조정 실패", false);
-
-	LOG("DX12 초기화 성공");
-	return true;
-}
-
 bool Engine::InitManager()
 {
 	LOG("매니저 초기화 시작");
 
+	CHECK(RenderManager::GetInstance()->Init(), "렌더링 매니저 초기화 실패", false);
 	CHECK(CameraManager::GetInstance()->Init(), "카메라 매니저 초기화 실패", false);
 	CHECK(GeometryManager::GetInstance()->Init(), "지오메트리 매니저 초기화 실패", false);
 	CHECK(InputManager::GetInstance()->Init(), "입력 매니저 초기화 실패", false);
@@ -169,7 +156,8 @@ bool Engine::InitEngineSetting()
 	msQualityLevels.NumQualityLevels = 0;
 
 	HRESULT hr{};
-	hr = device->GetDevice()->CheckFeatureSupport(
+	
+	hr = DEVICE_OBJ->GetDevice()->CheckFeatureSupport(
 		D3D12_FEATURE_MULTISAMPLE_QUALITY_LEVELS,
 		&msQualityLevels,
 		sizeof(msQualityLevels));
@@ -202,21 +190,23 @@ void Engine::Update(float DeltaTime)
 void Engine::RenderBegin()
 {
 	HRESULT hr{};
-	Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> cmdList = commandObject->GetCommandList();
-	Microsoft::WRL::ComPtr<ID3D12CommandAllocator> cmdAlloc = commandObject->GetCommandAllocator();
+	
+	Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> cmdList = CMD_OBJ->GetCommandList();
+	Microsoft::WRL::ComPtr<ID3D12CommandAllocator> cmdAlloc = CMD_OBJ->GetCommandAllocator();
+
 	hr = cmdAlloc->Reset();
 	hr = cmdList->Reset(cmdAlloc.Get(), nullptr);
 
 	//전면버퍼와 후면버퍼의 교체
 	D3D12_RESOURCE_BARRIER barrier = CD3DX12_RESOURCE_BARRIER::Transition(
-		swapChain->GetBackBuffer().Get(),
+		SWAP_CHAIN_OBJ->GetBackBuffer().Get(),
 		D3D12_RESOURCE_STATE_PRESENT,
 		D3D12_RESOURCE_STATE_RENDER_TARGET);
 
-	cmdList->SetGraphicsRootSignature(pipelineStateObject->GetRootSignature()->GetRootSignature(E_ROOT_SIGNATURE_FLAG::DEFAULT).Get());
-	pipelineStateObject->GetRootSignature()->ClearTable(E_ROOT_SIGNATURE_FLAG::DEFAULT);
+	cmdList->SetGraphicsRootSignature(PSO->GetRootSignature()->GetRootSignature(E_ROOT_SIGNATURE_FLAG::DEFAULT).Get());
+	PSO->GetRootSignature()->ClearTable(E_ROOT_SIGNATURE_FLAG::DEFAULT);
 
-	ID3D12DescriptorHeap* tableDescriptorHeap = pipelineStateObject->GetRootSignature()->GetTableDescriptorHeaps(E_ROOT_SIGNATURE_FLAG::DEFAULT).Get();
+	ID3D12DescriptorHeap* tableDescriptorHeap = PSO->GetRootSignature()->GetTableDescriptorHeaps(E_ROOT_SIGNATURE_FLAG::DEFAULT).Get();
 
 	if (tableDescriptorHeap != nullptr)
 	{
@@ -225,17 +215,17 @@ void Engine::RenderBegin()
 
 	cmdList->ResourceBarrier(1, &barrier);
 
-	cmdList->RSSetViewports(1, &swapChain->GetViewport());
-	cmdList->RSSetScissorRects(1, &swapChain->GetScissorRect());
+	cmdList->RSSetViewports(1, &SWAP_CHAIN_OBJ->GetViewport());
+	cmdList->RSSetScissorRects(1, &SWAP_CHAIN_OBJ->GetScissorRect());
 
-	D3D12_CPU_DESCRIPTOR_HANDLE backBufferView = swapChain->GetBackBufferRTV();
+	D3D12_CPU_DESCRIPTOR_HANDLE backBufferView = SWAP_CHAIN_OBJ->GetBackBufferRTV();
 	cmdList->ClearRenderTargetView(backBufferView, GLOBAL::CLEAR_COLOR, 0, nullptr);
 
-	D3D12_CPU_DESCRIPTOR_HANDLE depthStencilView = pipelineStateObject->GetDepthStencilObject()->GetDSVHandle();
+	D3D12_CPU_DESCRIPTOR_HANDLE depthStencilView = PSO->GetDepthStencilObject()->GetDSVHandle();
 	cmdList->OMSetRenderTargets(1, &backBufferView, FALSE, &depthStencilView);
 	cmdList->ClearDepthStencilView(depthStencilView, D3D12_CLEAR_FLAG_DEPTH | D3D12_CLEAR_FLAG_STENCIL, 1.0, 0, 0, nullptr);
 
-	Microsoft::WRL::ComPtr<ID3D12PipelineState> pso = pipelineStateObject->GetPipelineStateObject(E_RENDERING_FLAG::DEFAULT);
+	Microsoft::WRL::ComPtr<ID3D12PipelineState> pso = PSO->GetPipelineStateObject(E_RENDERING_FLAG::DEFAULT);
 
 	cmdList->SetPipelineState(pso.Get());
 }
@@ -251,59 +241,22 @@ void Engine::Render()
 
 void Engine::RenderEnd()
 {
-	Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> cmdList = commandObject->GetCommandList();
+	Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> cmdList = CMD_OBJ->GetCommandList();
 
 	D3D12_RESOURCE_BARRIER barrier = CD3DX12_RESOURCE_BARRIER::Transition(
-		swapChain->GetBackBuffer().Get(),
+		SWAP_CHAIN_OBJ->GetBackBuffer().Get(),
 		D3D12_RESOURCE_STATE_RENDER_TARGET,
 		D3D12_RESOURCE_STATE_PRESENT);
 
 	cmdList->ResourceBarrier(1, &barrier);
 	HRESULT hr = cmdList->Close();
 	ID3D12CommandList* cmdlistArr[]{ cmdList.Get() };
-	commandObject->GetCommandQueue()->ExecuteCommandLists(_countof(cmdlistArr), cmdlistArr);
-	swapChain->Present();
+	CMD_OBJ->GetCommandQueue()->ExecuteCommandLists(_countof(cmdlistArr), cmdlistArr);
+	SWAP_CHAIN_OBJ->Present();
 
-	commandObject->FlushCommandQueue();
+	CMD_OBJ->FlushCommandQueue();
 
-	swapChain->SwapIndex();
-}
-
-bool Engine::ResizeWindow()
-{
-	LOG("스왑체인 리사이즈 시작");
-
-	//이전 커맨드가 모두 끝날 때까지 대기
-	CHECK(commandObject->FlushCommandQueue(), "커맨드 큐 비우기 실패", false);
-
-	HRESULT hr{};
-
-	CHECK(commandObject->ResetCmdList(), "커맨드 리스트 리셋 실패", false);
-
-	CHECK(SUCCEEDED(hr), "커맨드 리스트 리셋 실패", false);
-
-	//기존의 스왑 체인 버퍼와 뎁스 스텐실 버퍼를 해제
-	swapChain->ResetSwapChain();
-	pipelineStateObject->GetDepthStencilObject()->ResetDepthStencilBuffer();
-
-	CHECK(swapChain->CreateSwapChainBuffer(device->GetDevice()), "스왑체인 버퍼 생성 실패", false);
-	CHECK(pipelineStateObject->GetDepthStencilObject()->CreateDepthStencilBuffer(device->GetDevice()), "뎁스 스텐실 버퍼 생성 실패", false);
-	
-	//뎁스 스텐실 버퍼를 D3D12_RESOURCE_STATE_DEPTH_WRITE 상태로 변경하여 렌더링 시 깊이 쓰기 가능하도록 설정
-	D3D12_RESOURCE_BARRIER barrier{ CD3DX12_RESOURCE_BARRIER::Transition(
-		pipelineStateObject->GetDepthStencilObject()->GetDepthStencilBuffer().Get(),
-		D3D12_RESOURCE_STATE_COMMON,
-		D3D12_RESOURCE_STATE_DEPTH_WRITE) };
-	commandObject->GetCommandList()->ResourceBarrier(1, &barrier);
-	commandObject->ExecuteCommandList();
-
-	CHECK(commandObject->FlushCommandQueue(), "커맨드 큐 비우기 실패", false);
-
-	swapChain->SetScreenViewport();
-	swapChain->SetScissorRect();
-
-	LOG("스왑체인 리사이즈 성공");
-	return true;
+	SWAP_CHAIN_OBJ->SwapIndex();
 }
 
 //extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND Handle, UINT Message, WPARAM wParam, LPARAM lParam);

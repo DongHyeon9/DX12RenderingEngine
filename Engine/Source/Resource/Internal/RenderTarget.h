@@ -16,7 +16,7 @@ private:
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> descriptorHeap{};
 
 public:
-	bool Init(Microsoft::WRL::ComPtr<ID3D12Device> Device, std::vector<DXGI_FORMAT> Formats);
+	bool Init(std::vector<DXGI_FORMAT> Formats);
 	void ResetBuffer();
 
 protected:

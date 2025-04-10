@@ -27,16 +27,13 @@
     <ClInclude Include="Source\Engine\AppBase.h" />
     <ClInclude Include="Source\Engine\Engine.h" />
     <ClInclude Include="Source\Engine\Render\CommandObject.h" />
-    <ClInclude Include="Source\Engine\Render\Device.h" />
+    <ClInclude Include="Source\Engine\Render\DeviceObject.h" />
     <ClInclude Include="Source\Engine\Render\PipelineStateObject.h" />
     <ClInclude Include="Source\Engine\Render\PipelineStateObject\BlendStateObject.h" />
     <ClInclude Include="Source\Engine\Render\PipelineStateObject\DepthStencilObject.h" />
     <ClInclude Include="Source\Engine\Render\PipelineStateObject\RasterizerStateObject.h" />
     <ClInclude Include="Source\Engine\Render\PipelineStateObject\RenderTargetObject.h" />
-    <ClInclude Include="Source\Engine\Render\PipelineStateObject\RenderTarget\RenderTarget.h" />
-    <ClInclude Include="Source\Engine\Render\PipelineStateObject\RootArgument\DescriptorTable.h" />
-    <ClInclude Include="Source\Engine\Render\PipelineStateObject\RootArgument\RootArguments.h" />
-    <ClInclude Include="Source\Engine\Render\PipelineStateObject\RootSignature.h" />
+    <ClInclude Include="Source\Engine\Render\PipelineStateObject\RootSignatureObject.h" />
     <ClInclude Include="Source\Engine\Render\PipelineStateObject\ShaderObject.h" />
     <ClInclude Include="Source\Engine\Render\PipelineStateObject\Shader\DomainShaderObject.h" />
     <ClInclude Include="Source\Engine\Render\PipelineStateObject\Shader\GeometryShaderObject.h" />
@@ -44,7 +41,7 @@
     <ClInclude Include="Source\Engine\Render\PipelineStateObject\Shader\PixelShaderObject.h" />
     <ClInclude Include="Source\Engine\Render\PipelineStateObject\Shader\ShaderObjectBase.h" />
     <ClInclude Include="Source\Engine\Render\PipelineStateObject\Shader\VertexShaderObject.h" />
-    <ClInclude Include="Source\Engine\Render\SwapChain.h" />
+    <ClInclude Include="Source\Engine\Render\SwapChainObject.h" />
     <ClInclude Include="Source\Engine\Scene.h" />
     <ClInclude Include="Source\Header\d3dx12.h" />
     <ClInclude Include="Source\Header\EngineCore.h" />
@@ -58,6 +55,7 @@
     <ClInclude Include="Source\Manager\CameraManager.h" />
     <ClInclude Include="Source\Manager\GeometryManager.h" />
     <ClInclude Include="Source\Manager\InputManager.h" />
+    <ClInclude Include="Source\Manager\RenderManager.h" />
     <ClInclude Include="Source\Manager\ResourceManager.h" />
     <ClInclude Include="Source\Manager\TimerManager.h" />
     <ClInclude Include="Source\Object\Actor.h" />
@@ -66,7 +64,9 @@
     <ClInclude Include="Source\Resource\External\Resource.h" />
     <ClInclude Include="Source\Resource\External\Texture.h" />
     <ClInclude Include="Source\Resource\Internal\ConstantBuffer.h" />
+    <ClInclude Include="Source\Resource\Internal\DescriptorTable.h" />
     <ClInclude Include="Source\Resource\Internal\Material.h" />
+    <ClInclude Include="Source\Resource\Internal\RenderTarget.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Header\EngineUtil.inl">
@@ -82,28 +82,26 @@
     <ClCompile Include="Source\Engine\AppBase.cpp" />
     <ClCompile Include="Source\Engine\Engine.cpp" />
     <ClCompile Include="Source\Engine\Render\CommandObject.cpp" />
-    <ClCompile Include="Source\Engine\Render\Device.cpp" />
+    <ClCompile Include="Source\Engine\Render\DeviceObject.cpp" />
     <ClCompile Include="Source\Engine\Render\PipelineStateObject.cpp" />
     <ClCompile Include="Source\Engine\Render\PipelineStateObject\BlendStateObject.cpp" />
     <ClCompile Include="Source\Engine\Render\PipelineStateObject\DepthStencilObject.cpp" />
     <ClCompile Include="Source\Engine\Render\PipelineStateObject\RasterizerStateObject.cpp" />
     <ClCompile Include="Source\Engine\Render\PipelineStateObject\RenderTargetObject.cpp" />
-    <ClCompile Include="Source\Engine\Render\PipelineStateObject\RenderTarget\RenderTarget.cpp" />
-    <ClCompile Include="Source\Engine\Render\PipelineStateObject\RootArgument\DescriptorTable.cpp" />
-    <ClCompile Include="Source\Engine\Render\PipelineStateObject\RootArgument\RootArguments.cpp" />
-    <ClCompile Include="Source\Engine\Render\PipelineStateObject\RootSignature.cpp" />
+    <ClCompile Include="Source\Engine\Render\PipelineStateObject\RootSignatureObject.cpp" />
     <ClCompile Include="Source\Engine\Render\PipelineStateObject\ShaderObject.cpp" />
     <ClCompile Include="Source\Engine\Render\PipelineStateObject\Shader\DomainShaderObject.cpp" />
     <ClCompile Include="Source\Engine\Render\PipelineStateObject\Shader\GeometryShaderObject.cpp" />
     <ClCompile Include="Source\Engine\Render\PipelineStateObject\Shader\HullShaderObject.cpp" />
     <ClCompile Include="Source\Engine\Render\PipelineStateObject\Shader\PixelShaderObject.cpp" />
     <ClCompile Include="Source\Engine\Render\PipelineStateObject\Shader\VertexShaderObject.cpp" />
-    <ClCompile Include="Source\Engine\Render\SwapChain.cpp" />
+    <ClCompile Include="Source\Engine\Render\SwapChainObject.cpp" />
     <ClCompile Include="Source\Engine\Scene.cpp" />
     <ClCompile Include="Source\Header\EngineCore.cpp" />
     <ClCompile Include="Source\Manager\CameraManager.cpp" />
     <ClCompile Include="Source\Manager\GeometryManager.cpp" />
     <ClCompile Include="Source\Manager\InputManager.cpp" />
+    <ClCompile Include="Source\Manager\RenderManager.cpp" />
     <ClCompile Include="Source\Manager\ResourceManager.cpp" />
     <ClCompile Include="Source\Manager\TimerManager.cpp" />
     <ClCompile Include="Source\Object\Actor.cpp" />
@@ -112,7 +110,9 @@
     <ClCompile Include="Source\Resource\External\Resource.cpp" />
     <ClCompile Include="Source\Resource\External\Texture.cpp" />
     <ClCompile Include="Source\Resource\Internal\ConstantBuffer.cpp" />
+    <ClCompile Include="Source\Resource\Internal\DescriptorTable.cpp" />
     <ClCompile Include="Source\Resource\Internal\Material.cpp" />
+    <ClCompile Include="Source\Resource\Internal\RenderTarget.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Default.hlsli" />

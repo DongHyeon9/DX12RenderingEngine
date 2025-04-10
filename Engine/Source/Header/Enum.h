@@ -104,70 +104,34 @@ enum class E_CBV_REGISTER : uint8
 
 enum class E_SRV_REGISTER : uint8
 {
-	T0 = 0,
+	T0 = static_cast<uint8>(E_CBV_REGISTER::END),
 	T1,
 	T2,
 	T3,
 	T4,
-
-	END
-};
-
-enum class E_UAV_REGISTER : uint8
-{
-	U0 = 0,
-	U1,
-	U2,
-	U3,
-	U4,
-
-	END
-};
-
-enum class E_TABLE_CBV_REGISTER : uint8
-{
-	B5 = E_CBV_REGISTER::END,
-	B6,
-	B7,
-	B8,
-	B9,
-	B10,
-	B11,
-	B12,
-	B13,
-	B14,
-
-	END
-};
-
-enum class E_TABLE_SRV_REGISTER : uint8
-{
-	T5 = E_SRV_REGISTER::END,
+	T5,
 	T6,
 	T7,
-	T8,
-	T9,
-	T10,
-	T11,
-	T12,
-	T13,
-	T14,
 
 	END
 };
 
-enum class E_TABLE_UAV_REGISTER : uint8
+enum class E_CONSTANT_BUFFER_TYPE : uint8
 {
-	U5 = E_UAV_REGISTER::END,
-	U6,
-	U7,
-	U8,
-	U9,
-	U10,
-	U11,
-	U12,
-	U13,
-	U14,
+	CAMERA = 0,
+	LIGHT,
+	NORMAL,
+	TRANSFORM,
+	MATERIAL,
+
+	END
+};
+
+enum class E_LIGHT_TYPE : uint8
+{
+	POINT = 0,
+	SPOT,
+	DIRECTIONAL,
 
 	END
 };

@@ -29,18 +29,16 @@ namespace GLOBAL
 namespace ENUM_COUNT
 {
 	constexpr uint8 CBV_REGISTER{ static_cast<uint8>(E_CBV_REGISTER::END) };
-	constexpr uint8 SRV_REGISTER{ static_cast<uint8>(E_SRV_REGISTER::END) };
-	constexpr uint8 UAV_REGISTER{ static_cast<uint8>(E_UAV_REGISTER::END) };
-
-	constexpr uint8 TABLE_CBV_REGISTER{ static_cast<uint8>(E_TABLE_CBV_REGISTER::END) };
-	constexpr uint8 TABLE_SRV_REGISTER{ static_cast<uint8>(E_TABLE_SRV_REGISTER::END) };
-	constexpr uint8 TABLE_UAV_REGISTER{ static_cast<uint8>(E_TABLE_UAV_REGISTER::END) };
+	constexpr uint8 SRV_REGISTER{ static_cast<uint8>(E_SRV_REGISTER::END) - CBV_REGISTER };
+	constexpr uint8 CONSTANT_BUFFER_TYPE{ static_cast<uint8>(E_CONSTANT_BUFFER_TYPE::END) };
 }
 
 namespace LITERAL
 {
 	constexpr uint32 SWAP_CHAIN_BUFFER_COUNT{ 2 };
 	constexpr uint16 REGISTER_COUNT{ ENUM_COUNT::CBV_REGISTER + ENUM_COUNT::SRV_REGISTER };
+	constexpr uint8 GLOBAL_CBUFFER_COUNT{ 3 };
+	constexpr uint8 MAX_LIGHT{ 50 };
 
 	constexpr DXGI_FORMAT BACK_BUFFER_FORMAT{ DXGI_FORMAT_R8G8B8A8_UNORM };
 	constexpr DXGI_FORMAT DEPTH_STENCIL_FORMAT{ DXGI_FORMAT_D24_UNORM_S8_UINT };

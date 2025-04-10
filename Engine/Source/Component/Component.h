@@ -13,7 +13,11 @@ protected:
 private:
 
 public:
+	Component(FString ObjName) :Object(std::move(ObjName)) {}
 	void SetOwner(std::shared_ptr<Actor> Owner);
+	virtual void Update(float DeltaTime) {}
+	virtual void LateUpdate(float DeltaTime) {}
+	virtual void BeginPlay() {}
 
 protected:
 

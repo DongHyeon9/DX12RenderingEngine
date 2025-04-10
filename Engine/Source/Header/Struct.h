@@ -37,6 +37,47 @@ struct CameraData
 	Matrix projection{ Matrix::Identity };
 };
 
+struct LightInfo
+{
+	Vector3 color{ 1.0f, 1.0f, 1.0f };
+	float falloffStart{};
+	Vector3 direction{ 0.0f, 0.0f, 1.0f };
+	float falloffEnd{ 10.0f };
+	Vector3 position{};
+	float spotPower{ 1.0f };
+	E_LIGHT_TYPE lightType{};
+	Vector3 dummy1{};
+};
+
+struct LightData
+{
+	uint32 lightCount{};
+	Vector3 dummy{};
+	std::array<LightInfo, LITERAL::MAX_LIGHT> lightInfo{};
+};
+
+struct NormalVectorData
+{
+	float scale{ 0.1f };
+	float dummy[3];
+};
+
+struct MaterialParam
+{
+	Vector3 ambient{ 0.1f };
+	float shininess{ 1.0f };
+	Vector3 diffuse{ 1.0f };
+	uint32 textureInfo{};
+	Vector3 specular{ 0.5f };
+	float dummy2{};
+};
+
+struct TransformMatrix
+{
+	Matrix worldMat{ Matrix::Identity };
+	Matrix inverseWorldMat{ Matrix::Identity };
+};
+
 struct Vertex
 {
 	Vector3 position{};
@@ -51,7 +92,3 @@ struct MeshData
 	std::vector<uint32> indices;
 };
 
-struct TransformMatrix
-{
-	Matrix matWVP{ Matrix::Identity };
-};

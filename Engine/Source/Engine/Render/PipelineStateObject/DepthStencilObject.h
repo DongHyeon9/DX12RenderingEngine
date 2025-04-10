@@ -23,9 +23,9 @@ private:
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> dsvHeap{};
 
 public:
-	bool Init(Microsoft::WRL::ComPtr<ID3D12Device> Device);
+	bool Init();
 	void ResetDepthStencilBuffer();
-	bool CreateDepthStencilBuffer(Microsoft::WRL::ComPtr<ID3D12Device> Device);
+	bool CreateDepthStencilBuffer();
 
 	FORCEINLINE D3D12_DEPTH_STENCIL_DESC GetDepthStencilState(E_DEPTH_STENCIL_STATE_FLAG DepthStencilFlag)const { return depthStencilStates[static_cast<uint8>(DepthStencilFlag)]; }
 	FORCEINLINE D3D12_CPU_DESCRIPTOR_HANDLE GetDSVHandle() const { return dsvHandle; }

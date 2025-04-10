@@ -55,9 +55,6 @@
     <Filter Include="01.Engine\Render\PipelineStateObject\Shader">
       <UniqueIdentifier>{956f7db6-5e05-4c99-a80c-ef6995d74a5f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01.Engine\Render\PipelineStateObject\RootArgument">
-      <UniqueIdentifier>{27fd0df7-6430-43a1-8d1f-830e8401fbec}</UniqueIdentifier>
-    </Filter>
     <Filter Include="06.Resource\External">
       <UniqueIdentifier>{6207e26d-233a-45e5-99fa-23ccb5948fd8}</UniqueIdentifier>
     </Filter>
@@ -72,9 +69,6 @@
     </Filter>
     <Filter Include="Etc\DX12">
       <UniqueIdentifier>{cc90f3b4-656b-4b0d-b127-95d7889fbc2f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01.Engine\Render\PipelineStateObject\RenderTarget">
-      <UniqueIdentifier>{5f899007-c8b5-41a3-9006-9958825065ad}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -130,12 +124,6 @@
       <Filter>02.Manager</Filter>
     </ClInclude>
     <ClInclude Include="Source\Engine\Render\CommandObject.h">
-      <Filter>01.Engine\Render</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Engine\Render\Device.h">
-      <Filter>01.Engine\Render</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Engine\Render\SwapChain.h">
       <Filter>01.Engine\Render</Filter>
     </ClInclude>
     <ClInclude Include="Source\Object\Actor.h">
@@ -195,12 +183,6 @@
     <ClInclude Include="Source\Engine\Render\PipelineStateObject\RasterizerStateObject.h">
       <Filter>01.Engine\Render\PipelineStateObject</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Engine\Render\PipelineStateObject\RootSignature.h">
-      <Filter>01.Engine\Render\PipelineStateObject</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Engine\Render\PipelineStateObject\RootArgument\RootArguments.h">
-      <Filter>01.Engine\Render\PipelineStateObject\RootArgument</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Resource\External\Texture.h">
       <Filter>06.Resource\External</Filter>
     </ClInclude>
@@ -213,17 +195,29 @@
     <ClInclude Include="Source\Resource\Internal\ConstantBuffer.h">
       <Filter>06.Resource\Internal</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Engine\Render\PipelineStateObject\RootArgument\DescriptorTable.h">
-      <Filter>01.Engine\Render\PipelineStateObject\RootArgument</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Engine\Render\PipelineStateObject\RenderTarget\RenderTarget.h">
-      <Filter>01.Engine\Render\PipelineStateObject\RenderTarget</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Resource\External\Resource.h">
       <Filter>06.Resource\External</Filter>
     </ClInclude>
     <ClInclude Include="Source\Component\SceneComp.h">
       <Filter>05.Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Manager\RenderManager.h">
+      <Filter>02.Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Render\SwapChainObject.h">
+      <Filter>01.Engine\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Render\DeviceObject.h">
+      <Filter>01.Engine\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Resource\Internal\RenderTarget.h">
+      <Filter>06.Resource\Internal</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Resource\Internal\DescriptorTable.h">
+      <Filter>06.Resource\Internal</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Render\PipelineStateObject\RootSignatureObject.h">
+      <Filter>01.Engine\Render\PipelineStateObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -247,12 +241,6 @@
     </ClCompile>
     <ClCompile Include="Source\Manager\InputManager.cpp">
       <Filter>02.Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Engine\Render\Device.cpp">
-      <Filter>01.Engine\Render</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Engine\Render\SwapChain.cpp">
-      <Filter>01.Engine\Render</Filter>
     </ClCompile>
     <ClCompile Include="Source\Engine\Render\CommandObject.cpp">
       <Filter>01.Engine\Render</Filter>
@@ -311,12 +299,6 @@
     <ClCompile Include="Source\Engine\Render\PipelineStateObject\RasterizerStateObject.cpp">
       <Filter>01.Engine\Render\PipelineStateObject</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Engine\Render\PipelineStateObject\RootSignature.cpp">
-      <Filter>01.Engine\Render\PipelineStateObject</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Engine\Render\PipelineStateObject\RootArgument\RootArguments.cpp">
-      <Filter>01.Engine\Render\PipelineStateObject\RootArgument</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Resource\External\Texture.cpp">
       <Filter>06.Resource\External</Filter>
     </ClCompile>
@@ -329,12 +311,6 @@
     <ClCompile Include="Source\Resource\Internal\Material.cpp">
       <Filter>06.Resource\Internal</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Engine\Render\PipelineStateObject\RootArgument\DescriptorTable.cpp">
-      <Filter>01.Engine\Render\PipelineStateObject\RootArgument</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Engine\Render\PipelineStateObject\RenderTarget\RenderTarget.cpp">
-      <Filter>01.Engine\Render\PipelineStateObject\RenderTarget</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Header\EngineCore.cpp">
       <Filter>99.Header</Filter>
     </ClCompile>
@@ -343,6 +319,24 @@
     </ClCompile>
     <ClCompile Include="Source\Component\SceneComp.cpp">
       <Filter>05.Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Manager\RenderManager.cpp">
+      <Filter>02.Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Render\DeviceObject.cpp">
+      <Filter>01.Engine\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Render\SwapChainObject.cpp">
+      <Filter>01.Engine\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Resource\Internal\RenderTarget.cpp">
+      <Filter>06.Resource\Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Resource\Internal\DescriptorTable.cpp">
+      <Filter>06.Resource\Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Render\PipelineStateObject\RootSignatureObject.cpp">
+      <Filter>01.Engine\Render\PipelineStateObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

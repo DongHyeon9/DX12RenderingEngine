@@ -1,13 +1,18 @@
 #include "DepthStencilObject.h"
 #include "Engine\Engine.h"
 
-bool DepthStencilObject::Init(Microsoft::WRL::ComPtr<ID3D12Device> Device)
+#include "Manager\RenderManager.h"
+#include "Engine\Render\DeviceObject.h"
+
+bool DepthStencilObject::Init()
 {
     LOG("뎁스 스텐실 오브젝트 초기화 시작");
 
+	Microsoft::WRL::ComPtr<ID3D12Device> device = DEVICE_OBJ->GetDevice();
+
 	HRESULT hr{};
 
-    dsvDescriptorSize = Device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_DSV);
+    dsvDescriptorSize = device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_DSV);
 
 	LOG("뎁스 스텐실 뷰 생성 시작");
 
@@ -17,10 +22,10 @@ bool DepthStencilObject::Init(Microsoft::WRL::ComPtr<ID3D12Device> Device)
 	depthStencilDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_NONE;	//CPU에서만 접근하므로 플래그 없음
 	depthStencilDesc.NodeMask = 0;								//싱글 GPU 환경이므로 0
 
-	hr = Device->CreateDescriptorHeap(&depthStencilDesc, IID_PPV_ARGS(&dsvHeap));
+	hr = device->CreateDescriptorHeap(&depthStencilDesc, IID_PPV_ARGS(&dsvHeap));
 	if (FAILED(hr))
 	{
-		hr = Device->GetDeviceRemovedReason();
+		hr = device->GetDeviceRemovedReason();
 	}
 	CHECK(SUCCEEDED(hr), "뎁스 스텐실 뷰 생성 실패", false);
 
@@ -35,8 +40,9 @@ void DepthStencilObject::ResetDepthStencilBuffer()
 	depthStencilBuffer.Reset();
 }
 
-bool DepthStencilObject::CreateDepthStencilBuffer(Microsoft::WRL::ComPtr<ID3D12Device> Device)
+bool DepthStencilObject::CreateDepthStencilBuffer()
 {
+	Microsoft::WRL::ComPtr<ID3D12Device> device = DEVICE_OBJ->GetDevice();
 	EngineSetting engineSetting = GEngine->GetEngineSetting();
 	HRESULT hr{};
 
@@ -61,7 +67,7 @@ bool DepthStencilObject::CreateDepthStencilBuffer(Microsoft::WRL::ComPtr<ID3D12D
 
 	CD3DX12_HEAP_PROPERTIES heapProperty{ D3D12_HEAP_TYPE_DEFAULT };	//GPU에 의해 관리되는 기본 힙 사용
 	//뎁스 스텐실 버퍼 생성
-	hr = Device->CreateCommittedResource(
+	hr = device->CreateCommittedResource(
 		&heapProperty,					//힙 속성
 		D3D12_HEAP_FLAG_NONE,			//힙 플래그(특별한 힙 옵션 없음)
 		&depthStencilDesc,				//리소스 설명(뎁스 스텐실 버퍼 설명)
@@ -78,7 +84,7 @@ bool DepthStencilObject::CreateDepthStencilBuffer(Microsoft::WRL::ComPtr<ID3D12D
 	dsvHandle = dsvHeap->GetCPUDescriptorHandleForHeapStart();
 
 	//뎁스 스텐실 뷰 생성
-	Device->CreateDepthStencilView(
+	device->CreateDepthStencilView(
 		depthStencilBuffer.Get(),
 		&dsvDesc,
 		dsvHandle);	//DSV가 저장될 디스크립터 힙의 위치

@@ -1,7 +1,7 @@
 #pragma once
 #include "Component\Component.h"
 
-class MonoBehaviour
+class MonoBehaviour : public Component
 {
 public:
 

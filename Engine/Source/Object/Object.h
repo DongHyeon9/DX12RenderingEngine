@@ -15,7 +15,8 @@ public:
 	Object(FString ObjectName) :objectName(std::move(ObjectName)) {}
 	void Destroy();
 	FORCEINLINE bool IsDestroy()const { return bDestroyFlag; }
-	virtual void BeginDestroy() {}
+	virtual void EndPlay() {}
+	FORCEINLINE FString GetObjectName()const { return objectName; }
 
 protected:
 

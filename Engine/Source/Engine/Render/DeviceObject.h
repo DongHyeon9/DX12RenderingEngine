@@ -1,7 +1,7 @@
 #pragma once
 #include "Header\EngineCore.h"
 
-class Device
+class DeviceObject
 {
 public:
 

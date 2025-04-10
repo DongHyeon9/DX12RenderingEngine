@@ -1,13 +1,16 @@
 #include "Texture.h"
-#include "Engine/Engine.h"
+
+#include "Manager\RenderManager.h"
+#include "Engine\Render\DeviceObject.h"
+#include "Engine\Render\CommandObject.h"
 
 bool Texture::Load(FString FileName)
 {
     __super::Load(FileName);
 	LOG("%s 텍스처 생성 시작", fileName.c_str());
 
-	auto device = GEngine->GetDevice();
-	auto cmdList = GEngine->GetCommandList();
+	Microsoft::WRL::ComPtr<ID3D12Device> device = DEVICE_OBJ->GetDevice();
+	Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> cmdList = CMD_OBJ->GetCommandList();
 
 	FString fullPath = path + fileName;
 	FString ext = std::filesystem::path(fullPath).extension();

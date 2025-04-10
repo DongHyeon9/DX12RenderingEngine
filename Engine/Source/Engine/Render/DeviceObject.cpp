@@ -1,6 +1,6 @@
-#include "Device.h"
+#include "DeviceObject.h"
 
-bool Device::Init()
+bool DeviceObject::Init()
 {
     LOG("디바이스 초기화 시작");
 
@@ -46,7 +46,7 @@ bool Device::Init()
     return true;
 }
 
-void Device::LogAdpaters()
+void DeviceObject::LogAdpaters()
 {
 	//지원하는 어댑터 확인
 	Microsoft::WRL::ComPtr<IDXGIAdapter> adapter{};
@@ -65,7 +65,7 @@ void Device::LogAdpaters()
 		LogAdapterOutputs(adt);
 }
 
-void Device::LogAdapterOutputs(Microsoft::WRL::ComPtr<IDXGIAdapter> Adapter)
+void DeviceObject::LogAdapterOutputs(Microsoft::WRL::ComPtr<IDXGIAdapter> Adapter)
 {
 	//출력되는 디바이스 확인
 	Microsoft::WRL::ComPtr<IDXGIOutput> output{};
@@ -79,7 +79,7 @@ void Device::LogAdapterOutputs(Microsoft::WRL::ComPtr<IDXGIAdapter> Adapter)
 	}
 }
 
-void Device::LogOutputDisplayModes(Microsoft::WRL::ComPtr<IDXGIOutput> Output)
+void DeviceObject::LogOutputDisplayModes(Microsoft::WRL::ComPtr<IDXGIOutput> Output)
 {
 	//디바이스에서 지원하는 해상도 확인
 	uint32 count{};

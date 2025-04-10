@@ -16,6 +16,11 @@ public:										\
 #define KEY_UP(key) InputManager::GetInstance()->GetButtonUp(key)
 #define KEY_PRESS(key) InputManager::GetInstance()->GetButtonPress(key)
 
+#define DEVICE_OBJ RenderManager::GetInstance()->GetDeviceObject()
+#define CMD_OBJ RenderManager::GetInstance()->GetCommandObject()
+#define SWAP_CHAIN_OBJ RenderManager::GetInstance()->GetSwapChainObject()
+#define PSO RenderManager::GetInstance()->GetPipelineStateObject()
+
 #pragma warning(disable : 4302)
 
 #pragma endregion 개발편의

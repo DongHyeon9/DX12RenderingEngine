@@ -1,7 +1,7 @@
 #pragma once
 #include "Header\EngineCore.h"
 
-class SwapChain
+class SwapChainObject
 {
 public:
 
@@ -22,9 +22,9 @@ private:
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> rtvHeap{};
 
 public:
-	bool Init(Microsoft::WRL::ComPtr<ID3D12Device> Device, Microsoft::WRL::ComPtr<IDXGIFactory4> Factory, Microsoft::WRL::ComPtr<ID3D12CommandQueue> CommandQueue);
+	bool Init();
 	void ResetSwapChain();
-	bool CreateSwapChainBuffer(Microsoft::WRL::ComPtr<ID3D12Device> Device);
+	bool CreateSwapChainBuffer();
 	void SetScreenViewport();
 	void SetScissorRect();
 	void Present();
