@@ -1,6 +1,8 @@
 #pragma once
 #include "Header\EngineCore.h"
 
+class Actor;
+
 class Scene
 {
 public:
@@ -8,6 +10,8 @@ public:
 protected:
 
 private:
+	std::vector<std::shared_ptr<Actor>> children{};
+	std::queue<std::shared_ptr<Actor>> addChildren{};
 
 public:
 	bool Init();
@@ -18,6 +22,7 @@ public:
 	void LateUpdate(float DeltaTime);
 	void Render();
 
+	void AddActor(std::shared_ptr<Actor> Actor);
 protected:
 
 private:

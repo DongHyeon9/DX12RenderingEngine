@@ -26,7 +26,7 @@ bool PipelineStateObject::CreatePipelineStateObject()
 	HRESULT hr{};
 	{
 		D3D12_GRAPHICS_PIPELINE_STATE_DESC desc{};
-		desc.pRootSignature = rootSignature->GetRootSignature(E_ROOT_SIGNATURE_FLAG::DEFAULT).Get();
+		desc.pRootSignature = rootSignature->GetSignature().Get();
 		desc.SampleDesc.Count = 1;
 		desc.SampleMask = UINT_MAX;
 

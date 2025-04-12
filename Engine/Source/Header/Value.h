@@ -31,6 +31,7 @@ namespace ENUM_COUNT
 	constexpr uint8 CBV_REGISTER{ static_cast<uint8>(E_CBV_REGISTER::END) };
 	constexpr uint8 SRV_REGISTER{ static_cast<uint8>(E_SRV_REGISTER::END) - CBV_REGISTER };
 	constexpr uint8 CONSTANT_BUFFER_TYPE{ static_cast<uint8>(E_CONSTANT_BUFFER_TYPE::END) };
+	constexpr uint8 TEXTURE_TYPE{ static_cast<uint8>(E_TEXTURE_TYPE::END) };
 }
 
 namespace LITERAL

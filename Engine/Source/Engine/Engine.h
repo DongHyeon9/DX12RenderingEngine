@@ -34,10 +34,7 @@ private:
 
 	void EngineUpdate();
 	void Update(float DeltaTime);
-
-	void RenderBegin();
 	void Render();
-	void RenderEnd();
 };
 
 static LRESULT CALLBACK WndProc(HWND Handle, UINT Message, WPARAM wParam, LPARAM lParam);

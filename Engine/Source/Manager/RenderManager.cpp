@@ -25,6 +25,77 @@ bool RenderManager::Init()
     return true;
 }
 
+void RenderManager::Update(float DeltaTime)
+{
+}
+
+void RenderManager::RenderBegin()
+{
+	HRESULT hr{};
+
+	Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> cmdList = commandObject->GetCommandList();
+	Microsoft::WRL::ComPtr<ID3D12CommandAllocator> cmdAlloc = commandObject->GetCommandAllocator();
+
+	hr = cmdAlloc->Reset();
+	hr = cmdList->Reset(cmdAlloc.Get(), nullptr);
+
+	//전면버퍼와 후면버퍼의 교체
+	D3D12_RESOURCE_BARRIER barrier = CD3DX12_RESOURCE_BARRIER::Transition(
+		swapChain->GetBackBuffer().Get(),
+		D3D12_RESOURCE_STATE_PRESENT,
+		D3D12_RESOURCE_STATE_RENDER_TARGET);
+
+	cmdList->SetGraphicsRootSignature(pipelineStateObject->GetRootSignature()->GetSignature().Get());
+	pipelineStateObject->GetRootSignature()->Clear();
+
+	ID3D12DescriptorHeap* tableDescriptorHeap = pipelineStateObject->GetRootSignature()->GetDescriptorTable().Get();
+
+	if (tableDescriptorHeap != nullptr)
+	{
+		cmdList->SetDescriptorHeaps(1, &tableDescriptorHeap);
+	}
+
+	cmdList->ResourceBarrier(1, &barrier);
+
+	cmdList->RSSetViewports(1, &swapChain->GetViewport());
+	cmdList->RSSetScissorRects(1, &swapChain->GetScissorRect());
+
+	D3D12_CPU_DESCRIPTOR_HANDLE backBufferView = swapChain->GetBackBufferRTV();
+	cmdList->ClearRenderTargetView(backBufferView, GLOBAL::CLEAR_COLOR, 0, nullptr);
+
+	D3D12_CPU_DESCRIPTOR_HANDLE depthStencilView = pipelineStateObject->GetDepthStencilObject()->GetDSVHandle();
+	cmdList->OMSetRenderTargets(1, &backBufferView, FALSE, &depthStencilView);
+	cmdList->ClearDepthStencilView(depthStencilView, D3D12_CLEAR_FLAG_DEPTH | D3D12_CLEAR_FLAG_STENCIL, 1.0, 0, 0, nullptr);
+
+	//TODO 나중에 지워질걸?
+	SetPipelineState(E_RENDERING_FLAG::DEFAULT);
+}
+
+void RenderManager::RenderEnd()
+{
+	Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> cmdList = commandObject->GetCommandList();
+
+	D3D12_RESOURCE_BARRIER barrier = CD3DX12_RESOURCE_BARRIER::Transition(
+		swapChain->GetBackBuffer().Get(),
+		D3D12_RESOURCE_STATE_RENDER_TARGET,
+		D3D12_RESOURCE_STATE_PRESENT);
+
+	cmdList->ResourceBarrier(1, &barrier);
+	HRESULT hr = cmdList->Close();
+	ID3D12CommandList* cmdlistArr[]{ cmdList.Get() };
+	commandObject->GetCommandQueue()->ExecuteCommandLists(_countof(cmdlistArr), cmdlistArr);
+	swapChain->Present();
+
+	commandObject->FlushCommandQueue();
+
+	swapChain->SwapIndex();
+}
+
+void RenderManager::SetPipelineState(E_RENDERING_FLAG Flag)
+{
+	commandObject->GetCommandList()->SetPipelineState(pipelineStateObject->GetPipelineStateObject(Flag).Get());
+}
+
 bool RenderManager::ResizeWindow()
 {
 	LOG("스왑체인 리사이즈 시작");

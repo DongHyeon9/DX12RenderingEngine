@@ -135,3 +135,15 @@ enum class E_LIGHT_TYPE : uint8
 
 	END
 };
+
+enum class E_TEXTURE_TYPE : uint8
+{
+	ALBEDO = 0,
+	NORMAL,
+	METALLIC,
+	ROUGHNESS,
+	AMBIENT,
+	HEIGHT,
+
+	END
+};

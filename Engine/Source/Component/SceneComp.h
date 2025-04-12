@@ -26,6 +26,8 @@ public:
 	void EndPlay()override;
 	void Update(float DeltaTime)override;
 	void LateUpdate(float DeltaTime)override;
+	//E_CONSTANT_BUFFER_TYPE::TRANSFORM데이터가 필요없다면 __super::Render가 아닌
+	//children의 Render를 호출해주고 이후 필요한 로직 작성
 	virtual void Render();
 
 	void AddChild(std::shared_ptr<SceneComp> NewChild);

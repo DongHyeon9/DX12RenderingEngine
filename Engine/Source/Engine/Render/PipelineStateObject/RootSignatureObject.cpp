@@ -2,29 +2,82 @@
 
 #include "Manager\RenderManager.h"
 #include "Engine\Render\DeviceObject.h"
+#include "Engine\Render\CommandObject.h"
 
 #include "Resource\Internal\DescriptorTable.h"
 #include "Resource\Internal\ConstantBuffer.h"
+#include "Resource\External\Texture.h"
 
 bool RootSignatureObject::Init()
 {
     LOG("루트 시그니처 초기화 시작");
 
-    CHECK(!CreateSamplerDesc(), "샘플러 디스크립션 생성 실패", false);
-    CHECK(!CreateRootSignature(), "루트 시그니처 생성 실패", false);
+    CHECK(CreateSamplerDesc(), "샘플러 디스크립션 생성 실패", false);
+    CHECK(CreateRootSignature(), "루트 시그니처 생성 실패", false);
 
     descriptorTable = std::make_shared<DescriptorTable>();
     descriptorTable->Init(256);
 
-    CHECK(!CreateConstantBuffer(E_CBV_REGISTER::B0, E_CONSTANT_BUFFER_TYPE::CAMERA, sizeof(CameraData), 1), "카메라 콘스탄트 버퍼 생성 실패", false);
-    CHECK(!CreateConstantBuffer(E_CBV_REGISTER::B1, E_CONSTANT_BUFFER_TYPE::LIGHT, sizeof(LightData), 1), "라이트 콘스탄트 버퍼 생성 실패", false);
-    CHECK(!CreateConstantBuffer(E_CBV_REGISTER::B2, E_CONSTANT_BUFFER_TYPE::NORMAL, sizeof(NormalVectorData), 1), "노말벡터 콘스탄트 버퍼 생성 실패", false);
+    CHECK(CreateConstantBuffer(E_CBV_REGISTER::B0, E_CONSTANT_BUFFER_TYPE::CAMERA, sizeof(CameraData), 1), "카메라 콘스탄트 버퍼 생성 실패", false);
+    CHECK(CreateConstantBuffer(E_CBV_REGISTER::B1, E_CONSTANT_BUFFER_TYPE::LIGHT, sizeof(LightData), 1), "라이트 콘스탄트 버퍼 생성 실패", false);
+    CHECK(CreateConstantBuffer(E_CBV_REGISTER::B2, E_CONSTANT_BUFFER_TYPE::NORMAL, sizeof(NormalVectorData), 1), "노말벡터 콘스탄트 버퍼 생성 실패", false);
 
-    CHECK(!CreateConstantBuffer(E_CBV_REGISTER::B3, E_CONSTANT_BUFFER_TYPE::TRANSFORM, sizeof(TransformMatrix), 256), "트랜스폼 콘스탄트 버퍼 생성 실패", false);
-    CHECK(!CreateConstantBuffer(E_CBV_REGISTER::B4, E_CONSTANT_BUFFER_TYPE::MATERIAL, sizeof(MaterialParam), 256), "머티리얼 콘스탄트 버퍼 생성 실패", false);
+    CHECK(CreateConstantBuffer(E_CBV_REGISTER::B3, E_CONSTANT_BUFFER_TYPE::TRANSFORM, sizeof(TransformMatrix), 256), "트랜스폼 콘스탄트 버퍼 생성 실패", false);
+    CHECK(CreateConstantBuffer(E_CBV_REGISTER::B4, E_CONSTANT_BUFFER_TYPE::MATERIAL, sizeof(MaterialParam), 256), "머티리얼 콘스탄트 버퍼 생성 실패", false);
 
     LOG("루트 시그니처 초기화 성공");
     return true;
+}
+
+Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> RootSignatureObject::GetDescriptorTable() const
+{
+    return descriptorTable->GetDescriptorTable();
+}
+
+void RootSignatureObject::PushData(E_CONSTANT_BUFFER_TYPE BufferType, void* Buffer, uint32 Size)
+{
+    uint8 idx = static_cast<uint8>(BufferType);
+    descriptorTable->SetCBV(constantBuffers[idx]->PushData(Buffer, Size), static_cast<E_CBV_REGISTER>(idx));
+}
+
+void RootSignatureObject::PushGlobalData(E_CONSTANT_BUFFER_TYPE BufferType, void* Buffer, uint32 Size)
+{
+    uint8 idx = static_cast<uint8>(BufferType);
+    constantBuffers[idx]->PushGlobalData(Buffer, Size);
+}
+
+void RootSignatureObject::PushTexture(E_SRV_REGISTER Register, std::shared_ptr<Texture> Texture)
+{
+    descriptorTable->SetSRV(Texture->GetSRVHandle(), Register);
+}
+
+void RootSignatureObject::PushTexture(E_SRV_REGISTER Register, D3D12_CPU_DESCRIPTOR_HANDLE SrcHandle)
+{
+    descriptorTable->SetSRV(SrcHandle, Register);
+}
+
+void RootSignatureObject::PushGlobalTexture(E_SRV_REGISTER Register, std::shared_ptr<Texture> Texture)
+{
+    uint32 idx = static_cast<uint32>(Register) - static_cast<uint32>(E_SRV_REGISTER::T0);
+    CMD_OBJ->GetCommandList()->SetGraphicsRootShaderResourceView(idx, Texture->GetTexture()->GetGPUVirtualAddress());
+}
+
+void RootSignatureObject::PushGlobalTexture(E_SRV_REGISTER Register, D3D12_GPU_VIRTUAL_ADDRESS SrcAddress)
+{
+    uint32 idx = static_cast<uint32>(Register) - static_cast<uint32>(E_SRV_REGISTER::T0);
+    CMD_OBJ->GetCommandList()->SetGraphicsRootShaderResourceView(idx, SrcAddress);
+}
+
+void RootSignatureObject::Clear()
+{
+    descriptorTable->Clear();
+    for (auto constantBuffer : constantBuffers)
+        constantBuffer->Clear();
+}
+
+void RootSignatureObject::CommitDescriptor()
+{
+    descriptorTable->CommitTable();
 }
 
 bool RootSignatureObject::CreateSamplerDesc()
@@ -86,7 +139,7 @@ bool RootSignatureObject::CreateRootSignature()
         blobSignature->GetBufferPointer(),
         blobSignature->GetBufferSize(),
         IID_PPV_ARGS(&signature));
-    CHECK(FAILED(hr), "루트 시그니처 생성 실패", false);
+    CHECK(SUCCEEDED(hr), "루트 시그니처 생성 실패", false);
     LOG("루트 시그니처 생성");
 
     LOG("루트 시그니처 생성 성공");
@@ -98,7 +151,7 @@ bool RootSignatureObject::CreateConstantBuffer(E_CBV_REGISTER Register, E_CONSTA
     LOG("콘스탄트 버퍼 생성");
 
     uint8 type = static_cast<uint8>(Register);
-    assert(constantBuffers.size() == type);
+    assert(constantBuffers.size() > type);
     uint8 idx = static_cast<uint8>(BufferType);
     constantBuffers[idx] = std::make_shared<ConstantBuffer>();
     constantBuffers[idx]->Init(Register, BufferSize, Count);

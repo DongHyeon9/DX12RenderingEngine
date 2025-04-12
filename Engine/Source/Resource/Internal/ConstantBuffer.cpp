@@ -24,8 +24,8 @@ bool ConstantBuffer::Init(E_CBV_REGISTER Register, uint32 Size, uint32 Count)
 	elementSize = EngineUtil::Shader::CalulateConstantBufferSize(Size);
 	elementCount = Count;
 
-	CHECK(!CreateBuffer(), "버퍼 생성 실패", false);
-	CHECK(!CreateView(), "뷰 생성 실패", false);
+	CHECK(CreateBuffer(), "버퍼 생성 실패", false);
+	CHECK(CreateView(), "뷰 생성 실패", false);
 
 	LOG("콘트탄트 버퍼 초기화 성공");
 	return true;
@@ -36,24 +36,21 @@ void ConstantBuffer::Clear()
 	currentIndex = 0;
 }
 
-void ConstantBuffer::PushData(void* Buffer, uint32 Size)
+D3D12_CPU_DESCRIPTOR_HANDLE ConstantBuffer::PushData(void* Buffer, uint32 Size)
 {
 	assert(currentIndex < elementCount);
 	assert(elementSize == (EngineUtil::Shader::CalulateConstantBufferSize(Size)));
 
 	memcpy(&mappedBuffer[currentIndex * elementSize], Buffer, Size);
 
-	D3D12_CPU_DESCRIPTOR_HANDLE handle = GetCPUHandle(currentIndex);
-	TableDescriptorHeap::GetInstance()->SetCBV(handle, cbvRegister);
-
-	++currentIndex;
+	return GetCPUHandle(currentIndex++);
 }
 
-void ConstantBuffer::PushGlobalData(void* Buffer, uint32 Size, uint32 Index)
+void ConstantBuffer::PushGlobalData(void* Buffer, uint32 Size)
 {
 	assert(elementSize == (EngineUtil::Shader::CalulateConstantBufferSize(Size)));
 	memcpy(&mappedBuffer[0], Buffer, Size);
-	CMD_OBJ->GetCommandList()->SetGraphicsRootConstantBufferView(Index, GetGPUVirtualAddress(0));
+	CMD_OBJ->GetCommandList()->SetGraphicsRootConstantBufferView(static_cast<uint32>(cbvRegister), GetGPUVirtualAddress(0));
 }
 
 D3D12_GPU_VIRTUAL_ADDRESS ConstantBuffer::GetGPUVirtualAddress(uint32 Index)
@@ -84,11 +81,11 @@ bool ConstantBuffer::CreateBuffer()
 		nullptr,
 		IID_PPV_ARGS(&cbvBuffer));
 
-	CHECK(FAILED(hr), "리소스 커밋 실패", false);
+	CHECK(SUCCEEDED(hr), "리소스 커밋 실패", false);
 	LOG("리소스 커밋");
 
 	hr = cbvBuffer->Map(0, nullptr, reinterpret_cast<void**>(&mappedBuffer));
-	CHECK(FAILED(hr), "버퍼 맵핑 실패", false);
+	CHECK(SUCCEEDED(hr), "버퍼 맵핑 실패", false);
 	LOG("버퍼 맵핑");
 
 	LOG("버퍼 생성 완료");
@@ -108,7 +105,7 @@ bool ConstantBuffer::CreateView()
 
 	HRESULT hr{};
 	hr = device->CreateDescriptorHeap(&desc, IID_PPV_ARGS(&cbvHeap));
-	CHECK(FAILED(hr), "디스크립터 힙 생성 실패", false);
+	CHECK(SUCCEEDED(hr), "디스크립터 힙 생성 실패", false);
 	LOG("디스크립터 힙 생성");
 
 	cpuHandleBegin = cbvHeap->GetCPUDescriptorHandleForHeapStart();

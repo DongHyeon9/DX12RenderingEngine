@@ -3,6 +3,7 @@
 
 class DescriptorTable;
 class ConstantBuffer;
+class Texture;
 
 enum class E_SAMPLER_TYPE : uint8
 {
@@ -29,6 +30,15 @@ private:
 public:
 	bool Init();
 	FORCEINLINE Microsoft::WRL::ComPtr<ID3D12RootSignature> GetSignature()const { return signature; }
+	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> GetDescriptorTable()const; 
+	void PushData(E_CONSTANT_BUFFER_TYPE BufferType, void* Buffer, uint32 Size);
+	void PushGlobalData(E_CONSTANT_BUFFER_TYPE BufferType, void* Buffer, uint32 Size);
+	void PushTexture(E_SRV_REGISTER Register, std::shared_ptr<Texture> Texture);
+	void PushTexture(E_SRV_REGISTER Register, D3D12_CPU_DESCRIPTOR_HANDLE SrcHandle);
+	void PushGlobalTexture(E_SRV_REGISTER Register, std::shared_ptr<Texture> Texture);
+	void PushGlobalTexture(E_SRV_REGISTER Register, D3D12_GPU_VIRTUAL_ADDRESS SrcAddress);
+	void Clear();
+	void CommitDescriptor();
 
 protected:
 

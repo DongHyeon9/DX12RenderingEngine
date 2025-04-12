@@ -4,9 +4,9 @@
 #include "PipelineStateObject\RasterizerStateObject.h"
 #include "PipelineStateObject\RenderTargetObject.h"
 #include "PipelineStateObject\ShaderObject.h"
-#include "PipelineStateObject\RootSignature.h"
+#include "PipelineStateObject\RootSignatureObject.h"
 
-enum class E_RENDERING_FLAG
+enum class E_RENDERING_FLAG : uint8
 {
 	DEFAULT = 0,
 
@@ -31,6 +31,7 @@ private:
 
 public:
 	bool Init();
+
 
 	FORCEINLINE Microsoft::WRL::ComPtr<ID3D12PipelineState> GetPipelineStateObject(E_RENDERING_FLAG Flag) { return pipelineStateObjects[static_cast<uint8>(Flag)]; }
 	FORCEINLINE std::shared_ptr<BlendStateObject> GetBlendStateObject()const { return blendStateObject; }

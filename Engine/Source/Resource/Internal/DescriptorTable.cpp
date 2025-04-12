@@ -19,7 +19,7 @@ bool DescriptorTable::Init(uint32 Count)
 
 	HRESULT hr{};
 	hr = device->CreateDescriptorHeap(&desc, IID_PPV_ARGS(&descHeap));
-	CHECK(FAILED(hr), "디스크립터 힙 생성 실패", false);
+	CHECK(SUCCEEDED(hr), "디스크립터 힙 생성 실패", false);
 	LOG("디스크립터 힙 생성");
 
 	handleSize = device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);

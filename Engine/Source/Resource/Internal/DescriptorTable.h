@@ -23,7 +23,7 @@ public:
 	void SetSRV(D3D12_CPU_DESCRIPTOR_HANDLE srcHandle, E_SRV_REGISTER Register);
 	void CommitTable();
 
-	FORCEINLINE Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> GetDescriptorHeap()const { return descHeap; }
+	FORCEINLINE Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> GetDescriptorTable()const { return descHeap; }
 	D3D12_CPU_DESCRIPTOR_HANDLE GetCPUHandle(E_CBV_REGISTER Register);
 	D3D12_CPU_DESCRIPTOR_HANDLE GetCPUHandle(E_SRV_REGISTER Register);
 

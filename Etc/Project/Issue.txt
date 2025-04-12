@@ -1,2 +1,1 @@
-PipelineStateObject::GetRootSignature()->SetUAV,SetSRV,SetCBV,SetUAVTable,SetSRVTable,SetCBVTable 로 데이터 설정, CommitData로 데이터 전송
-ClearTable로 초기화
+assimp dll 로드 안됨

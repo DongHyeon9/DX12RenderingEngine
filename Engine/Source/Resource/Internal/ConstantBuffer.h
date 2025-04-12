@@ -25,8 +25,8 @@ public:
 
 	bool Init(E_CBV_REGISTER Register, uint32 Size, uint32 Count);
 	void Clear();
-	void PushData(void* Buffer, uint32 Size);
-	void PushGlobalData(void* Buffer, uint32 Size, uint32 Index);
+	D3D12_CPU_DESCRIPTOR_HANDLE PushData(void* Buffer, uint32 Size);
+	void PushGlobalData(void* Buffer, uint32 Size);
 	D3D12_GPU_VIRTUAL_ADDRESS GetGPUVirtualAddress(uint32 Index);
 	D3D12_CPU_DESCRIPTOR_HANDLE GetCPUHandle(uint32 Index);
 

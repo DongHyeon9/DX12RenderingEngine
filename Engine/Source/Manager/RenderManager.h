@@ -6,6 +6,8 @@ class CommandObject;
 class SwapChainObject;
 class PipelineStateObject;
 
+enum class E_RENDERING_FLAG : uint8;
+
 class RenderManager
 {
 	DECLARE_SINGLETON(RenderManager);
@@ -21,6 +23,11 @@ private:
 
 public:
 	bool Init();
+
+	void Update(float DeltaTime);
+	void RenderBegin();
+	void RenderEnd();
+	void SetPipelineState(E_RENDERING_FLAG Flag);
 
 	FORCEINLINE std::shared_ptr<DeviceObject> GetDeviceObject()const { return device; }
 	FORCEINLINE std::shared_ptr<CommandObject> GetCommandObject()const { return commandObject; }

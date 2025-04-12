@@ -70,6 +70,9 @@
     <Filter Include="Etc\DX12">
       <UniqueIdentifier>{cc90f3b4-656b-4b0d-b127-95d7889fbc2f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="99.Header\ThirdParty\assimp">
+      <UniqueIdentifier>{2dc9cc95-5ab8-4165-ba6c-6c0c3e886296}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Header\Enum.h">
@@ -219,6 +222,15 @@
     <ClInclude Include="Source\Engine\Render\PipelineStateObject\RootSignatureObject.h">
       <Filter>01.Engine\Render\PipelineStateObject</Filter>
     </ClInclude>
+    <ClInclude Include="..\Lib\ThirdParty\assimp_x64-windows\include\assimp\Importer.hpp">
+      <Filter>99.Header\ThirdParty\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\ThirdParty\assimp_x64-windows\include\assimp\postprocess.h">
+      <Filter>99.Header\ThirdParty\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\ThirdParty\assimp_x64-windows\include\assimp\scene.h">
+      <Filter>99.Header\ThirdParty\assimp</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Engine\AppBase.cpp">
@@ -340,11 +352,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Default.hlsli">
-      <Filter>03.Shader\Header</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <FxCompile Include="Source\Shader\Geometry\GS_Default.hlsl">
       <Filter>03.Shader\Geometry</Filter>
     </FxCompile>
@@ -380,5 +387,10 @@
     <Text Include="..\Etc\DX12\COM.txt">
       <Filter>Etc\DX12</Filter>
     </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Source\Shader\Header\Default.hlsli">
+      <Filter>03.Shader\Header</Filter>
+    </None>
   </ItemGroup>
 </Project>

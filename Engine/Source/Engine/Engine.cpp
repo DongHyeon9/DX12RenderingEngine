@@ -49,14 +49,12 @@ WPARAM Engine::Run()
 {
 	LOG("프로그램 실행");
 
+	CMD_OBJ->ResetCmdList();
+
 	//앱 초기화
 	CHECK(app->Init(), "앱 초기화 실패", false);
 
 	CMD_OBJ->FlushCommandQueue();
-
-	//TODO 메쉬 생성
-	GeometryManager::GetInstance()->CreateBox(Vector3{ 100.0f,100.0f,100.0f });
-	ResourceManager::GetInstance()->GetResource<Texture>(TEXT("T_Earth.jpg"));
 
 	//프로그램 메인 루프
 	MSG msg{};
@@ -175,6 +173,7 @@ void Engine::EngineUpdate()
 	const float deltaTime{ TimerManager::GetInstance()->Update() };
 	InputManager::GetInstance()->Update();
 	CameraManager::GetInstance()->Update(deltaTime);
+	RenderManager::GetInstance()->Update(deltaTime);
 
 	Update(deltaTime);
 	Render();
@@ -187,76 +186,13 @@ void Engine::Update(float DeltaTime)
 	app->LateUpdate(DeltaTime);
 }
 
-void Engine::RenderBegin()
-{
-	HRESULT hr{};
-	
-	Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> cmdList = CMD_OBJ->GetCommandList();
-	Microsoft::WRL::ComPtr<ID3D12CommandAllocator> cmdAlloc = CMD_OBJ->GetCommandAllocator();
-
-	hr = cmdAlloc->Reset();
-	hr = cmdList->Reset(cmdAlloc.Get(), nullptr);
-
-	//전면버퍼와 후면버퍼의 교체
-	D3D12_RESOURCE_BARRIER barrier = CD3DX12_RESOURCE_BARRIER::Transition(
-		SWAP_CHAIN_OBJ->GetBackBuffer().Get(),
-		D3D12_RESOURCE_STATE_PRESENT,
-		D3D12_RESOURCE_STATE_RENDER_TARGET);
-
-	cmdList->SetGraphicsRootSignature(PSO->GetRootSignature()->GetRootSignature(E_ROOT_SIGNATURE_FLAG::DEFAULT).Get());
-	PSO->GetRootSignature()->ClearTable(E_ROOT_SIGNATURE_FLAG::DEFAULT);
-
-	ID3D12DescriptorHeap* tableDescriptorHeap = PSO->GetRootSignature()->GetTableDescriptorHeaps(E_ROOT_SIGNATURE_FLAG::DEFAULT).Get();
-
-	if (tableDescriptorHeap != nullptr)
-	{
-		cmdList->SetDescriptorHeaps(1, &tableDescriptorHeap);
-	}
-
-	cmdList->ResourceBarrier(1, &barrier);
-
-	cmdList->RSSetViewports(1, &SWAP_CHAIN_OBJ->GetViewport());
-	cmdList->RSSetScissorRects(1, &SWAP_CHAIN_OBJ->GetScissorRect());
-
-	D3D12_CPU_DESCRIPTOR_HANDLE backBufferView = SWAP_CHAIN_OBJ->GetBackBufferRTV();
-	cmdList->ClearRenderTargetView(backBufferView, GLOBAL::CLEAR_COLOR, 0, nullptr);
-
-	D3D12_CPU_DESCRIPTOR_HANDLE depthStencilView = PSO->GetDepthStencilObject()->GetDSVHandle();
-	cmdList->OMSetRenderTargets(1, &backBufferView, FALSE, &depthStencilView);
-	cmdList->ClearDepthStencilView(depthStencilView, D3D12_CLEAR_FLAG_DEPTH | D3D12_CLEAR_FLAG_STENCIL, 1.0, 0, 0, nullptr);
-
-	Microsoft::WRL::ComPtr<ID3D12PipelineState> pso = PSO->GetPipelineStateObject(E_RENDERING_FLAG::DEFAULT);
-
-	cmdList->SetPipelineState(pso.Get());
-}
-
 void Engine::Render()
 {
-	RenderBegin();
+	RenderManager::GetInstance()->RenderBegin();
 
 	app->Render();
 
-	RenderEnd();
-}
-
-void Engine::RenderEnd()
-{
-	Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> cmdList = CMD_OBJ->GetCommandList();
-
-	D3D12_RESOURCE_BARRIER barrier = CD3DX12_RESOURCE_BARRIER::Transition(
-		SWAP_CHAIN_OBJ->GetBackBuffer().Get(),
-		D3D12_RESOURCE_STATE_RENDER_TARGET,
-		D3D12_RESOURCE_STATE_PRESENT);
-
-	cmdList->ResourceBarrier(1, &barrier);
-	HRESULT hr = cmdList->Close();
-	ID3D12CommandList* cmdlistArr[]{ cmdList.Get() };
-	CMD_OBJ->GetCommandQueue()->ExecuteCommandLists(_countof(cmdlistArr), cmdlistArr);
-	SWAP_CHAIN_OBJ->Present();
-
-	CMD_OBJ->FlushCommandQueue();
-
-	SWAP_CHAIN_OBJ->SwapIndex();
+	RenderManager::GetInstance()->RenderEnd();
 }
 
 //extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND Handle, UINT Message, WPARAM wParam, LPARAM lParam);

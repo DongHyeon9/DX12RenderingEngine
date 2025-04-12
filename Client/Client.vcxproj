@@ -87,6 +87,9 @@
     <IntDir>$(SolutionDir)Intermediate\$(ProjectName)_$(Configuration)\</IntDir>
     <TargetName>$(ProjectName)_$(Configuration)</TargetName>
   </PropertyGroup>
+  <PropertyGroup Label="Vcpkg">
+    <VcpkgEnabled>false</VcpkgEnabled>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -128,7 +131,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)Lib\ThirdParty\assimp_x64-windows\debug\lib\;$(SolutionDir)Lib\ThirdParty\directxtex_x64-windows\debug\lib\;$(SolutionDir)Lib\ThirdParty\directxtk12_x64-windows\debug\lib\;$(SolutionDir)Lib\ThirdParty\imgui_x64-windows\debug\lib\;$(SolutionDir)Bin\Engine\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)Lib\ThirdParty\assimp_x64-windows\debug\lib\;$(SolutionDir)Lib\ThirdParty\directxtex_x64-windows\debug\lib\;$(SolutionDir)Lib\ThirdParty\directxtk12_x64-windows\debug\lib\;$(SolutionDir)Lib\ThirdParty\imgui_x64-windows\debug\lib\;$(SolutionDir)Bin\Engine\;$(SolutionDir)Lib\ThirdParty\assimp_x64-windows\debug\bin\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>Engine_$(Configuration).lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -149,7 +152,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)Lib\ThirdParty\assimp_x64-windows\lib\;$(SolutionDir)Lib\ThirdParty\directxtex_x64-windows\lib\;$(SolutionDir)Lib\ThirdParty\directxtk12_x64-windows\lib\;$(SolutionDir)Lib\ThirdParty\imgui_x64-windows\lib\;$(SolutionDir)Bin\Engine\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)Lib\ThirdParty\assimp_x64-windows\lib\;$(SolutionDir)Lib\ThirdParty\directxtex_x64-windows\lib\;$(SolutionDir)Lib\ThirdParty\directxtk12_x64-windows\lib\;$(SolutionDir)Lib\ThirdParty\imgui_x64-windows\lib\;$(SolutionDir)Bin\Engine\;$(SolutionDir)Lib\ThirdParty\assimp_x64-windows\bin\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>Engine_$(Configuration).lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>

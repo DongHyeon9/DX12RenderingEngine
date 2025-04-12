@@ -1,4 +1,6 @@
-float4 main() : SV_TARGET
+#include "Default.hlsli"
+
+float4 main(PixelShaderInput input) : SV_Target
 {
-	return float4(1.0f, 1.0f, 1.0f, 1.0f);
+    return albedoTex.Sample(warpSampler, input.texcoord);
 }

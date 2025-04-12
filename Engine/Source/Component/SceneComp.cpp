@@ -1,6 +1,10 @@
 #include "SceneComp.h"
 #include "Object\Actor.h"
 
+#include "Manager\RenderManager.h"
+#include "Engine\Render\PipelineStateObject.h"
+#include "Engine\Render\PipelineStateObject\RootSignatureObject.h"
+
 void SceneComp::EndPlay()
 {
 	__super::EndPlay();
@@ -79,12 +83,12 @@ void SceneComp::LateUpdate(float DeltaTime)
 
 void SceneComp::Render()
 {
-	//TODO PushData를 어디서 할 것인가
-
 	for (const auto& child : children)
 	{
 		child->Render();
 	}
+
+	PSO->GetRootSignature()->PushData(E_CONSTANT_BUFFER_TYPE::TRANSFORM, &world, sizeof(world));
 }
 
 void SceneComp::AddChild(std::shared_ptr<SceneComp> NewChild)
