@@ -37,7 +37,7 @@ bool SwapChainObject::Init()
 		&swapCahinDesc,
 		swapChain.GetAddressOf());
 
-	rtvDescriptorSize = DEVICE_OBJ->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+	rtvDescriptorSize = DEVICE_OBJ->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
 
 	CHECK(SUCCEEDED(hr), "스왑체인 생성 실패", false);
 

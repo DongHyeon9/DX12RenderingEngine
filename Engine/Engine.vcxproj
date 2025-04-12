@@ -303,8 +303,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)Lib\ThirdParty\assimp_x64-windows\debug\lib\;$(SolutionDir)Lib\ThirdParty\directxtex_x64-windows\debug\lib\;$(SolutionDir)Lib\ThirdParty\directxtk12_x64-windows\debug\lib\;$(SolutionDir)Lib\ThirdParty\imgui_x64-windows\debug\lib\;$(SolutionDir)Lib\ThirdParty\directxmesh_x64-windows\debug\lib\;$(SolutionDir)Lib\ThirdParty\assimp_x64-windows\debug\bin\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>imguid.lib;DirectXTK12.lib;DirectXTex.lib;assimp-vc143-mtd.lib;DirectXMesh.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Lib\ThirdParty\assimp_x64-windows\debug\lib\;$(SolutionDir)Lib\ThirdParty\directxtex_x64-windows\debug\lib\;$(SolutionDir)Lib\ThirdParty\directxtk12_x64-windows\debug\lib\;$(SolutionDir)Lib\ThirdParty\imgui_x64-windows\debug\lib\;$(SolutionDir)Lib\ThirdParty\directxmesh_x64-windows\debug\lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -330,8 +329,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)Lib\ThirdParty\assimp_x64-windows\lib\;$(SolutionDir)Lib\ThirdParty\directxtex_x64-windows\lib\;$(SolutionDir)Lib\ThirdParty\directxtk12_x64-windows\lib\;$(SolutionDir)Lib\ThirdParty\imgui_x64-windows\lib\;$(SolutionDir)Lib\ThirdParty\directxmesh_x64-windows\lib\;$(SolutionDir)Lib\ThirdParty\assimp_x64-windows\bin\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>assimp-vc143-mt.lib;DirectXTex.lib;DirectXTK12.lib;imgui.lib;DirectXMesh.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Lib\ThirdParty\assimp_x64-windows\lib\;$(SolutionDir)Lib\ThirdParty\directxtex_x64-windows\lib\;$(SolutionDir)Lib\ThirdParty\directxtk12_x64-windows\lib\;$(SolutionDir)Lib\ThirdParty\imgui_x64-windows\lib\;$(SolutionDir)Lib\ThirdParty\directxmesh_x64-windows\lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

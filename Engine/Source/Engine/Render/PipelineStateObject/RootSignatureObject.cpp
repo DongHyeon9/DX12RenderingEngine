@@ -140,7 +140,6 @@ bool RootSignatureObject::CreateRootSignature()
         blobSignature->GetBufferSize(),
         IID_PPV_ARGS(&signature));
     CHECK(SUCCEEDED(hr), "루트 시그니처 생성 실패", false);
-    LOG("루트 시그니처 생성");
 
     LOG("루트 시그니처 생성 성공");
     return true;

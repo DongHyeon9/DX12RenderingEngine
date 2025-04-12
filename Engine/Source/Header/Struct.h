@@ -32,7 +32,7 @@ struct Transform
 
 struct CameraData
 {
-	Vector3 cameraPos{};
+	Vector4 cameraPos{};
 	Matrix view{ Matrix::Identity };
 	Matrix projection{ Matrix::Identity };
 };

@@ -36,8 +36,7 @@ void RenderManager::RenderBegin()
 	Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> cmdList = commandObject->GetCommandList();
 	Microsoft::WRL::ComPtr<ID3D12CommandAllocator> cmdAlloc = commandObject->GetCommandAllocator();
 
-	hr = cmdAlloc->Reset();
-	hr = cmdList->Reset(cmdAlloc.Get(), nullptr);
+	commandObject->ResetCmdList();
 
 	//전면버퍼와 후면버퍼의 교체
 	D3D12_RESOURCE_BARRIER barrier = CD3DX12_RESOURCE_BARRIER::Transition(
@@ -46,14 +45,11 @@ void RenderManager::RenderBegin()
 		D3D12_RESOURCE_STATE_RENDER_TARGET);
 
 	cmdList->SetGraphicsRootSignature(pipelineStateObject->GetRootSignature()->GetSignature().Get());
+
 	pipelineStateObject->GetRootSignature()->Clear();
 
 	ID3D12DescriptorHeap* tableDescriptorHeap = pipelineStateObject->GetRootSignature()->GetDescriptorTable().Get();
-
-	if (tableDescriptorHeap != nullptr)
-	{
-		cmdList->SetDescriptorHeaps(1, &tableDescriptorHeap);
-	}
+	cmdList->SetDescriptorHeaps(1, &tableDescriptorHeap);
 
 	cmdList->ResourceBarrier(1, &barrier);
 
@@ -81,9 +77,9 @@ void RenderManager::RenderEnd()
 		D3D12_RESOURCE_STATE_PRESENT);
 
 	cmdList->ResourceBarrier(1, &barrier);
-	HRESULT hr = cmdList->Close();
-	ID3D12CommandList* cmdlistArr[]{ cmdList.Get() };
-	commandObject->GetCommandQueue()->ExecuteCommandLists(_countof(cmdlistArr), cmdlistArr);
+
+	commandObject->ExecuteCommandList();
+
 	swapChain->Present();
 
 	commandObject->FlushCommandQueue();

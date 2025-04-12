@@ -46,3 +46,19 @@
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
+
+#ifdef _DEBUG
+
+#pragma comment(lib, "assimp-vc143-mtd.lib")
+#pragma comment(lib, "DirectXTex.lib")
+#pragma comment(lib, "DirectXTK12.lib")
+#pragma comment(lib, "imguid.lib")
+
+#else
+
+#pragma comment(lib, "assimp-vc143-mt.lib")
+#pragma comment(lib, "DirectXTex.lib")
+#pragma comment(lib, "DirectXTK12.lib")
+#pragma comment(lib, "imgui.lib")
+
+#endif

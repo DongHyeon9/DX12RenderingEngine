@@ -63,6 +63,12 @@ void Actor::SetRootComponent(std::shared_ptr<SceneComp> RootComponent)
 	newRootComp = RootComponent;
 }
 
+void Actor::Init(std::shared_ptr<SceneComp> RootComponent)
+{
+	RootComponent->SetOwner(std::static_pointer_cast<Actor>(shared_from_this()));
+	rootComponent = RootComponent;
+}
+
 void Actor::AddActorComponent(std::shared_ptr<Component> NewComp)
 {
 	NewComp->SetOwner(std::static_pointer_cast<Actor>(shared_from_this()));

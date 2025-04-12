@@ -17,7 +17,7 @@ namespace GLOBAL
 {
 	constexpr float UNIT{ 1000.0f };
 
-	const Color CLEAR_COLOR{ DirectX::Colors::AliceBlue };
+	const Color CLEAR_COLOR{ DirectX::Colors::BlanchedAlmond };
 	constexpr Vector3 FORWARD{ 0.f,0.f,1.f };
 	constexpr Vector3 BACKWARD{ 0.f,0.f,-1.f };
 	constexpr Vector3 RIGHT{ 1.f,0.f,0.f };

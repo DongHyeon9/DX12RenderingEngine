@@ -17,10 +17,13 @@ bool Scene::Init()
     std::shared_ptr<Actor> actor{ std::make_shared<Actor>(TEXT("Cube")) };
     std::shared_ptr<MeshComp> meshComp{ std::make_shared<MeshComp>(TEXT("CubeRoot")) };
     std::shared_ptr<Material> material{ std::make_shared<Material>() };
-    material->SetTexture(E_TEXTURE_TYPE::ALBEDO, ResourceManager::GetInstance()->GetResource<Texture>(TEXT("T_Earth.jpg")));
+    std::shared_ptr<Texture> albedo = ResourceManager::GetInstance()->GetResource<Texture>(TEXT("T_Earth.jpg"));
+    albedo->CreateView();
+    material->SetTexture(E_TEXTURE_TYPE::ALBEDO, albedo);
     meshComp->Init(GeometryManager::GetInstance()->CreateBox(Vector3{ 100.0f,100.0f,100.0f }));
     meshComp->SetMaterial(0, material);
-    actor->SetRootComponent(meshComp);
+    actor->Init(meshComp);
+    //actor->SetWorldPosition(Vector3{ 0.0f,0.0f,500.0f });
 
     children.emplace_back(actor);
 

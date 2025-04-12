@@ -36,6 +36,7 @@ public:
 
 	void EndPlay()override;
 	void SetRootComponent(std::shared_ptr<SceneComp> RootComponent);
+	void Init(std::shared_ptr<SceneComp> RootComponent);
 	void AddActorComponent(std::shared_ptr<Component> NewComp);
 	void AddSceneComponent(std::shared_ptr<SceneComp> NewComp);
 	void AddChild(std::shared_ptr<Actor> Child);

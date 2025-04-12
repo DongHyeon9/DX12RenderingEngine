@@ -1,6 +1,10 @@
 #include "CameraManager.h"
 #include "InputManager.h"
 
+#include "Manager\RenderManager.h"
+#include "Engine\Render\PipelineStateObject.h"
+#include "Engine\Render\PipelineStateObject\RootSignatureObject.h"
+
 bool CameraManager::Init()
 {
 	return true;
@@ -14,7 +18,7 @@ void CameraManager::Update(float DeltaTime)
 
 void CameraManager::Render()
 {
-	//GEngine->GetConstantBuffer(E_CONSTANT_BUFFER_TYPE::CAMERA)->PushGlobalData(&cameraData, sizeof(cameraData), static_cast<uint32>(E_CONSTANT_BUFFER_TYPE::CAMERA));
+	PSO->GetRootSignature()->PushGlobalData(E_CONSTANT_BUFFER_TYPE::CAMERA, &cameraData, sizeof(cameraData));
 }
 
 void CameraManager::SetCameraLocation(const Vector3& NewLocation)
@@ -86,7 +90,7 @@ void CameraManager::UpdateTransform()
 
 	cameraData.view = cameraData.view.Invert();
 
-	cameraData.cameraPos = cameraPosition;
+	cameraData.cameraPos = Vector4(cameraPosition.x, cameraPosition.y, cameraPosition.z, 1.0f);
 
 	const float aspect = static_cast<float>(RESOLUTION::WIDTH) / RESOLUTION::HEIGHT;
 	//cameraData.projection =
@@ -94,6 +98,6 @@ void CameraManager::UpdateTransform()
 	//	DirectX::XMMatrixOrthographicOffCenterLH(-aspect, aspect, -1.0f, 1.0f, nearPlane, farPlane) :
 	//	DirectX::XMMatrixPerspectiveFovLH(DirectX::XMConvertToRadians(FOV), aspect, nearPlane, farPlane);
 	
-	//cameraData.projection = DirectX::XMMatrixOrthographicOffCenterLH(-aspect, aspect, -1.0f, 1.0f, nearPlane, farPlane);
-	cameraData.projection = DirectX::XMMatrixPerspectiveFovLH(DirectX::XMConvertToRadians(FOV), aspect, nearPlane, farPlane);
+	cameraData.projection = DirectX::XMMatrixOrthographicOffCenterLH(-aspect, aspect, -1.0f, 1.0f, nearPlane, farPlane);
+	//cameraData.projection = DirectX::XMMatrixPerspectiveFovLH(DirectX::XMConvertToRadians(FOV), aspect, nearPlane, farPlane);
 }

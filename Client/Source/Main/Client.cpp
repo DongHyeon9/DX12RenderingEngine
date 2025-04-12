@@ -1,3 +1,4 @@
+#include "Client.h"
 #include "Engine\Engine.h"
 #include "App\ExampleApp.h"
 

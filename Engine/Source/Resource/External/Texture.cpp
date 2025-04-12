@@ -10,7 +10,7 @@ bool Texture::Load(FString FileName)
 	LOG("%s 텍스처 생성 시작", fileName.c_str());
 
 	Microsoft::WRL::ComPtr<ID3D12Device> device = DEVICE_OBJ->GetDevice();
-	Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> cmdList = CMD_OBJ->GetCommandList();
+	Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> cmdList = CMD_OBJ->GetResourceCommandList();
 
 	FString fullPath = path + fileName;
 	FString ext = std::filesystem::path(fullPath).extension();
@@ -80,6 +80,33 @@ bool Texture::Load(FString FileName)
 		static_cast<uint32>(subResources.size()),
 		subResources.data());
 
+	CMD_OBJ->ExecuteResourceCommandList();
+
 	LOG("%s 텍스처 생성 성공", fileName.c_str());
     return true;
+}
+
+bool Texture::CreateView(D3D12_SRV_DIMENSION TextureDimension)
+{
+	LOG("쉐이더 리소스 뷰 생성 시작");
+
+	Microsoft::WRL::ComPtr<ID3D12Device> device = DEVICE_OBJ->GetDevice();
+
+	D3D12_DESCRIPTOR_HEAP_DESC srvHeapDesc{};
+	srvHeapDesc.NumDescriptors = 1;
+	srvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
+	srvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_NONE;
+	device->CreateDescriptorHeap(&srvHeapDesc, IID_PPV_ARGS(&srvHeap));
+
+	srvHandle = srvHeap->GetCPUDescriptorHandleForHeapStart();
+
+	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};
+	srvDesc.Format = image.GetMetadata().format;
+	srvDesc.ViewDimension = TextureDimension;
+	srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
+	srvDesc.Texture2D.MipLevels = 1;
+	device->CreateShaderResourceView(texture2D.Get(), &srvDesc, srvHandle);
+
+	LOG("쉐이더 리소스 뷰 생성 성공");
+	return true;
 }

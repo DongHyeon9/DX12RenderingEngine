@@ -42,6 +42,14 @@ bool DeviceObject::Init()
 	LogAdpaters();
 #endif //  _DEBUG
 
+#ifdef _DEBUG
+	Microsoft::WRL::ComPtr<ID3D12InfoQueue> infoQueue{};
+	hr = device->QueryInterface(IID_PPV_ARGS(&infoQueue));
+	CHECK(SUCCEEDED(hr), "인포 큐 생성 실패", false);
+	//infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_WARNING, TRUE);
+	//infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_ERROR, TRUE);
+#endif
+
     LOG("디바이스 초기화 성공");
     return true;
 }

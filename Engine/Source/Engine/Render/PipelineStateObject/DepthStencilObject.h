@@ -3,9 +3,11 @@
 
 enum class E_DEPTH_STENCIL_STATE_FLAG : uint8
 {
-	DEFAULT = 0,
+	DRAW = 0,
+	MASK,
+	DRAW_MASKED,
 
-	END
+	END,
 };
 
 class DepthStencilObject
@@ -26,6 +28,7 @@ public:
 	bool Init();
 	void ResetDepthStencilBuffer();
 	bool CreateDepthStencilBuffer();
+	void CreateDepthStencilState();
 
 	FORCEINLINE D3D12_DEPTH_STENCIL_DESC GetDepthStencilState(E_DEPTH_STENCIL_STATE_FLAG DepthStencilFlag)const { return depthStencilStates[static_cast<uint8>(DepthStencilFlag)]; }
 	FORCEINLINE D3D12_CPU_DESCRIPTOR_HANDLE GetDSVHandle() const { return dsvHandle; }
@@ -34,6 +37,6 @@ public:
 protected:
 
 private:
-
+	void SetDepthStencilState(E_DEPTH_STENCIL_STATE_FLAG Flag, D3D12_DEPTH_STENCIL_DESC Desc);
 };
 

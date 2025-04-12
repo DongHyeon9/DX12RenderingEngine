@@ -49,6 +49,14 @@ bool CommandObject::Init()
 	//Close()이후 ExecuteCommandLists()를 사용하여 실행가능
 	commandList->Close();
 
+	hr = device->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&resCmdAlloc));
+	CHECK(SUCCEEDED(hr), "리소스 커맨드 할당자 생성 실패", false);
+	LOG("리소스 커맨드 할당자 생성");
+
+	hr = device->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, resCmdAlloc.Get(), nullptr, IID_PPV_ARGS(&resCmdList));
+	CHECK(SUCCEEDED(hr), "리소스 커맨드 리스트 생성 실패", false);
+	LOG("리소스 커맨드 리스트 생성");
+
 	hEventCompletion = CreateEvent(
 		nullptr,	//보안 속성 (기본값 사용)
 		FALSE,		//수동 리셋 모드 (자동 리셋)
@@ -61,6 +69,7 @@ bool CommandObject::Init()
 
 bool CommandObject::ResetCmdList()
 {
+	commandAllocator->Reset();
 	//이전 프레임의 커맨드가 완료되었으므로 커맨드 리스트를 리셋
 	return SUCCEEDED(commandList->Reset(
 		commandAllocator.Get(),
@@ -95,4 +104,18 @@ void CommandObject::ExecuteCommandList()
 		commandList.Get()
 	};
 	commandQueue->ExecuteCommandLists(static_cast<UINT>(cmdLists.size()), cmdLists.data());
+}
+
+void CommandObject::ExecuteResourceCommandList()
+{
+	resCmdList->Close();
+	ID3D12CommandList* cmdListArr[]{
+		resCmdList.Get(),
+	};
+	commandQueue->ExecuteCommandLists(_countof(cmdListArr), cmdListArr);
+
+	FlushCommandQueue();
+
+	resCmdAlloc->Reset();
+	resCmdList->Reset(resCmdAlloc.Get(), nullptr);
 }

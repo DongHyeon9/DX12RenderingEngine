@@ -20,5 +20,8 @@
     <ClInclude Include="Source\App\ExampleApp.h">
       <Filter>App</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Main\Client.h">
+      <Filter>Main</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

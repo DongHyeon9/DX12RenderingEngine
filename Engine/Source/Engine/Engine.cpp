@@ -49,8 +49,6 @@ WPARAM Engine::Run()
 {
 	LOG("프로그램 실행");
 
-	CMD_OBJ->ResetCmdList();
-
 	//앱 초기화
 	CHECK(app->Init(), "앱 초기화 실패", false);
 
@@ -189,6 +187,8 @@ void Engine::Update(float DeltaTime)
 void Engine::Render()
 {
 	RenderManager::GetInstance()->RenderBegin();
+
+	CameraManager::GetInstance()->Render();
 
 	app->Render();
 

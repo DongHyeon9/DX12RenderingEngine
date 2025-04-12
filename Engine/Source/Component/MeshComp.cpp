@@ -11,7 +11,7 @@
 
 bool MeshComp::Init(std::shared_ptr<Mesh> Mesh)
 {
-	LOG("메쉬 렌더러 컴포넌트 초기화 시작");
+	LOG("메쉬 컴포넌트 초기화 시작");
 	mesh = Mesh;
 	auto meshesData = mesh->GetMesh();
 	size_t size = meshesData.size();
@@ -21,7 +21,7 @@ bool MeshComp::Init(std::shared_ptr<Mesh> Mesh)
 	CHECK(CreateVertexBuffer(meshesData), "버텍스 버퍼 생성 실패", false);
 	CHECK(CreateIndexBuffer(meshesData), "인덱스 버퍼 생성 실패", false);
 
-	LOG("메쉬 렌더러 컴포넌트 초기화 성공");
+	LOG("메쉬 컴포넌트 초기화 성공");
 	return true;
 }
 
@@ -31,6 +31,14 @@ bool MeshComp::Init(const MeshData& MeshData)
 
 	mesh = std::make_shared<Mesh>();
 	mesh->SetMeshData({ MeshData });
+
+	auto meshesData = mesh->GetMesh();
+	size_t size = meshesData.size();
+
+	CHECK(InitBufferSize(size), "버퍼사이즈 설정 실패", false);
+	CHECK(CreateMaterial(size), "머티리얼 생성 실패", false);
+	CHECK(CreateVertexBuffer(meshesData), "버텍스 버퍼 생성 실패", false);
+	CHECK(CreateIndexBuffer(meshesData), "인덱스 버퍼 생성 실패", false);
 
 	LOG("메쉬 렌더러 컴포넌트 초기화 성공");
 	return true;

@@ -39,8 +39,8 @@ bool PipelineStateObject::CreatePipelineStateObject()
 		desc.RTVFormats[0] = LITERAL::BACK_BUFFER_FORMAT;
 
 		desc.RasterizerState = rasterizerStateObject->GetRasterizeState(E_RASTERIZER_STATE_FLAG::SOLID);
-
-		desc.DepthStencilState = depthStencilObject->GetDepthStencilState(E_DEPTH_STENCIL_STATE_FLAG::DEFAULT);
+		desc.BlendState = blendStateObject->GetBlendState(E_BLEND_STATE_FLAG::DEFAULT);
+		desc.DepthStencilState = depthStencilObject->GetDepthStencilState(E_DEPTH_STENCIL_STATE_FLAG::DRAW);
 		desc.DSVFormat = LITERAL::DEPTH_STENCIL_FORMAT;
 
 		hr = DEVICE_OBJ->GetDevice()->CreateGraphicsPipelineState(&desc, IID_PPV_ARGS(&pipelineStateObjects[static_cast<uint8>(E_RENDERING_FLAG::DEFAULT)]));

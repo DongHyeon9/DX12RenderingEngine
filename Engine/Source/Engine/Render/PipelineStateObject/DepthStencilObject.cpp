@@ -31,6 +31,8 @@ bool DepthStencilObject::Init()
 
 	LOG("뎁스 스텐실 뷰 생성 성공");
 
+	CreateDepthStencilState();
+
     LOG("뎁스 스텐실 오브젝트 초기화 성공");
     return true;
 }
@@ -53,17 +55,14 @@ bool DepthStencilObject::CreateDepthStencilBuffer()
 	depthStencilDesc.Height = static_cast<UINT64>(engineSetting.resolution.y);
 	depthStencilDesc.DepthOrArraySize = 1;	//깊이 값(3D 텍스처의 경우) 또는 배열 크기
 	depthStencilDesc.MipLevels = 1;			//사용될 Mipmap 레벨 수 (1은 Mipmap 없음)
-	depthStencilDesc.Format = DXGI_FORMAT_R24G8_TYPELESS;	//픽셀 포맷
+	depthStencilDesc.Format = LITERAL::DEPTH_STENCIL_FORMAT;	//픽셀 포맷
 	depthStencilDesc.SampleDesc.Count = engineSetting.state4XMSAA ? 4 : 1;
 	depthStencilDesc.SampleDesc.Quality = engineSetting.state4XMSAA ? (engineSetting.quality4XMSAA - 1) : 0;
 	depthStencilDesc.Layout = D3D12_TEXTURE_LAYOUT_UNKNOWN;		//텍스처 레이아웃 (D3D12_TEXTURE_LAYOUT_UNKNOWN은 기본)
 	depthStencilDesc.Flags = D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL;	//리소스 사용 목적 (D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL은 뎁스 스텐실 버퍼로 사용)
 
 	//버퍼의 초기값을 정하는 구조체, 뎁스 스텐실 값도 지정가능
-	D3D12_CLEAR_VALUE clearValue{};
-	clearValue.Format = LITERAL::DEPTH_STENCIL_FORMAT;
-	clearValue.DepthStencil.Depth = 1.0f;
-	clearValue.DepthStencil.Stencil = 0;
+	D3D12_CLEAR_VALUE clearValue{ CD3DX12_CLEAR_VALUE{LITERAL::DEPTH_STENCIL_FORMAT, 1.0f, 0} };
 
 	CD3DX12_HEAP_PROPERTIES heapProperty{ D3D12_HEAP_TYPE_DEFAULT };	//GPU에 의해 관리되는 기본 힙 사용
 	//뎁스 스텐실 버퍼 생성
@@ -90,4 +89,51 @@ bool DepthStencilObject::CreateDepthStencilBuffer()
 		dsvHandle);	//DSV가 저장될 디스크립터 힙의 위치
 
 	return true;
+}
+
+void DepthStencilObject::CreateDepthStencilState()
+{
+	D3D12_DEPTH_STENCIL_DESC desc{};
+	desc.DepthEnable = true;
+	desc.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;
+	desc.DepthFunc = D3D12_COMPARISON_FUNC_LESS;
+	desc.StencilEnable = false;
+	desc.StencilReadMask = D3D12_DEFAULT_STENCIL_READ_MASK;
+	desc.StencilWriteMask = D3D12_DEFAULT_STENCIL_WRITE_MASK;
+	desc.FrontFace.StencilFailOp = D3D12_STENCIL_OP_KEEP;
+	desc.FrontFace.StencilDepthFailOp = D3D12_STENCIL_OP_KEEP;
+	desc.FrontFace.StencilPassOp = D3D12_STENCIL_OP_KEEP;
+	desc.FrontFace.StencilFunc = D3D12_COMPARISON_FUNC_ALWAYS;
+	desc.BackFace.StencilFailOp = D3D12_STENCIL_OP_KEEP;
+	desc.BackFace.StencilDepthFailOp = D3D12_STENCIL_OP_KEEP;
+	desc.BackFace.StencilPassOp = D3D12_STENCIL_OP_REPLACE;
+	desc.BackFace.StencilFunc = D3D12_COMPARISON_FUNC_ALWAYS;
+	SetDepthStencilState(E_DEPTH_STENCIL_STATE_FLAG::DRAW, desc);
+
+	desc.DepthEnable = true;
+	desc.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ZERO;
+	desc.DepthFunc = D3D12_COMPARISON_FUNC_LESS;
+	desc.StencilEnable = true;
+	desc.StencilReadMask = 0xFF;
+	desc.StencilWriteMask = 0xFF;
+	desc.FrontFace.StencilFailOp = D3D12_STENCIL_OP_KEEP;
+	desc.FrontFace.StencilDepthFailOp = D3D12_STENCIL_OP_KEEP;
+	desc.FrontFace.StencilPassOp = D3D12_STENCIL_OP_REPLACE;
+	desc.FrontFace.StencilFunc = D3D12_COMPARISON_FUNC_ALWAYS;
+	SetDepthStencilState(E_DEPTH_STENCIL_STATE_FLAG::MASK, desc);
+
+	desc.DepthEnable = true;
+	desc.StencilEnable = true;
+	desc.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;
+	desc.DepthFunc = D3D12_COMPARISON_FUNC_LESS_EQUAL;
+	desc.FrontFace.StencilFailOp = D3D12_STENCIL_OP_KEEP;
+	desc.FrontFace.StencilDepthFailOp = D3D12_STENCIL_OP_KEEP;
+	desc.FrontFace.StencilPassOp = D3D12_STENCIL_OP_KEEP;
+	desc.FrontFace.StencilFunc = D3D12_COMPARISON_FUNC_EQUAL;
+	SetDepthStencilState(E_DEPTH_STENCIL_STATE_FLAG::DRAW_MASKED, desc);
+}
+
+void DepthStencilObject::SetDepthStencilState(E_DEPTH_STENCIL_STATE_FLAG Flag, D3D12_DEPTH_STENCIL_DESC Desc)
+{
+	depthStencilStates[static_cast<uint8>(Flag)] = std::move(Desc);
 }
