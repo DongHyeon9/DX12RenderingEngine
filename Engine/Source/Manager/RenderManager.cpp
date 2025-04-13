@@ -44,9 +44,9 @@ void RenderManager::RenderBegin()
 		D3D12_RESOURCE_STATE_PRESENT,
 		D3D12_RESOURCE_STATE_RENDER_TARGET);
 
-	cmdList->SetGraphicsRootSignature(pipelineStateObject->GetRootSignature()->GetSignature().Get());
-
 	pipelineStateObject->GetRootSignature()->Clear();
+
+	cmdList->SetGraphicsRootSignature(pipelineStateObject->GetRootSignature()->GetSignature().Get());
 
 	ID3D12DescriptorHeap* tableDescriptorHeap = pipelineStateObject->GetRootSignature()->GetDescriptorTable().Get();
 	cmdList->SetDescriptorHeaps(1, &tableDescriptorHeap);
@@ -62,9 +62,6 @@ void RenderManager::RenderBegin()
 	D3D12_CPU_DESCRIPTOR_HANDLE depthStencilView = pipelineStateObject->GetDepthStencilObject()->GetDSVHandle();
 	cmdList->OMSetRenderTargets(1, &backBufferView, FALSE, &depthStencilView);
 	cmdList->ClearDepthStencilView(depthStencilView, D3D12_CLEAR_FLAG_DEPTH | D3D12_CLEAR_FLAG_STENCIL, 1.0, 0, 0, nullptr);
-
-	//TODO 나중에 지워질걸?
-	SetPipelineState(E_RENDERING_FLAG::DEFAULT);
 }
 
 void RenderManager::RenderEnd()

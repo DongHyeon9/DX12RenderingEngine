@@ -9,19 +9,16 @@ public:
 protected:
 
 private:
-	uint64 frequency{};
-	uint64 prevCount{};
-	float deltaTime{};
-
-	uint32 frameCount{};
-	float frameTime{};
-	uint32 fps{};
+	std::chrono::system_clock::time_point lastTime{};
+	std::chrono::system_clock::time_point currentTime{};
+	std::chrono::duration<float> deltaTime{};
 
 public:
 	bool Init();
 	float Update();
 
-	FORCEINLINE uint32 GetFPS()const { return fps; }
+	FORCEINLINE uint32 GetFPS()const { return static_cast<uint32>(1 / deltaTime.count()); }
+	FORCEINLINE float GetDeltaTime()const { return deltaTime.count(); }
 
 protected:
 

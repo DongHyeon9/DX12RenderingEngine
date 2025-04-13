@@ -147,3 +147,10 @@ enum class E_TEXTURE_TYPE : uint8
 
 	END
 };
+
+enum class E_RENDERING_FLAG : uint8
+{
+	DEFAULT = 0,
+
+	END
+};

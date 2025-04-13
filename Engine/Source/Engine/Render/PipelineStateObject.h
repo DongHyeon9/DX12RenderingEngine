@@ -6,13 +6,6 @@
 #include "PipelineStateObject\ShaderObject.h"
 #include "PipelineStateObject\RootSignatureObject.h"
 
-enum class E_RENDERING_FLAG : uint8
-{
-	DEFAULT = 0,
-
-	END
-};
-
 class PipelineStateObject
 {
 public:

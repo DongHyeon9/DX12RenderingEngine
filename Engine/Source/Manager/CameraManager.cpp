@@ -98,6 +98,6 @@ void CameraManager::UpdateTransform()
 	//	DirectX::XMMatrixOrthographicOffCenterLH(-aspect, aspect, -1.0f, 1.0f, nearPlane, farPlane) :
 	//	DirectX::XMMatrixPerspectiveFovLH(DirectX::XMConvertToRadians(FOV), aspect, nearPlane, farPlane);
 	
-	cameraData.projection = DirectX::XMMatrixOrthographicOffCenterLH(-aspect, aspect, -1.0f, 1.0f, nearPlane, farPlane);
-	//cameraData.projection = DirectX::XMMatrixPerspectiveFovLH(DirectX::XMConvertToRadians(FOV), aspect, nearPlane, farPlane);
+	//cameraData.projection = DirectX::XMMatrixOrthographicOffCenterLH(-aspect, aspect, -1.0f, 1.0f, nearPlane, farPlane);
+	cameraData.projection = DirectX::XMMatrixPerspectiveFovLH(DirectX::XMConvertToRadians(FOV), aspect, nearPlane, farPlane);
 }

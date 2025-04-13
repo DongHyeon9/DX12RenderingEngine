@@ -23,7 +23,7 @@ bool Scene::Init()
     meshComp->Init(GeometryManager::GetInstance()->CreateBox(Vector3{ 100.0f,100.0f,100.0f }));
     meshComp->SetMaterial(0, material);
     actor->Init(meshComp);
-    //actor->SetWorldPosition(Vector3{ 0.0f,0.0f,500.0f });
+    actor->SetWorldPosition(Vector3{ 0.0f,0.0f,500.0f });
 
     children.emplace_back(actor);
 

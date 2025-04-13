@@ -4,6 +4,11 @@
 #include "Engine\Render\PipelineStateObject.h"
 #include "Engine\Render\PipelineStateObject\RootSignatureObject.h"
 
+void Material::SetRenderingFlag(E_RENDERING_FLAG Flag)
+{
+	renderingFlag = Flag;
+}
+
 void Material::SetAmbient(const Vector3& Ambient)
 {
 	matParam.ambient = Ambient;
@@ -40,5 +45,5 @@ void Material::Render()
 		rootSignature->PushTexture(reg, textures[i]);
 	}
 
-	//TODO SetPipeline State
+	RenderManager::GetInstance()->SetPipelineState(renderingFlag);
 }

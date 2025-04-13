@@ -11,7 +11,7 @@ protected:
 private:
 	CameraData cameraData{};
 
-	Vector3 cameraPosition{ 0.f,0.f,-2.f };
+	Vector3 cameraPosition{ 0.f,0.f,0.f };
 	Vector3 cameraRotation{ 0.f,0.f,0.f };
 
 	Vector3 forward{};
