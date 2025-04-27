@@ -46,7 +46,7 @@ MeshData GeometryManager::CreatePlane(float Width, float Height, uint32 RowSlice
 			//텍스처 좌표 (u, v) 계산
 			v.texcoord = Vector2(static_cast<float>(j) / rowCount, 1.0f - static_cast<float>(i) / colCount);
 
-			v.tagent = GLOBAL::RIGHT;
+			v.tangent = GLOBAL::RIGHT;
 
 			//버텍스 배열에 추가
 			vertices.emplace_back(v);
@@ -95,7 +95,6 @@ MeshData GeometryManager::CreateBox(const Vector3& BoxExtent) const
 	const float zUnit = BoxExtent.z / GLOBAL::UNIT * 0.5f;
 
 	std::vector<Vector3> positions{};
-	std::vector<Color> colors{};
 	std::vector<Vector3> normals{};
 	std::vector<Vector2> texcoords{};
 	std::vector<Vector3> tangents{};
@@ -111,7 +110,6 @@ MeshData GeometryManager::CreateBox(const Vector3& BoxExtent) const
 	texcoords.emplace_back(Vector2(0.0f, 1.0f));
 	for (size_t i = 0; i < 4; ++i)
 	{
-		colors.emplace_back(DirectX::Colors::White);
 		normals.emplace_back(GLOBAL::BACKWARD);
 		tangents.emplace_back(GLOBAL::LEFT);
 	}
@@ -127,7 +125,6 @@ MeshData GeometryManager::CreateBox(const Vector3& BoxExtent) const
 	texcoords.emplace_back(Vector2(0.0f, 1.0f));
 	for (size_t i = 0; i < 4; ++i)
 	{
-		colors.emplace_back(DirectX::Colors::White);
 		normals.emplace_back(GLOBAL::RIGHT);
 		tangents.emplace_back(GLOBAL::BACKWARD);
 	}
@@ -143,7 +140,6 @@ MeshData GeometryManager::CreateBox(const Vector3& BoxExtent) const
 	texcoords.emplace_back(Vector2(0.0f, 1.0f));
 	for (size_t i = 0; i < 4; ++i)
 	{
-		colors.emplace_back(DirectX::Colors::White);
 		normals.emplace_back(GLOBAL::LEFT);
 		tangents.emplace_back(GLOBAL::FORWARD);
 	}
@@ -159,7 +155,6 @@ MeshData GeometryManager::CreateBox(const Vector3& BoxExtent) const
 	texcoords.emplace_back(Vector2(0.0f, 1.0f));
 	for (size_t i = 0; i < 4; ++i)
 	{
-		colors.emplace_back(DirectX::Colors::White);
 		normals.emplace_back(GLOBAL::UP);
 		tangents.emplace_back(GLOBAL::LEFT);
 	}
@@ -175,7 +170,6 @@ MeshData GeometryManager::CreateBox(const Vector3& BoxExtent) const
 	texcoords.emplace_back(Vector2(0.0f, 1.0f));
 	for (size_t i = 0; i < 4; ++i)
 	{
-		colors.emplace_back(DirectX::Colors::White);
 		normals.emplace_back(GLOBAL::DOWN);
 		tangents.emplace_back(GLOBAL::LEFT);
 	}
@@ -191,7 +185,6 @@ MeshData GeometryManager::CreateBox(const Vector3& BoxExtent) const
 	texcoords.emplace_back(Vector2(0.0f, 1.0f));
 	for (size_t i = 0; i < 4; ++i)
 	{
-		colors.emplace_back(DirectX::Colors::White);
 		normals.emplace_back(GLOBAL::FORWARD);
 		tangents.emplace_back(GLOBAL::LEFT);
 	}
@@ -213,7 +206,7 @@ MeshData GeometryManager::CreateBox(const Vector3& BoxExtent) const
 		v.position = positions[i];
 		v.normal = normals[i];
 		v.texcoord = texcoords[i];
-		v.tagent = tangents[i];
+		v.tangent = tangents[i];
 		vertices.emplace_back(v);
 	}
 
@@ -258,10 +251,10 @@ MeshData GeometryManager::CreateCapsule(float Radius, float Height, uint32 NumSl
 			v.normal.Normalize();
 			v.texcoord = Vector2(static_cast<float>(j) / NumSlices, 0.0f);
 
-			v.tagent.x = -Radius * sinf(phi) * sinf(theta);
-			v.tagent.y = 0.0f;
-			v.tagent.z = Radius * sinf(phi) * cosf(theta);
-			v.tagent.Normalize();
+			v.tangent.x = -Radius * sinf(phi) * sinf(theta);
+			v.tangent.y = 0.0f;
+			v.tangent.z = Radius * sinf(phi) * cosf(theta);
+			v.tangent.Normalize();
 
 			vertices.emplace_back(v);
 		}
@@ -347,7 +340,7 @@ MeshData GeometryManager::CreateCylinder(float BottomRadius, float TopRadius, fl
 		v.normal = v.position;
 		v.normal.Normalize();
 		v.texcoord = Vector2(static_cast<float>(i) / NumSlices, 1.0f);
-		v.tagent = GLOBAL::DOWN;
+		v.tangent = GLOBAL::DOWN;
 
 		vertices.emplace_back(v);
 	}
@@ -360,7 +353,7 @@ MeshData GeometryManager::CreateCylinder(float BottomRadius, float TopRadius, fl
 		v.normal = v.position;
 		v.normal.Normalize();
 		v.texcoord = Vector2(static_cast<float>(i) / NumSlices, 0.0f);
-		v.tagent = GLOBAL::UP;
+		v.tangent = GLOBAL::UP;
 
 		vertices.emplace_back(v);
 	}
@@ -413,10 +406,10 @@ MeshData GeometryManager::CreateSphere(float Radius, uint32 NumSlices, uint32 Nu
 			v.normal.Normalize();
 			v.texcoord = Vector2(static_cast<float>(j) / NumSlices, 1.0f - static_cast<float>(i) / NumStacks);
 
-			v.tagent.x = -Radius * sinf(phi) * sinf(theta);
-			v.tagent.y = 0.0f;
-			v.tagent.z = Radius * sinf(phi) * cosf(theta);
-			v.tagent.Normalize();
+			v.tangent.x = -Radius * sinf(phi) * sinf(theta);
+			v.tangent.y = 0.0f;
+			v.tangent.z = Radius * sinf(phi) * cosf(theta);
+			v.tangent.Normalize();
 
 			vertices.emplace_back(v);
 		}

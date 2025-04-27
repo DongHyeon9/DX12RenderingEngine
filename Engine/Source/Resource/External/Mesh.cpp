@@ -94,7 +94,7 @@ MeshData Mesh::ProcessMesh(aiMesh* Mesh, const aiScene* Scene)
             Vector3{};
 
         // ÅºÁ¨Æ® Á¤º¸
-        vertex.tagent = Mesh->HasTangentsAndBitangents() ?
+        vertex.tangent = Mesh->HasTangentsAndBitangents() ?
             Vector3{
                 Mesh->mTangents[i].x,
                 Mesh->mTangents[i].y,

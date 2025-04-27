@@ -82,7 +82,7 @@ struct Vertex
 {
 	Vector3 position{};
 	Vector3 normal{};
-	Vector3 tagent{};
+	Vector3 tangent{};
 	Vector2 texcoord{};
 };
 
