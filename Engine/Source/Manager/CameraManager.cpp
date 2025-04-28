@@ -23,7 +23,7 @@ void CameraManager::Render()
 
 void CameraManager::SetCameraLocation(const Vector3& NewLocation)
 {
-	cameraPosition = NewLocation / GLOBAL::UNIT;
+	cameraPosition = NewLocation * GLOBAL::UNIT;
 	UpdateTransform();
 }
 

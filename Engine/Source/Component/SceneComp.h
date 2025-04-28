@@ -39,12 +39,12 @@ public:
 	FORCEINLINE Matrix GetWorldMatrix()const { return world.worldMat; }
 
 	FORCEINLINE Transform GetRelativeTransform()const { return Transform{ GetRelativePosition(), GetRelativeRotation(), GetRelativeScale() }; }
-	FORCEINLINE Vector3 GetRelativePosition()const { return relativeTransform.position * GLOBAL::UNIT; }
+	FORCEINLINE Vector3 GetRelativePosition()const { return relativeTransform.position / GLOBAL::UNIT; }
 	FORCEINLINE Vector3 GetRelativeRotation()const { return relativeTransform.rotation; }
 	FORCEINLINE Vector3 GetRelativeScale()const { return relativeTransform.scale; }
 
 	FORCEINLINE Transform GetWorldTransform()const { return Transform{ GetWorldPosition(), GetWorldRotation(), GetWorldScale() }; }
-	FORCEINLINE Vector3 GetWorldPosition()const { return worldTransform.position * GLOBAL::UNIT; }
+	FORCEINLINE Vector3 GetWorldPosition()const { return worldTransform.position / GLOBAL::UNIT; }
 	FORCEINLINE Vector3 GetWorldRotation()const { return worldTransform.rotation; }
 	FORCEINLINE Vector3 GetWorldScale()const { return worldTransform.scale; }
 

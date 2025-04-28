@@ -105,7 +105,7 @@ void SceneComp::SetRelativeTransform(const Transform& Transform)
 
 void SceneComp::SetRelativePosition(const Vector3& Position)
 {
-	relativeTransform.position = Position / GLOBAL::UNIT;
+	relativeTransform.position = Position * GLOBAL::UNIT;
 	UpdateTransform();
 }
 
