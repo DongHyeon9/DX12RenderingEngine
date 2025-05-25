@@ -362,6 +362,7 @@ MeshData GeometryManager::CreateCylinder(float BottomRadius, float TopRadius, fl
 		vertices.emplace_back(v);
 	}
 	const uint32 bottomCenterIdx{ static_cast<uint32>(vertices.size()) };
+	LOG("상단 버텍스 생성");
 
 	//하단 중심 버텍스 생성
 	{
@@ -385,8 +386,6 @@ MeshData GeometryManager::CreateCylinder(float BottomRadius, float TopRadius, fl
 
 		vertices.emplace_back(v);
 	}
-
-	LOG("상단 버텍스 생성");
 
 	//측면 인덱스 연결
 	for (uint32 i = 0; i < NumSlices; i++) {
