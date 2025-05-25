@@ -20,6 +20,9 @@ MeshData GeometryManager::CreatePlane(float Width, float Height, uint32 RowSlice
 	uint32 rowCount = RowSlice + 1;
 	uint32 colCount = ColumnSlice + 1;
 
+	vertices.reserve((rowCount + 1) * (colCount + 1));
+	indices.reserve(rowCount * colCount * 6);
+
 	//실질적으로 사용할 Width와 Height는 GLOBAL::UNIT을 나눈 값
 	float unitWidth = Width * GLOBAL::PARSE_UNIT;
 	float unitHeight = Height * GLOBAL::PARSE_UNIT;
@@ -77,6 +80,9 @@ MeshData GeometryManager::CreatePlane(float Width, float Height, uint32 RowSlice
 		}
 	}
 	LOG("인덱스 연결");
+
+	vertices.shrink_to_fit();
+	indices.shrink_to_fit();
 
 	LOG("Plane 생성 완료");
 	return result;
@@ -213,6 +219,9 @@ MeshData GeometryManager::CreateBox(const Vector3& BoxExtent) const
 		vertices.emplace_back(v);
 	}
 
+	vertices.shrink_to_fit();
+	indices.shrink_to_fit();
+
 	LOG("Box 생성 완료");
 	return result;
 }
@@ -239,6 +248,12 @@ MeshData GeometryManager::CreateCapsule(float Radius, float Height, uint32 NumSl
 
 	std::vector<Vertex>& vertices = result.vertices;
 	std::vector<uint32>& indices = result.indices;
+
+	const uint32 sliceCount = NumSlices + 1;
+	const uint32 stackCount = sphereStack + 1;
+
+	vertices.reserve((HemiSphereStacks * 2 + 1) * (NumSlices + 1));
+	indices.reserve((HemiSphereStacks * 2) * NumSlices * 6);
 
 	//버텍스 생성
 	for (uint32 i = 0; i <= sphereStack; ++i) {
@@ -315,6 +330,9 @@ MeshData GeometryManager::CreateCapsule(float Radius, float Height, uint32 NumSl
 	}
 	LOG("인덱스 연결");
 
+	vertices.shrink_to_fit();
+	indices.shrink_to_fit();
+
 	LOG("Capsule 생성 완료");
 	return result;
 }
@@ -335,6 +353,9 @@ MeshData GeometryManager::CreateCylinder(float BottomRadius, float TopRadius, fl
 
 	std::vector<Vertex>& vertices = result.vertices;
 	std::vector<uint32>& indices = result.indices;
+
+	vertices.reserve((NumSlices + 1) * 2 + 2);
+	indices.reserve(NumSlices * 12);
 
 	//하단 버텍스 생성
 	for (uint32 i = 0; i <= NumSlices; i++) {
@@ -416,6 +437,9 @@ MeshData GeometryManager::CreateCylinder(float BottomRadius, float TopRadius, fl
 
 	LOG("인덱스 연결");
 
+	vertices.shrink_to_fit();
+	indices.shrink_to_fit();
+
 	LOG("Cylinder 생성 완료");
 	return result;
 }
@@ -437,6 +461,9 @@ MeshData GeometryManager::CreateSphere(float Radius, uint32 NumSlices, uint32 Nu
 
 	std::vector<Vertex>& vertices = result.vertices;
 	std::vector<uint32>& indices = result.indices;
+
+	vertices.reserve((NumStacks + 1) * (NumSlices + 1));
+	indices.reserve(NumStacks * NumSlices * 6);
 
 	//버텍스 생성
 	for (uint32 i = 0; i <= NumStacks; ++i) {
@@ -477,6 +504,9 @@ MeshData GeometryManager::CreateSphere(float Radius, uint32 NumSlices, uint32 Nu
 		}
 	}
 	LOG("인덱스 연결");
+
+	vertices.shrink_to_fit();
+	indices.shrink_to_fit();
 
 	LOG("Sphere 생성 완료");
 	return result;

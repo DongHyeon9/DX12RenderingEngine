@@ -180,9 +180,9 @@ void SceneComp::UpdateTransform()
 	//스케일->회전->이동의 순서로 행렬을 곱해서 만들어준다
 	local =
 		Matrix::CreateScale(relativeTransform.scale) *
-		Matrix::CreateRotationX(relativeTransform.rotation.x) *
-		Matrix::CreateRotationY(relativeTransform.rotation.y) *
-		Matrix::CreateRotationZ(relativeTransform.rotation.z) *
+		Matrix::CreateRotationX(relativeTransform.rotation.x * GLOBAL::TO_RADIAN) *
+		Matrix::CreateRotationY(relativeTransform.rotation.y * GLOBAL::TO_RADIAN) *
+		Matrix::CreateRotationZ(relativeTransform.rotation.z * GLOBAL::TO_RADIAN) *
 		Matrix::CreateTranslation(relativeTransform.position);
 
 	//부모컴포넌트가 있다면 부모컴포넌트의 행렬과 곱을하고

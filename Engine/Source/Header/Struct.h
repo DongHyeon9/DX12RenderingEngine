@@ -80,6 +80,12 @@ struct TransformMatrix
 
 struct Vertex
 {
+	Vertex() {}
+	Vertex(const Vertex& Ref) :position(Ref.position), normal(Ref.normal), tangent(Ref.tangent), texcoord(Ref.texcoord) {}
+	Vertex(Vertex&& Ref) noexcept :position(std::move(Ref.position)), normal(std::move(Ref.normal)), tangent(std::move(Ref.tangent)), texcoord(std::move(Ref.texcoord)) {}
+	Vertex& operator=(const Vertex& Ref) { position = Ref.position; normal = Ref.normal; tangent = Ref.tangent; texcoord = Ref.texcoord; }
+	Vertex& operator=(Vertex&& Ref) noexcept { position = std::move(Ref.position); normal = std::move(Ref.normal); tangent = std::move(Ref.tangent); texcoord = std::move(Ref.texcoord); }
+	
 	Vector3 position{};
 	Vector3 normal{};
 	Vector3 tangent{};

@@ -31,7 +31,6 @@ void Material::SetTexture(E_TEXTURE_TYPE Index, std::shared_ptr<Texture> Texture
 
 void Material::Render()
 {
-
 	std::shared_ptr<RootSignatureObject> rootSignature = PSO->GetRootSignature();
 	rootSignature->PushData(E_CONSTANT_BUFFER_TYPE::MATERIAL, &matParam, sizeof(matParam));
 

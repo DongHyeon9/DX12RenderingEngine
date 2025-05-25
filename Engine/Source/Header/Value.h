@@ -17,6 +17,8 @@ namespace GLOBAL
 {
 	constexpr float PARSE_UNIT{ 0.001f };
 	constexpr float UNPARSE_UNIT{ 1000.0f };
+	constexpr float TO_RADIAN{ 3.141592f / 180.0f };
+	constexpr float TO_DEGREE{ 180.0f / 3.141592f };
 
 	const Color CLEAR_COLOR{ DirectX::Colors::BlanchedAlmond };
 	constexpr Vector3 FORWARD{ 0.f,0.f,1.f };

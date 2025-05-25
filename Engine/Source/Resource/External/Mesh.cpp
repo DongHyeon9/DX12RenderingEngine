@@ -20,7 +20,7 @@ bool Mesh::Load(FString FileName)
     // 로드 실패 시 오류 메시지 출력
     if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) 
     {
-        LOG("로드 실패 : %s", importer.GetErrorString());
+        LOG("로드 실패 : %hs", importer.GetErrorString());
         return false;
     }
 

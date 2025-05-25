@@ -28,8 +28,11 @@ bool Scene::Init()
     //meshComp->Init(GeometryManager::GetInstance()->CreateSphere(100.0f, 20, 20));
     meshComp->SetMaterial(0, material);
     meshComp->SetMaterial(1, material);
+    meshComp->SetMaterial(2, material);
     actor->Init(meshComp);
-    actor->SetWorldPosition(Vector3{ 0.0f,0.0f,500.0f });
+    actor->SetWorldScale(Vector3{ 0.001f });
+    actor->SetWorldRotation(Vector3{ 0.0f, 180.0f, 0.0f });
+    //actor->SetWorldPosition(Vector3{ 0.0f,0.0f,500.0f });
 
     children.emplace_back(actor);
 
