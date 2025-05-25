@@ -15,7 +15,8 @@ namespace KEY
 
 namespace GLOBAL 
 {
-	constexpr float UNIT{ 0.001f };
+	constexpr float PARSE_UNIT{ 0.001f };
+	constexpr float UNPARSE_UNIT{ 1000.0f };
 
 	const Color CLEAR_COLOR{ DirectX::Colors::BlanchedAlmond };
 	constexpr Vector3 FORWARD{ 0.f,0.f,1.f };

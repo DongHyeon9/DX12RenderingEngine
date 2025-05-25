@@ -8,11 +8,11 @@ public:
 protected:
 	std::weak_ptr<SceneComp> parent{};
 	std::vector<std::shared_ptr<SceneComp>> children{};
+	TransformMatrix world{};
 
 private:
 	Transform relativeTransform{};
 	Transform worldTransform{};
-	TransformMatrix world{};
 	Matrix local{ Matrix::Identity };
 
 	Vector3 forward{};
@@ -26,8 +26,6 @@ public:
 	void EndPlay()override;
 	void Update(float DeltaTime)override;
 	void LateUpdate(float DeltaTime)override;
-	//E_CONSTANT_BUFFER_TYPE::TRANSFORM데이터가 필요없다면 __super::Render가 아닌
-	//children의 Render를 호출해주고 이후 필요한 로직 작성
 	virtual void Render();
 
 	void AddChild(std::shared_ptr<SceneComp> NewChild);
@@ -39,12 +37,12 @@ public:
 	FORCEINLINE Matrix GetWorldMatrix()const { return world.worldMat; }
 
 	FORCEINLINE Transform GetRelativeTransform()const { return Transform{ GetRelativePosition(), GetRelativeRotation(), GetRelativeScale() }; }
-	FORCEINLINE Vector3 GetRelativePosition()const { return relativeTransform.position / GLOBAL::UNIT; }
+	FORCEINLINE Vector3 GetRelativePosition()const { return relativeTransform.position * GLOBAL::UNPARSE_UNIT; }
 	FORCEINLINE Vector3 GetRelativeRotation()const { return relativeTransform.rotation; }
 	FORCEINLINE Vector3 GetRelativeScale()const { return relativeTransform.scale; }
 
 	FORCEINLINE Transform GetWorldTransform()const { return Transform{ GetWorldPosition(), GetWorldRotation(), GetWorldScale() }; }
-	FORCEINLINE Vector3 GetWorldPosition()const { return worldTransform.position / GLOBAL::UNIT; }
+	FORCEINLINE Vector3 GetWorldPosition()const { return worldTransform.position * GLOBAL::UNPARSE_UNIT; }
 	FORCEINLINE Vector3 GetWorldRotation()const { return worldTransform.rotation; }
 	FORCEINLINE Vector3 GetWorldScale()const { return worldTransform.scale; }
 

@@ -14,14 +14,13 @@ bool Mesh::Load(FString FileName)
     const aiScene* scene = importer.ReadFile(EngineUtil::String::ConvertString<std::string>(fullPath),
         aiProcess_Triangulate |            // 모든 폴리곤을 삼각형으로 분할
         aiProcess_FlipUVs |                // UV 좌표 뒤집기
-        aiProcess_JoinIdenticalVertices |  // 중복된 정점 병합
         aiProcess_SortByPType|             // 원시 유형별로 정렬
         aiProcess_CalcTangentSpace);       // 탄젠트 데이터 추가
 
     // 로드 실패 시 오류 메시지 출력
     if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) 
     {
-        LOG("로드 실패 : %hs", importer.GetErrorString());
+        LOG("로드 실패 : %s", importer.GetErrorString());
         return false;
     }
 

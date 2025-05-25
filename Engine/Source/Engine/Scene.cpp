@@ -17,15 +17,17 @@ bool Scene::Init()
     std::shared_ptr<Actor> actor{ std::make_shared<Actor>(TEXT("Cube")) };
     std::shared_ptr<MeshComp> meshComp{ std::make_shared<MeshComp>(TEXT("CubeRoot")) };
     std::shared_ptr<Material> material{ std::make_shared<Material>() };
-    std::shared_ptr<Texture> albedo = ResourceManager::GetInstance()->GetResource<Texture>(TEXT("UVTemplate.bmp"));
+    std::shared_ptr<Texture> albedo = ResourceManager::GetInstance()->GetResource<Texture>(TEXT("T_Dragon_Albbedo.jpg"));
     albedo->CreateView();
     material->SetTexture(E_TEXTURE_TYPE::ALBEDO, albedo);
+    meshComp->Init(ResourceManager::GetInstance()->GetResource<Mesh>(TEXT("SM_Dragon.fbx")));
     //meshComp->Init(GeometryManager::GetInstance()->CreateBox(Vector3{ 500.0f }));
     //meshComp->Init(GeometryManager::GetInstance()->CreatePlane(500.0f, 500.0f, 0, 0));
     //meshComp->Init(GeometryManager::GetInstance()->CreateCapsule(500.0f, 500.0f, 20, 20));
-    meshComp->Init(GeometryManager::GetInstance()->CreateCylinder(100.0f, 100.0f, 500.0f, 20));
+    //meshComp->Init(GeometryManager::GetInstance()->CreateCylinder(100.0f, 100.0f, 500.0f, 20));
     //meshComp->Init(GeometryManager::GetInstance()->CreateSphere(100.0f, 20, 20));
     meshComp->SetMaterial(0, material);
+    meshComp->SetMaterial(1, material);
     actor->Init(meshComp);
     actor->SetWorldPosition(Vector3{ 0.0f,0.0f,500.0f });
 

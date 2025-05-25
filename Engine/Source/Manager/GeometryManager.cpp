@@ -21,8 +21,8 @@ MeshData GeometryManager::CreatePlane(float Width, float Height, uint32 RowSlice
 	uint32 colCount = ColumnSlice + 1;
 
 	//실질적으로 사용할 Width와 Height는 GLOBAL::UNIT을 나눈 값
-	float unitWidth = Width * GLOBAL::UNIT;
-	float unitHeight = Height * GLOBAL::UNIT;
+	float unitWidth = Width * GLOBAL::PARSE_UNIT;
+	float unitHeight = Height * GLOBAL::PARSE_UNIT;
 
 	//RowSlice와 ColumnSlice에 따른 단위 길이 계산
 	float rowInterval = unitWidth / rowCount;	// 행 간의 간격
@@ -90,9 +90,12 @@ MeshData GeometryManager::CreateBox(const Vector3& BoxExtent) const
 	std::vector<Vertex>& vertices = result.vertices;
 	std::vector<uint32>& indices = result.indices;
 
-	const float xUnit = BoxExtent.x * GLOBAL::UNIT * 0.5f;
-	const float yUnit = BoxExtent.y * GLOBAL::UNIT * 0.5f;
-	const float zUnit = BoxExtent.z * GLOBAL::UNIT * 0.5f;
+	vertices.reserve(24);
+	indices.reserve(36);
+
+	const float xUnit = BoxExtent.x * GLOBAL::PARSE_UNIT * 0.5f;
+	const float yUnit = BoxExtent.y * GLOBAL::PARSE_UNIT * 0.5f;
+	const float zUnit = BoxExtent.z * GLOBAL::PARSE_UNIT * 0.5f;
 
 	std::vector<Vector3> positions{};
 	std::vector<Vector3> normals{};
@@ -149,10 +152,10 @@ MeshData GeometryManager::CreateBox(const Vector3& BoxExtent) const
 	positions.emplace_back(Vector3(xUnit, yUnit, zUnit));
 	positions.emplace_back(Vector3(xUnit, yUnit, -zUnit));
 	positions.emplace_back(Vector3(-xUnit, yUnit, -zUnit));
-	texcoords.emplace_back(Vector2(0.0f, 0.0f));
-	texcoords.emplace_back(Vector2(1.0f, 0.0f));
 	texcoords.emplace_back(Vector2(1.0f, 1.0f));
 	texcoords.emplace_back(Vector2(0.0f, 1.0f));
+	texcoords.emplace_back(Vector2(0.0f, 0.0f));
+	texcoords.emplace_back(Vector2(1.0f, 0.0f));
 	for (size_t i = 0; i < 4; ++i)
 	{
 		normals.emplace_back(GLOBAL::UP);
@@ -220,8 +223,8 @@ MeshData GeometryManager::CreateCapsule(float Radius, float Height, uint32 NumSl
 	MeshData result{};
 
 	// 입력값의 단위화
-	const float unitRadius = Radius * GLOBAL::UNIT;
-	const float unitHeight = Height * GLOBAL::UNIT;
+	const float unitRadius = Radius * GLOBAL::PARSE_UNIT;
+	const float unitHeight = Height * GLOBAL::PARSE_UNIT;
 	const float halfHeight = unitHeight * 0.5f;
 
 	//최솟값 설정
@@ -325,9 +328,9 @@ MeshData GeometryManager::CreateCylinder(float BottomRadius, float TopRadius, fl
 
 	//길이 단위화, 각도 계산
 	const float unitAngle = -DirectX::XM_2PI / NumSlices;
-	const float unitBottomRadius = BottomRadius * GLOBAL::UNIT;
-	const float unitTopRadius = TopRadius * GLOBAL::UNIT;
-	const float unitHeight = Height * GLOBAL::UNIT;
+	const float unitBottomRadius = BottomRadius * GLOBAL::PARSE_UNIT;
+	const float unitTopRadius = TopRadius * GLOBAL::PARSE_UNIT;
+	const float unitHeight = Height * GLOBAL::PARSE_UNIT;
 	const float halfHeight = unitHeight * 0.5f;
 
 	std::vector<Vertex>& vertices = result.vertices;
@@ -340,10 +343,11 @@ MeshData GeometryManager::CreateCylinder(float BottomRadius, float TopRadius, fl
 		v.normal = v.position;
 		v.normal.Normalize();
 		v.texcoord = Vector2(static_cast<float>(i) / NumSlices, 1.0f);
-		v.tangent = GLOBAL::DOWN;
-
+		v.tangent = v.normal.Cross(GLOBAL::UP);
+		
 		vertices.emplace_back(v);
 	}
+	const uint32 topStart{ static_cast<uint32>(vertices.size()) };
 	LOG("하단 버텍스 생성");
 
 	//상단 버텍스 생성
@@ -353,22 +357,64 @@ MeshData GeometryManager::CreateCylinder(float BottomRadius, float TopRadius, fl
 		v.normal = v.position;
 		v.normal.Normalize();
 		v.texcoord = Vector2(static_cast<float>(i) / NumSlices, 0.0f);
-		v.tangent = GLOBAL::UP;
+		v.tangent = v.normal.Cross(GLOBAL::UP);;
 
 		vertices.emplace_back(v);
 	}
+	const uint32 bottomCenterIdx{ static_cast<uint32>(vertices.size()) };
+
+	//하단 중심 버텍스 생성
+	{
+		Vertex v{};
+		v.position = Vector3(0.0f, -halfHeight, 0.0f);
+		v.normal = GLOBAL::DOWN;
+		v.texcoord = Vector2(0.0f, 0.0f);
+		v.tangent = GLOBAL::RIGHT;
+
+		vertices.emplace_back(v);
+	}
+	const uint32 topCenterIdx{ static_cast<uint32>(vertices.size()) };
+
+	//상단 중심 버텍스 생성
+	{
+		Vertex v{};
+		v.position = Vector3(0.0f, halfHeight, 0.0f);
+		v.normal = GLOBAL::UP;
+		v.texcoord = Vector2(0.0f, 1.0f);
+		v.tangent = GLOBAL::LEFT;
+
+		vertices.emplace_back(v);
+	}
+
 	LOG("상단 버텍스 생성");
 
-	//인덱스 연결
+	//측면 인덱스 연결
 	for (uint32 i = 0; i < NumSlices; i++) {
+		//측면 삼각형 연결
 		indices.emplace_back(i);
-		indices.emplace_back(i + NumSlices + 1);
-		indices.emplace_back(i + 1 + NumSlices + 1);
+		indices.emplace_back(i + 1 + topStart);
+		indices.emplace_back(i + 1);
 
+		//측면 역삼각형 연결
 		indices.emplace_back(i);
-		indices.emplace_back(i + 1 + NumSlices + 1);
+		indices.emplace_back(i + topStart);
+		indices.emplace_back(i + 1 + topStart);
+	}
+
+	//하단 인덱스 연결
+	for (uint32 i = 0; i < NumSlices; ++i) {
+		indices.emplace_back(bottomCenterIdx);
+		indices.emplace_back(i);
 		indices.emplace_back(i + 1);
 	}
+
+	//상단 인덱스 연결
+	for (uint32 i = 0; i < NumSlices; ++i) {
+		indices.emplace_back(topCenterIdx);
+		indices.emplace_back(topStart + i + 1);
+		indices.emplace_back(topStart + i);
+	}
+
 	LOG("인덱스 연결");
 
 	LOG("Cylinder 생성 완료");
@@ -381,7 +427,7 @@ MeshData GeometryManager::CreateSphere(float Radius, uint32 NumSlices, uint32 Nu
 	MeshData result{};
 
 	// 입력값의 단위화
-	const float unitRadius = Radius * GLOBAL::UNIT;
+	const float unitRadius = Radius * GLOBAL::PARSE_UNIT;
 
 	NumSlices += 3;
 	NumStacks += 2;

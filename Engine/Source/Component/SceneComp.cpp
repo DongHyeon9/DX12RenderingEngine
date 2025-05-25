@@ -87,8 +87,6 @@ void SceneComp::Render()
 	{
 		child->Render();
 	}
-
-	PSO->GetRootSignature()->PushData(E_CONSTANT_BUFFER_TYPE::TRANSFORM, &world, sizeof(world));
 }
 
 void SceneComp::AddChild(std::shared_ptr<SceneComp> NewChild)
@@ -105,7 +103,7 @@ void SceneComp::SetRelativeTransform(const Transform& Transform)
 
 void SceneComp::SetRelativePosition(const Vector3& Position)
 {
-	relativeTransform.position = Position * GLOBAL::UNIT;
+	relativeTransform.position = Position * GLOBAL::PARSE_UNIT;
 	UpdateTransform();
 }
 

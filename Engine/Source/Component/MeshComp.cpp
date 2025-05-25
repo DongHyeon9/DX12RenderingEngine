@@ -66,6 +66,7 @@ void MeshComp::Render()
 
 	for (size_t i = 0; i < materials.size(); ++i)
 	{
+		PSO->GetRootSignature()->PushData(E_CONSTANT_BUFFER_TYPE::TRANSFORM, &world, sizeof(world));
 		cmdList->IASetVertexBuffers(0, 1, &vertexBufferView[i]);
 		cmdList->IASetIndexBuffer(&indexBufferView[i]);
 		materials[i]->Render();
